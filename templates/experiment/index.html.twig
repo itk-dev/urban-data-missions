@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Experiment index{% endblock %}
+
+{% block body %}
+    <h1>Experiment index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Sensors</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for experiment in experiments %}
+            <tr>
+                <td>{{ experiment.id }}</td>
+                <td>{{ experiment.title }}</td>
+                <td>{{ experiment.sensors ? experiment.sensors|json_encode : '' }}</td>
+                <td>
+                    <a href="{{ path('experiment_show', {'id': experiment.id}) }}">show</a>
+                    <a href="{{ path('experiment_edit', {'id': experiment.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('experiment_new') }}">Create new</a>
+{% endblock %}

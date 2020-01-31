@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Experiment: {{ experiment.title }}</h1>
+
+    {% for sensor in experiment.sensors %}
+        {{ sensor }}
+    {% endfor %}
+
+{% endblock %}
