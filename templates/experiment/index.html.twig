@@ -2,24 +2,24 @@
 
 {% block title %}Experiment index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Experiment index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Title</th>
                 <th>Sensors</th>
+                <th>Created at</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for experiment in experiments %}
             <tr>
-                <td>{{ experiment.id }}</td>
                 <td>{{ experiment.title }}</td>
                 <td>{{ experiment.sensors ? experiment.sensors|json_encode : '' }}</td>
+                <td>{{ experiment.createdAt ? experiment.createdAt|date }}</td>
                 <td>
                     <a href="{{ path('experiment_show', {'id': experiment.id}) }}">show</a>
                     <a href="{{ path('experiment_edit', {'id': experiment.id}) }}">edit</a>

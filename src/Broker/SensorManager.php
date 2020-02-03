@@ -1,17 +1,15 @@
 <?php
 
-
 namespace App\Broker;
-
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SensorManager
 {
-    /** @var HttpClientInterface  */
+    /** @var HttpClientInterface */
     private $httpClient;
 
-    /** @var string  */
+    /** @var string */
     private $ngsiLdBrokerUrl;
 
     public function __construct(HttpClientInterface $httpClient, string $ngsiLdBrokerUrl)
@@ -20,7 +18,8 @@ class SensorManager
         $this->ngsiLdBrokerUrl = $ngsiLdBrokerUrl;
     }
 
-    public function getSensors() {
+    public function getSensors()
+    {
         $response = $this->httpClient->request('GET', '/ngsi-ld/v1/entities/', [
             'base_uri' => $this->ngsiLdBrokerUrl,
             'query' => ['type' => 'https://uri.fiware.org/ns/data-models#AirQualityObserved'],

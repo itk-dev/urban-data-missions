@@ -3,12 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\BlameableInterface;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Blameable\BlameableTrait;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExperimentRepository")
  */
-class Experiment
+class Experiment implements BlameableInterface, TimestampableInterface
 {
+    use BlameableTrait;
+    use TimestampableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")

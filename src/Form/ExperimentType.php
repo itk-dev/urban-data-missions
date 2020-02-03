@@ -11,8 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ExperimentType extends AbstractType
 {
-
-    /** @var SensorManager  */
+    /** @var SensorManager */
     private $sensorManager;
 
     public function __construct(SensorManager $sensorManager)

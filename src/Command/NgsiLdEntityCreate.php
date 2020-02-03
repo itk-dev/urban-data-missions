@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Command;
-
 
 use App\Broker\SensorManager;
 use Symfony\Component\Console\Command\Command;
@@ -15,7 +13,7 @@ class NgsiLdEntityCreate extends Command
 {
     protected static $defaultName = 'test:ngsi-ld:entity:create';
 
-    /** @var HttpClientInterface  */
+    /** @var HttpClientInterface */
     private $sensorManager;
 
     public function __construct(SensorManager $sensorManager)

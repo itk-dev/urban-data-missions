@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Form\Type;
 
 use App\Broker\SensorManager;
@@ -12,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateExperimentType extends AbstractType
 {
-    /** @var SensorManager  */
+    /** @var SensorManager */
     private $sensorManager;
 
     public function __construct(SensorManager $sensorManager)
