@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Experiment;
 use App\Form\ExperimentType;
 use App\Repository\ExperimentRepository;
+use App\Traits\LoggerTrait;
+use Psr\Log\LoggerAwareInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/experiment")
  */
-class ExperimentController extends AbstractController
+class ExperimentController extends AbstractController implements LoggerAwareInterface
 {
+    use LoggerTrait;
+
     /**
      * @Route("/", name="experiment_index", methods={"GET"})
      */
@@ -90,5 +94,13 @@ class ExperimentController extends AbstractController
         }
 
         return $this->redirectToRoute('experiment_index');
+    }
+
+    /**
+     * @Route("/{id}/subscription/notify", name="experiment_subscription_notify", methods={"POST"})
+     */
+    public function subscriptionNotity(Request $request, Experiment $experiment): Response
+    {
+        $this->info(sprintf('Subscription notification received: %s; %s; %s', $experiment->getId(), $request->get('sensor'), $request->getContent()));
     }
 }

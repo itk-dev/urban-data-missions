@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  db:
+  mariadb:
     image: itkdev/mariadb:latest
     ports:
       - '3306'
@@ -24,7 +24,7 @@ services:
       # - PHP_MAIL=1 # Uncomment to enable mailhog.
       - DOCKER_HOST_DOMAIN=${COMPOSE_DOMAIN}
     depends_on:
-      - db
+      - mariadb
       - mercure
       - scorpio
     volumes:

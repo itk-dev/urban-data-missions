@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Broker\SensorManager;
 use App\Entity\Experiment;
+use App\Scorpio\SensorManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
