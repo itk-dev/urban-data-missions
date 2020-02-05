@@ -3,11 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Experiment;
+use App\Entity\Measurement;
 use App\Form\ExperimentType;
 use App\Repository\ExperimentRepository;
 use App\Traits\LoggerTrait;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -99,8 +103,32 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     /**
      * @Route("/{id}/subscription/notify", name="experiment_subscription_notify", methods={"POST"})
      */
-    public function subscriptionNotity(Request $request, Experiment $experiment): Response
+    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager): Response
     {
+        $payload = json_decode($request->getContent(), true);
+        foreach ($payload['data'] as $data) {
+            // $measuredAt = $item['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'];
+            $measuredAt = $data['modifiedAt'];
+            $measuredValue = 0;
+            foreach ($data as $key => $value) {
+                if (isset($value['value'])
+                    && 'https://uri.fiware.org/ns/data-models#dateObserved' !== $key
+                    && 0 === strpos($key, 'https://uri.fiware.org/ns/data-models#')) {
+                    $measuredValue = (float) $value['value'];
+                }
+            }
+            $measurement = (new Measurement())
+                ->setMeasuredAt(new DateTimeImmutable($measuredAt))
+                ->setSensor($data['id'])
+                ->setValue($measuredValue)
+                ->setData($data)
+                ->setPayload($payload)
+                ->setExperiment($experiment);
+            $entityManager->persist($measurement);
+        }
+        $entityManager->flush();
         $this->info(sprintf('Subscription notification received: %s; %s; %s', $experiment->getId(), $request->get('sensor'), $request->getContent()));
+
+        return new JsonResponse(['status' => 'ok']);
     }
 }

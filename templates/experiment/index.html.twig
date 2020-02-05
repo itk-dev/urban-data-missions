@@ -10,6 +10,7 @@
             <tr>
                 <th>Title</th>
                 <th>Sensors</th>
+                <th>Measurements</th>
                 <th>Created at</th>
                 <th>actions</th>
             </tr>
@@ -18,7 +19,8 @@
         {% for experiment in experiments %}
             <tr>
                 <td>{{ experiment.title }}</td>
-                <td>{{ experiment.sensors ? experiment.sensors|json_encode : '' }}</td>
+                <td>{{ experiment.sensors|length }}</td>
+                <td>{{ experiment.measurements|length }}</td>
                 <td>{{ experiment.createdAt ? experiment.createdAt|date }}</td>
                 <td>
                     <a href="{{ path('experiment_show', {'id': experiment.id}) }}">show</a>
@@ -33,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('experiment_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('experiment_new') }}">Create new</a>
 {% endblock %}

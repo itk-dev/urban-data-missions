@@ -3,6 +3,7 @@
 namespace App\Scorpio;
 
 use App\Entity\Experiment;
+use App\Entity\Sensor;
 use App\Traits\LoggerTrait;
 use Psr\Log\LoggerAwareInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,10 @@ class SubscriptionManager implements LoggerAwareInterface
 
     public function createSubscription(Experiment $experiment)
     {
+        if (null === $experiment->getId() || $experiment->getSensors()->isEmpty()) {
+            return;
+        }
+
         $subscriptionId = 'urn:ngsi-ld:Subscription:experiment:'.$experiment->getId();
 
         $endpoint = $this->router->generate('experiment_subscription_notify', [
@@ -37,18 +42,16 @@ class SubscriptionManager implements LoggerAwareInterface
             'type' => 'Subscription',
             'id' => $subscriptionId,
             'description' => $subscriptionId,
-            'entities' => [
-                array_map(static function ($sensor) {
-                    return [
-                        // Apparently, using 'id' => $sensor breaks something ...
-                        'idPattern' => $sensor,
-                        'type' => 'https://uri.fiware.org/ns/data-models#temperature',
-                    ];
-                }, $experiment->getSensors()),
-            ],
-//                'watchedAttributes' => ['https://uri.fiware.org/ns/data-models#temperature'],
+            'entities' => $experiment->getSensors()->map(static function (Sensor $sensor) {
+                return [
+                    // Apparently, using 'id' => $sensor breaks something ...
+                    'idPattern' => $sensor->getId(),
+                    'type' => $sensor->getType(),
+                ];
+            })->toArray(),
+            // 'watchedAttributes' => ['https://uri.fiware.org/ns/data-models#temperature'],
             'notification' => [
-//                    'attributes' => ['https://uri.fiware.org/ns/data-models#temperature'],
+                 // 'attributes' => ['https://uri.fiware.org/ns/data-models#temperature'],
                 'format' => 'normalized',
                 'endpoint' => [
                     'uri' => $endpoint,

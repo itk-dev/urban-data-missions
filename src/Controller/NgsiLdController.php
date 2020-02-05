@@ -9,17 +9,41 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/ngsi-ld")
+ * @Route("/ngsi-ld/v1", name="ngsi_ld_")
  */
 class NgsiLdController
 {
+    /** @var Client */
+    private $client;
+
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
     /**
-     * @Route("/{path}", requirements={"path"=".*"}, methods={"GET"})
+     * @Route("/entities/{id}", methods={"GET"}, name="entities")
      */
-    public function index(Request $request, string $path, Client $client)
+    public function entities(Request $request, string $id)
+    {
+        return $this->get($request, 'entities/'.$id);
+    }
+
+    /**
+     * @Route("/{path}", requirements={"path"=".*"}, methods={"GET"}, name="index")
+     */
+    public function index(Request $request, string $path)
+    {
+        return $this->get($request, $path, ['query' => $request->query->all()]);
+    }
+
+    private function get(Request $request, string $path, array $options = [])
     {
         try {
-            $response = $client->get('/ngsi-ld/'.$path, ['query' => $request->query->all()]);
+            $options += [
+                'query' => $request->query->all(),
+            ];
+            $response = $this->client->get('/ngsi-ld/v1/'.$path, $options);
 
             return new JsonResponse($response->toArray(), $response->getStatusCode());
         } catch (ClientException $exception) {

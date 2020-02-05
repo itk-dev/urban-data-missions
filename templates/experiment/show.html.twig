@@ -17,14 +17,47 @@
             </tr>
             <tr>
                 <th>Sensors</th>
-                <td>{{ experiment.sensors ? experiment.sensors|json_encode : '' }}</td>
+                <td>
+                    <ul class="list-unstyled sensors">
+                        {% for sensor in experiment.sensors %}
+                            <li><a href="{{ path('ngsi_ld_entities', {id: sensor.id}) }}">{{ sensor.id }}</a></li>
+                        {%  endfor %}
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('experiment_index') }}">back to list</a>
+    <a class="btn btn-secondary" href="{{ path('experiment_index') }}">{{ 'Back to list'|trans }}</a>
 
-    <a href="{{ path('experiment_edit', {'id': experiment.id}) }}">edit</a>
+    <a class="btn btn-primary" href="{{ path('experiment_edit', {'id': experiment.id}) }}">edit</a>
 
-    {{ include('experiment/_delete_form.html.twig') }}
+    {#{ include('experiment/_delete_form.html.twig') }#}
+
+    <fieldset>
+        <legend>{{ 'Measurements'|trans }}</legend>
+
+        <table class="table">
+            <thead>
+                <th>{{ 'Measured at'|trans }}</th>
+                <th>{{ 'Sensor'|trans }}</th>
+                <th>{{ 'Value'|trans }}</th>
+                <th>{{ 'Data'|trans }}</th>
+            </thead>
+            <tbody>
+                {% for measurement in experiment.measurements %}
+                    <tr>
+                        <td class="datetime">{{ measurement.measuredAt|date }}</td>
+                        <td>{{ measurement.sensor }}</td>
+                        <td class="number">{{ measurement.value }}</td>
+                        <td>{{ measurement.data|json_encode }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">{{ 'No measurements yet'|trans }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
 {% endblock %}

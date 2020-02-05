@@ -14,6 +14,12 @@ docker-compose exec phpfpm chown -R daemon /app/var
 docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction
 ```
 
+## Sensors
+
+```sh
+docker-compose exec phpfpm bin/console app:sensor update
+```
+
 ## Fixtures
 
 ```sh
@@ -49,4 +55,17 @@ https://gitlab.iotcrawler.net/core/iotcrawler_core#deployed-components
 docker-compose exec phpfpm bin/console app:measurement create sensor:test087 temperature 42
 docker-compose exec phpfpm bin/console app:measurement update sensor:test087 temperature 43
 docker-compose exec phpfpm bin/console app:measurement update sensor:test087 temperature 40 --measured-at='-1 hour'
+```
+
+## Assets
+
+```sh
+docker run -v ${PWD}:/app itkdev/yarn:latest install
+docker run -v ${PWD}:/app itkdev/yarn:latest build
+```
+
+During development:
+
+```sh
+docker run -v ${PWD}:/app --tty --interactive itkdev/yarn:latest watch
 ```

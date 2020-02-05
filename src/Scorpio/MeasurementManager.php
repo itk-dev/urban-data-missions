@@ -2,16 +2,14 @@
 
 namespace App\Scorpio;
 
+use App\Traits\LoggerTrait;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 class MeasurementManager implements LoggerAwareInterface
 {
-    use LoggerAwareTrait;
     use LoggerTrait;
 
     /** @var Client */
@@ -101,12 +99,5 @@ class MeasurementManager implements LoggerAwareInterface
         $response = $this->client->delete($path);
 
         return Response::HTTP_NO_CONTENT === $response->getStatusCode();
-    }
-
-    public function log($level, $message, array $context = [])
-    {
-        if (null !== $this->logger) {
-            call_user_func_array([$this->logger, 'log'], func_get_args());
-        }
     }
 }

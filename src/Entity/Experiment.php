@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\BlameableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -29,14 +31,26 @@ class Experiment implements BlameableInterface, TimestampableInterface
     private $title;
 
     /**
-     * @ORM\Column(type="json")
-     */
-    private $sensors = [];
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $subscription;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Measurement", mappedBy="experiment", orphanRemoval=true)
+     * @ORM\OrderBy({"measuredAt": "DESC"})
+     */
+    private $measurements;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sensor", inversedBy="experiments")
+     */
+    private $sensors;
+
+    public function __construct()
+    {
+        $this->measurements = new ArrayCollection();
+        $this->sensors = new ArrayCollection();
+    }
 
     public function getId(): ?string
     {
@@ -55,18 +69,6 @@ class Experiment implements BlameableInterface, TimestampableInterface
         return $this;
     }
 
-    public function getSensors(): ?array
-    {
-        return $this->sensors;
-    }
-
-    public function setSensors(array $sensors): self
-    {
-        $this->sensors = $sensors;
-
-        return $this;
-    }
-
     public function getSubscription(): ?string
     {
         return $this->subscription;
@@ -75,6 +77,63 @@ class Experiment implements BlameableInterface, TimestampableInterface
     public function setSubscription(?string $subscription): self
     {
         $this->subscription = $subscription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Measurement[]
+     */
+    public function getMeasurements(): Collection
+    {
+        return $this->measurements;
+    }
+
+    public function addMeasurement(Measurement $measurement): self
+    {
+        if (!$this->measurements->contains($measurement)) {
+            $this->measurements[] = $measurement;
+            $measurement->setExperiment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMeasurement(Measurement $measurement): self
+    {
+        if ($this->measurements->contains($measurement)) {
+            $this->measurements->removeElement($measurement);
+            // set the owning side to null (unless already changed)
+            if ($measurement->getExperiment() === $this) {
+                $measurement->setExperiment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sensor[]
+     */
+    public function getSensors(): Collection
+    {
+        return $this->sensors;
+    }
+
+    public function addSensor(Sensor $sensor): self
+    {
+        if (!$this->sensors->contains($sensor)) {
+            $this->sensors[] = $sensor;
+        }
+
+        return $this;
+    }
+
+    public function removeSensor(Sensor $sensor): self
+    {
+        if ($this->sensors->contains($sensor)) {
+            $this->sensors->removeElement($sensor);
+        }
 
         return $this;
     }

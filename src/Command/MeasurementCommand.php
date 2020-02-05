@@ -18,10 +18,10 @@ class MeasurementCommand extends Command
     /** @var MeasurementManager */
     private $measurementManager;
 
-    public function __construct(MeasurementManager $measurementManager)
+    public function __construct(MeasurementManager $sensorManager)
     {
         parent::__construct();
-        $this->measurementManager = $measurementManager;
+        $this->measurementManager = $sensorManager;
     }
 
     protected function configure()

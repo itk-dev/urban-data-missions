@@ -12,6 +12,9 @@ parameters:
     router.request_context.base_url: '%env(ROUTER_REQUEST_CONTEXT_BASE_URL)%'
     asset.request_context.base_path: '%router.request_context.base_url%'
 
+    env(SENSOR_TYPES): '["https://uri.fiware.org/ns/data-models#humidity","https://uri.fiware.org/ns/data-models#temperature"]'
+    sensorTypes: '%env(json:SENSOR_TYPES)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -20,6 +23,8 @@ services:
 
         bind:
             $ngsiLdBrokerUrl: '%env(NGSI_LD_BROKER_URL)%'
+            $sensorManagerOptions:
+                types: '%sensorTypes%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

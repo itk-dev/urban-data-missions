@@ -4,13 +4,11 @@ namespace App\Scorpio;
 
 use App\Traits\LoggerTrait;
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class Client implements LoggerAwareInterface
 {
-    use LoggerAwareTrait;
     use LoggerTrait;
 
     /** @var HttpClientInterface */
@@ -25,7 +23,7 @@ class Client implements LoggerAwareInterface
         $this->ngsiLdBrokerUrl = $ngsiLdBrokerUrl;
     }
 
-    public function query(array $query)
+    public function getEntities(array $query)
     {
         $path = '/ngsi-ld/v1/entities/';
 

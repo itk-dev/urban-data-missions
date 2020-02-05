@@ -3,9 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Experiment;
+use App\Entity\Sensor;
 use App\Scorpio\SensorManager;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,8 +26,8 @@ class ExperimentType extends AbstractType
 
         $builder
             ->add('title')
-            ->add('sensors', ChoiceType::class, [
-                'choices' => array_combine($sensors, $sensors),
+            ->add('sensors', EntityType::class, [
+                'class' => Sensor::class,
                 'expanded' => true,
                 'multiple' => true,
                 'required' => true,
