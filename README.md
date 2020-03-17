@@ -14,18 +14,19 @@ docker-compose exec phpfpm chown -R daemon /app/var
 docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction
 ```
 
-## Sensors
-
-```sh
-docker-compose exec phpfpm bin/console app:sensor update
-```
-
 ## Fixtures
 
 ```sh
 docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction --group=iot-data
 docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction --group=experiment
 ```
+
+## Sensors
+
+```sh
+docker-compose exec phpfpm bin/console app:sensor update
+```
+
 
 Fake some measurements
 

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Experiment app'|trans %}
+
+{% block content %}
+    <h1>{{ experiment.title }}</h1>
+
+    <ul class="list-unstyled sensors">
+        {% for sensor in experiment.sensors %}
+            <li><a href="#{{ sensor.id }}">{{ sensor.id }}</a></li>
+        {%  endfor %}
+    </ul>
+
+    <fieldset>
+        <legend>{{ 'Data'|trans }}</legend>
+
+        <code><pre id="data"></pre></code>
+    </fieldset>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var APP_CONFIG = {{ app_options|default(null)|json_encode|raw }}
+    </script>
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}

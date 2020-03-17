@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Experiment;
 use App\Entity\Measurement;
+use App\Entity\Sensor;
 use App\Form\ExperimentType;
 use App\Repository\ExperimentRepository;
 use App\Traits\LoggerTrait;
@@ -14,6 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -103,7 +106,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     /**
      * @Route("/{id}/subscription/notify", name="experiment_subscription_notify", methods={"POST"})
      */
-    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager): Response
+    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager, PublisherInterface $publisher): Response
     {
         $payload = json_decode($request->getContent(), true);
         foreach ($payload['data'] as $data) {
@@ -125,10 +128,34 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
                 ->setPayload($payload)
                 ->setExperiment($experiment);
             $entityManager->persist($measurement);
+
+            $update = new Update(
+                $experiment->getSensors()->first()->getId(),
+                json_encode(['data' => $data])
+            );
+            $publisher($update);
         }
         $entityManager->flush();
         $this->info(sprintf('Subscription notification received: %s; %s; %s', $experiment->getId(), $request->get('sensor'), $request->getContent()));
 
         return new JsonResponse(['status' => 'ok']);
+    }
+
+    /**
+     * @Route("/{id}/app", name="experiment_app", methods={"GET"})
+     */
+    public function app(Experiment $experiment): Response
+    {
+        $appOptions = [
+            'eventSourceUrl' => 'http://0.0.0.0:1337/.well-known/mercure?'
+                .implode('&', $experiment->getSensors()->map(static function (Sensor $sensor) {
+                    return 'topic='.urlencode($sensor->getId());
+                })->toArray()),
+        ];
+
+        return $this->render('experiment/app.html.twig', [
+            'experiment' => $experiment,
+            'app_options' => $appOptions,
+        ]);
     }
 }

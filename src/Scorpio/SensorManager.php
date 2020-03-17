@@ -54,15 +54,17 @@ class SensorManager
             if (Response::HTTP_OK === $response->getStatusCode()) {
                 $result = $response->toArray();
                 foreach ($result as $data) {
-                    $id = $data['id'];
-                    $sensor = $repository->find($data['id']);
-                    if (null === $sensor) {
-                        $sensor = (new Sensor())
-                            ->setId($id);
+                    if (isset($data['id'])) {
+                        $id = $data['id'];
+                        $sensor = $repository->find($data['id']);
+                        if (null === $sensor) {
+                            $sensor = (new Sensor())
+                                ->setId($id);
+                        }
+                        $sensor
+                            ->setData($data);
+                        $this->entityManager->persist($sensor);
                     }
-                    $sensor
-                        ->setData($data);
-                    $this->entityManager->persist($sensor);
                 }
                 $this->entityManager->flush();
             }

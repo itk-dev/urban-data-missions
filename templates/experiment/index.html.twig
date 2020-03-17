@@ -23,8 +23,9 @@
                 <td>{{ experiment.measurements|length }}</td>
                 <td>{{ experiment.createdAt ? experiment.createdAt|date }}</td>
                 <td>
-                    <a href="{{ path('experiment_show', {'id': experiment.id}) }}">show</a>
-                    <a href="{{ path('experiment_edit', {'id': experiment.id}) }}">edit</a>
+                    <a href="{{ path('experiment_show', {'id': experiment.id}) }}">{{ 'Show'|trans }}</a>
+                    <a href="{{ path('experiment_edit', {'id': experiment.id}) }}">{{ 'Edit'|trans }}</a>
+                    <a href="{{ path('experiment_app', {'id': experiment.id}) }}">{{ 'App'|trans }}</a>
                 </td>
             </tr>
         {% else %}
