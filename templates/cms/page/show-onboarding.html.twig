@@ -1,0 +1,37 @@
+{% extends 'cms/page/show.html.twig' %}
+
+{% block page_content %}
+    <div class="onboarding-progress">
+        {% set current = preceding_siblings|length %}
+        {% set total = preceding_siblings|length + following_siblings|length %}
+
+        {% if current > 0 %}
+            <div class="progress" style="height: 20px;">
+                <div class="progress-bar" role="progressbar" style="width: {{ 100 * current / total }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <div>
+                {{ current }}/{{ total }}
+            </div>
+        {% endif %}
+    </div>
+
+    {{ parent() }}
+
+    <div>
+        {% if current == 0 %}
+            {% set next_sibling = following_siblings|first|default(null) %}
+            {% if next_sibling %}
+                <a class="btn btn-primary btn-block" href="{{ _self.page_url(next_sibling) }}">{{ 'Start introduction'|trans }}</a>
+            {% endif %}
+            <a class="btn btn-link btn-block" href="{{ path('app') }}">{{ 'Skip introduction'|trans }}</a>
+        {% elseif current == total %}
+            <a class="btn btn-primary btn-block" href="{{ path('app') }}">{{ 'Explore the data missions'|trans }}</a>
+
+            {% set first_intro_page = preceding_siblings|length > 1 ? preceding_siblings[1] %}
+            {% if first_intro_page %}
+                <a class="btn btn-link btn-block" href="{{ _self.page_url(first_intro_page) }}">{{ 'Restart introduction'|trans }}</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

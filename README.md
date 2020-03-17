@@ -1,11 +1,5 @@
 # Iot Crawler App
 
-Based on
-
-* https://github.com/dunglas/symfony-docker
-* https://github.com/ScorpioBroker/ScorpioBroker
-* https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf
-
 ```sh
 docker-compose up -d
 docker-compose exec phpfpm composer install
@@ -17,56 +11,47 @@ docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interact
 ## Fixtures
 
 ```sh
-docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction --group=iot-data
-docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction --group=experiment
-```
-
-## Sensors
-
-```sh
-docker-compose exec phpfpm bin/console app:sensor update
-```
-
-
-Fake some measurements
-
-```sh
-docker-compose exec phpfpm bin/console app:measurement update fixture:sensor:001:temperature temperature 1
-```
-
-
-Experiment: http://0.0.0.0:8787/experiment/
-Scorpio Broker: http://0.0.0.0:9090/ngsi-ld/v1/entities/
-
-## Measurements
-
-http://0.0.0.0:9090/ngsi-ld/v1/entities/?type=https%3A%2F%2Furi.fiware.org%2Fns%2Fdata-models%23temperature
-http://0.0.0.0:9090/ngsi-ld/v1/entities/?type=https%3A%2F%2Furi.fiware.org%2Fns%2Fdata-models%23humidity
-
-
-
-https://gitlab.iotcrawler.net/core/iotcrawler_core/snippets/5
-
-https://gitlab.iotcrawler.net/core/iotcrawler_core#deployed-components
-
-
-## Creating measurements
-
-```sh
-docker-compose exec phpfpm bin/console app:measurement create sensor:test087 temperature 42
-docker-compose exec phpfpm bin/console app:measurement update sensor:test087 temperature 43
-docker-compose exec phpfpm bin/console app:measurement update sensor:test087 temperature 40 --measured-at='-1 hour'
+docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
 ```
 
 ## Assets
 
 ```sh
-docker run -v ${PWD}:/app itkdev/yarn:latest install
-docker run -v ${PWD}:/app itkdev/yarn:latest build
+docker run --volume ${PWD}:/app --workdir /app node:latest yarn install
+docker run --volume ${PWD}:/app --workdir /app node:latest yarn build
 ```
 
 During development:
 
 ```sh
-docker run -v ${PWD}:/app --tty --interactive itkdev/yarn:latest watch
+docker run --volume ${PWD}:/app --workdir /app --tty --interactive node:latest yarn watch
+```
+
+## Content pages
+
+This project contains a very simple content management system. Go to
+[http://0.0.0.0:8787/admin/?entity=Page](http://0.0.0.0:8787/admin/?entity=Page) to administer pages.
+
+[http://0.0.0.0:8787/cms](http://0.0.0.0:8787/cms) shows the frontpage, i.e. the
+first published page with no parent.
+
+## Development
+
+### Fixtures
+
+```sh
+itkdev-docker-compose bin/console doctrine:database:drop --force && \
+itkdev-docker-compose bin/console doctrine:database:create && \
+itkdev-docker-compose bin/console doctrine:migrations:migrate --no-interaction && \
+itkdev-docker-compose bin/console doctrine:fixtures:load --no-interaction
+```
+
+### Coding standards
+
+```sh
+composer coding-standards-check
+```
+
+```sh
+composer coding-standards-apply
 ```

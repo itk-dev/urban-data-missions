@@ -1,0 +1,62 @@
+easy_admin:
+    design:
+        form_theme: # Both themes are for ckeditor integration
+            - "@EasyAdmin/form/bootstrap_4.html.twig"
+            - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
+
+    entities:
+        Page:
+            class: App\Entity\CmsPage
+
+            list:
+                # collapse_actions: true
+
+                actions:
+                    view:
+                        label: View
+                        type: route
+                        name: cms_show
+
+                fields:
+                    - property: title
+                    - property: slug
+                    - property: type
+                    - property: parent
+                    - property: position
+                    - property: children
+                    - property: published
+                    - property: createdAt
+                    - property: updatedAt
+                    - property: createdBy
+                    - property: updatedBy
+
+            show:
+                fields:
+                    - property: title
+                    - property: slug
+                    - property: type
+                    - property: parent
+                    - property: position
+                    - property: children
+                    - property: published
+                    - property: createdAt
+                    - property: updatedAt
+                    - property: createdBy
+                    - property: updatedBy
+
+            form:
+                fields:
+                    - property: title
+                    - property: slug
+                    - property: published
+                    - property: type
+                      type: choice
+                      type_options:
+                          choices: '%app.cms.page.type.choices%'
+                    - property: content
+                      type: fos_ckeditor
+                      # type_options: { 'config': { 'toolbar': [ { name: 'styles', items: ['Bold', 'Italic', 'BulletedList', 'Link'] } ] } } }
+                    - property: imageFile
+                      type: file
+                    - property: parent
+                    - property: position

@@ -5,6 +5,9 @@
         "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "antishov/doctrine-extensions-bundle": "^1.4",
+        "easycorp/easyadmin-bundle": "^2.3",
+        "friendsofsymfony/ckeditor-bundle": "^2.2",
         "knplabs/doctrine-behaviors": "^2.0",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "5.0.*",
@@ -20,11 +23,13 @@
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "5.0.*",
         "symfony/webpack-encore-bundle": "^1.7",
-        "symfony/yaml": "5.0.*"
+        "symfony/yaml": "5.0.*",
+        "vich/uploader-bundle": "^1.13"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
+        "friendsoftwig/twigcs": "^3.2",
         "symfony/maker-bundle": "^1.14"
     },
     "config": {
@@ -55,7 +60,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "ckeditor:install --clear=drop": "symfony-cmd",
+            "assets:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -63,11 +69,21 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "coding-standards-check": [
+        "coding-standards-check/php-cs-fixer": [
             "php-cs-fixer --config=.php_cs.dist fix --dry-run"
         ],
-        "coding-standards-apply": [
+        "coding-standards-check/twigcs": [
+            "twigcs templates"
+        ],
+        "coding-standards-check": [
+            "@coding-standards-check/php-cs-fixer",
+            "@coding-standards-check/twigcs"
+        ],
+        "coding-standards-apply/php-cs-fixer": [
             "php-cs-fixer --config=.php_cs.dist fix"
+        ],
+        "coding-standards-apply": [
+            "@coding-standards-apply/php-cs-fixer"
         ]
     },
     "conflict": {
@@ -75,7 +91,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.0.*"
         }
     }
