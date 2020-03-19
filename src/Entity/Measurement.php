@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MeasurementRepository")
  */
-class Measurement
+class Measurement implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -122,5 +124,14 @@ class Measurement
         $this->value = $value;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'sensor' => $this->getSensor(),
+            'measured_at' => $this->getMeasuredAt()->format(DateTimeInterface::ATOM),
+            'value' => $this->getValue(),
+        ];
     }
 }

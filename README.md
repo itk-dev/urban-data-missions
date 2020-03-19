@@ -40,10 +40,10 @@ first published page with no parent.
 ### Fixtures
 
 ```sh
-itkdev-docker-compose bin/console doctrine:database:drop --force && \
-itkdev-docker-compose bin/console doctrine:database:create && \
-itkdev-docker-compose bin/console doctrine:migrations:migrate --no-interaction && \
-itkdev-docker-compose bin/console doctrine:fixtures:load --no-interaction
+docker-compose exec phpfpm bin/console doctrine:database:drop --force && \
+docker-compose exec phpfpm bin/console doctrine:database:create && \
+docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction && \
+docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
 ```
 
 ### Coding standards

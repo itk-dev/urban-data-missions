@@ -131,7 +131,10 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
 
             $update = new Update(
                 $experiment->getSensors()->first()->getId(),
-                json_encode(['data' => $data])
+                json_encode([
+                    'data' => $data,
+                    'measurement' => $measurement,
+                ])
             );
             $publisher($update);
         }

@@ -1,5 +1,6 @@
 {
     "devDependencies": {
+        "@amcharts/amcharts4": "^4.9.9",
         "@fortawesome/fontawesome-free": "^5.12.1",
         "@symfony/webpack-encore": "^0.28.2",
         "bootstrap": "^4.4.1",
