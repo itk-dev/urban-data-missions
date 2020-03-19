@@ -2,60 +2,55 @@
 
 {% block title page.title %}
 
+{% block body_class %}{{ page.slug|raw }}{% endblock %}
+
 {% macro page_url(page) %}
     {{ path('cms_show', {id: page.slug}) }}
 {% endmacro %}
 
 {% macro page_link(page) %}
-    <a href="{{ _self.page_url(page) }}">{{ page.title }}</a>
+    <a href="{{ _self.page_url(page) }}">{{ page.title }}</a
 {% endmacro %}
 
 {% macro page_navigation(context) %}
-    {% set path = context.path|default(null) %}
+    {#% set path = context.path|default(null) %#}
     {% set previous_page = context.preceding_siblings|last %}
     {% set next_page = context.following_siblings|first %}
 
-    <div class="d-flex justify-content-between">
-        <div class="page-path">
+    <div class="row">
+        {# <div class="page-path">
             {% if path %}
                 {% for step in path %}
                     {{ _self.page_link(step) }}
                     {% if not loop.last %}/{% endif %}
                 {% endfor %}
             {% endif %}
-        </div>
-        <div class="page-navigation">
+        </div> #}
+        <div class="col page-navigation">
             {% if previous_page or next_page %}
                 <nav aria-label="{{ 'Page navigation'|trans }}">
-                    <ul class="pagination">
-                        {% if previous_page %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ _self.page_url(previous_page) }}" aria-label="{{ 'Previous'|trans }}" title="{{ previous_page.title }}">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <span class="page-link">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </span>
-                            </li>
-                        {% endif %}
-
-                        {% if next_page %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ _self.page_url(next_page) }}" aria-label="{{ 'Next'|trans }}" title="{{ next_page.title }}">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <span class="page-link">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </span>
-                            </li>
-                        {% endif %}
-                    </ul>
+                    {% if previous_page %}
+                        <a class="btn btn-lg btn-outline-primary float-left" href="{{ _self.page_url(previous_page) }}" aria-label="{{ 'Previous'|trans }}" title="{{ previous_page.title }}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    {% else %}
+                        <span class="btn btn-lg btn-primary float-left btn-disabled">
+                            <span class="page-link">
+                                <span aria-hidden="true">&laquo;</span>
+                            </span>
+                        </span>
+                    {% endif %}
+                    {% if next_page %}
+                        <a class="btn btn-lg btn-primary float-right" href="{{ _self.page_url(next_page) }}" aria-label="{{ 'Next'|trans }}" title="{{ next_page.title }}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    {% else %}
+                        <span class="btn btn-lg btn-primary float-right btn-disabled">
+                            <span class="page-link">
+                                <span aria-hidden="true">&raquo;</span>
+                            </span>
+                        </span>
+                    {% endif %}
                 </nav>
             {% endif %}
         </div>
@@ -77,21 +72,30 @@
 {% endmacro %}
 
 {% block content %}
-    <article class="page">
-        {% block page_content %}
-            {{ _self.page_navigation(_context) }}
-
-            <h1 class="page-title">{{ page.title }}</h1>
-
-            <div class="page-content">{{ page.content|raw }}</div>
-
-            {% if page.image %}
-                <div class="page-image">
-                    <img src="{{ cms_images_base_url ~ '/' ~ page.image }}"/>
+    <div class="container-fluid bg-white">
+        <article class="page">
+            {% block page_content %}
+                <div class="row">
+                    <div class="col">
+                        <h1 class="page-title">{{ page.title }}</h1>
+                    </div>
                 </div>
-            {% endif %}
 
-            {{ _self.page_children(page) }}
-        {% endblock %}
-    </article>
+                <div class="row page-content">
+                    <div class="col">
+                        {{ page.content|raw }}
+                    </div>
+                </div>
+
+                {% if page.image %}
+                    <div class="row page-image mb-3">
+                        <div class="col">
+                            <img class="img-fluid" src="{{ cms_images_base_url ~ '/' ~ page.image }}"/>
+                        </div>
+                    </div>
+                {% endif %}
+
+            {% endblock %}
+        </article>
+    </div>
 {% endblock %}
