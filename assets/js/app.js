@@ -1,5 +1,7 @@
 import '../css/app.scss'
 
+require('typeface-roboto')
+
 if (typeof window.APP_CONFIG !== 'undefined') {
   if (window.APP_CONFIG.eventSourceUrl) {
     const eventSource = new EventSource(APP_CONFIG.eventSourceUrl)
