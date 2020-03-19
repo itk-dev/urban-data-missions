@@ -13,7 +13,7 @@
 {% endmacro %}
 
 {% macro page_navigation(context) %}
-    {% set path = context.path|default(null) %}
+    {#% set path = context.path|default(null) %#}
     {% set previous_page = context.preceding_siblings|last %}
     {% set next_page = context.following_siblings|first %}
 
