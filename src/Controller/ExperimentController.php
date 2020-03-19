@@ -27,7 +27,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     use LoggerTrait;
 
     /**
-     * @Route("/", name="experiment_index", methods={"GET"})
+     * @Route("", name="experiment_index", methods={"GET"})
      */
     public function index(ExperimentRepository $experimentRepository): Response
     {
