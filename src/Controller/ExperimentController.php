@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -25,6 +26,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExperimentController extends AbstractController implements LoggerAwareInterface
 {
     use LoggerTrait;
+
+    /** @var array */
+    private $options;
+
+    public function __construct(array $experimentOptions)
+    {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+
+        $this->options = $resolver->resolve($experimentOptions);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefault('mercure', static function (OptionsResolver $mercureResolver) {
+            $mercureResolver->setRequired('publish_url');
+        });
+    }
 
     /**
      * @Route("", name="experiment_index", methods={"GET"})
@@ -150,8 +169,8 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     public function app(Experiment $experiment): Response
     {
         $appOptions = [
-            'eventSourceUrl' => 'http://0.0.0.0:1337/.well-known/mercure?'
-                .implode('&', $experiment->getSensors()->map(static function (Sensor $sensor) {
+            'eventSourceUrl' => $this->options['mercure']['publish_url']
+                .'?'.implode('&', $experiment->getSensors()->map(static function (Sensor $sensor) {
                     return 'topic='.urlencode($sensor->getId());
                 })->toArray()),
         ];
