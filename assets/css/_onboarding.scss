@@ -1,0 +1,10 @@
+.onboarding {
+    h1 {
+        margin-top: $sizer * 4;
+    }
+    .page-content p:first-of-type {
+        text-align: center;
+        color: $primary;
+        font-size: $font-size-lg;
+    }
+}
