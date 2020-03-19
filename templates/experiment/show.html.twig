@@ -21,7 +21,7 @@
                     <ul class="list-unstyled sensors">
                         {% for sensor in experiment.sensors %}
                             <li><a href="{{ path('ngsi_ld_entities', {id: sensor.id}) }}">{{ sensor.id }}</a></li>
-                        {%  endfor %}
+                        {% endfor %}
                     </ul>
                 </td>
             </tr>

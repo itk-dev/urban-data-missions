@@ -1,4 +1,42 @@
+/* Overwrite bootstrap variables */
+
+/* Replace body font color*/
+$body-color: #3F3D56;
+
+/* Set primary color */
+$purple: #685ff3;
+$primary: $purple;
+
+/* Set primary font */
+$font-family-sans-serif: Roboto, Arial, Helvetica, sans-serif;
+
+/* Set sizeing variable */
+$sizer: 1rem;
+
+/* Import all of Bootstrap */
 @import "~bootstrap/scss/bootstrap";
+
+/* Import partials */
+@import "onboarding";
+@import "navigation";
+
+/* Add styling outside Bootstrap */
+body {
+    background-position: center;
+    background-size: cover;
+    padding: $sizer / 2;
+    background-blend-mode: luminosity;
+    min-height: 100vh;
+}
+
+body > .container-fluid {
+    min-height: calc(100vh - #{$sizer});
+    box-shadow: $dropdown-box-shadow;
+}
+
+h1 {
+    font-weight: $font-weight-normal;
+}
 
 table {
     .number {

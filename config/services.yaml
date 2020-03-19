@@ -15,6 +15,10 @@ parameters:
     env(SENSOR_TYPES): '["https://uri.fiware.org/ns/data-models#humidity","https://uri.fiware.org/ns/data-models#temperature"]'
     sensorTypes: '%env(json:SENSOR_TYPES)%'
 
+    app.path.cms_images: /uploads/cms/images
+    app.cms.page.type.choices:
+        'Onboarding guide': onboarding
+
 services:
     # default configuration for services in *this* file
     _defaults:
