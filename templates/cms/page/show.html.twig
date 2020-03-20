@@ -13,41 +13,32 @@
 {% endmacro %}
 
 {% macro page_navigation(context) %}
-    {#% set path = context.path|default(null) %#}
     {% set previous_page = context.preceding_siblings|last %}
     {% set next_page = context.following_siblings|first %}
 
     <div class="row">
-        {# <div class="page-path">
-            {% if path %}
-                {% for step in path %}
-                    {{ _self.page_link(step) }}
-                    {% if not loop.last %}/{% endif %}
-                {% endfor %}
-            {% endif %}
-        </div> #}
         <div class="col page-navigation">
             {% if previous_page or next_page %}
                 <nav aria-label="{{ 'Page navigation'|trans }}">
                     {% if previous_page %}
                         <a class="btn btn-lg btn-outline-primary float-left" href="{{ _self.page_url(previous_page) }}" aria-label="{{ 'Previous'|trans }}" title="{{ previous_page.title }}">
-                            <span aria-hidden="true">&laquo;</span>
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i>
                         </a>
                     {% else %}
                         <span class="btn btn-lg btn-primary float-left btn-disabled">
                             <span class="page-link">
-                                <span aria-hidden="true">&laquo;</span>
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i>
                             </span>
                         </span>
                     {% endif %}
                     {% if next_page %}
                         <a class="btn btn-lg btn-primary float-right" href="{{ _self.page_url(next_page) }}" aria-label="{{ 'Next'|trans }}" title="{{ next_page.title }}">
-                            <span aria-hidden="true">&raquo;</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     {% else %}
                         <span class="btn btn-lg btn-primary float-right btn-disabled">
                             <span class="page-link">
-                                <span aria-hidden="true">&raquo;</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
                             </span>
                         </span>
                     {% endif %}
@@ -81,7 +72,7 @@
                     </div>
                 </div>
 
-                <div class="row page-content">
+                <div class="row page-content mb-3 mt-3">
                     <div class="col">
                         {{ page.content|raw }}
                     </div>

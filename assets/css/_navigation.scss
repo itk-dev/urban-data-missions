@@ -4,3 +4,8 @@
     left: 0;
     right: 0;
 }
+.close {
+    position: fixed;
+    top: $sizer;
+    right: $sizer;
+}
