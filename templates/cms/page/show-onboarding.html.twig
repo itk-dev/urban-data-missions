@@ -12,6 +12,7 @@
             <p class="text-center small text-muted">{{ 'Onboarding step'|trans }}: {{ current }}/{{ total }}</p>
         {% endif %}
     </div>
+    <a class="close" href="{{ path('app') }}" aria-label="Close"><i class="fas fa-times-circle" aria-hidden="true"></i></a>
 
     {{ parent() }}
 
