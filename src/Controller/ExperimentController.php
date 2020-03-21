@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,7 +42,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefault('mercure', static function (OptionsResolver $mercureResolver) {
-            $mercureResolver->setRequired('publish_url');
+            $mercureResolver->setRequired('event_source_url');
         });
     }
 
@@ -129,8 +130,14 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     {
         $payload = json_decode($request->getContent(), true);
         foreach ($payload['data'] as $data) {
-            // $measuredAt = $item['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'];
-            $measuredAt = $data['modifiedAt'];
+            $measuredAt = isset($data['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'])
+                ? new DateTimeImmutable($data['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'])
+                : null;
+
+            if (null === $measuredAt) {
+                return new BadRequestHttpException();
+            }
+
             $measuredValue = 0;
             foreach ($data as $key => $value) {
                 if (isset($value['value'])
@@ -140,7 +147,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
                 }
             }
             $measurement = (new Measurement())
-                ->setMeasuredAt(new DateTimeImmutable($measuredAt))
+                ->setMeasuredAt($measuredAt)
                 ->setSensor($data['id'])
                 ->setValue($measuredValue)
                 ->setData($data)
@@ -168,12 +175,21 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
      */
     public function app(Experiment $experiment): Response
     {
-        $appOptions = [
-            'eventSourceUrl' => $this->options['mercure']['publish_url']
-                .'?'.implode('&', $experiment->getSensors()->map(static function (Sensor $sensor) {
-                    return 'topic='.urlencode($sensor->getId());
-                })->toArray()),
-        ];
+        $appOptions['eventSourceUrl'] = $this->options['mercure']['event_source_url']
+            .'?'.implode('&', $experiment->getSensors()->map(static function (Sensor $sensor) {
+                return 'topic='.urlencode($sensor->getId());
+            })->toArray());
+
+        $appOptions['sensors'] = array_column(
+            $experiment->getSensors()->map(static function (Sensor $sensor) {
+                return [
+                    'id' => $sensor->getId(),
+                    'name' => $sensor->getId(),
+                ];
+            })->toArray(),
+            null,
+            'id'
+        );
 
         return $this->render('experiment/app.html.twig', [
             'experiment' => $experiment,

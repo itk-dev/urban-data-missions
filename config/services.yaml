@@ -29,7 +29,7 @@ services:
             $ngsiLdBrokerUrl: '%env(NGSI_LD_BROKER_URL)%'
             $experimentOptions:
                 mercure:
-                    publish_url: '%env(MERCURE_PUBLISH_URL)%'
+                    event_source_url: '%env(MERCURE_EVENT_SOURCE_URL)%'
             $sensorManagerOptions:
                 types: '%sensorTypes%'
 

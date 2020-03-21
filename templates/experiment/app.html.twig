@@ -22,7 +22,7 @@
 
 {% block javascripts %}
     <script>
-        var APP_CONFIG = {{ app_options|default(null)|json_encode|raw }}
+        var APP_OPTIONS = {{ app_options|default(null)|json_encode|raw }}
     </script>
     {{ encore_entry_script_tags('app') }}
 {% endblock %}

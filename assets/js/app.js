@@ -13,15 +13,9 @@ require('bootstrap')
 
 import $ from 'jquery'
 
-const series = {
-  // field ↦ options
-  humidity: {},
-  noise: {},
-  temperature: {},
-  'fixture:sensor:001': {
-    name: 'Hep-hey!'
-  }
-}
+const options = window.APP_OPTIONS || {}
+
+const series = options.sensors
 
 const chart = new Chart({
   series: series,
@@ -45,52 +39,23 @@ const getRandomKey = (map) => {
 }
 
 const addMeasurement = (measurement) => {
-  const data = {
-    date: new Date(measurement.measured_at),
-    [measurement.sensor]: measurement.value
-  }
-  chart.addData(data)
-
-  // console.log('addMeasurement', data)
-}
-
-let date = new Date()
-const addMinutes = (date, minutes) => {
-  return new Date(date.getTime() + minutes * 60 * 1000)
-}
-
-const timer = setInterval(() => {
-  date = addMinutes(date, 60)
-  addMeasurement({
-    measured_at: date.toISOString(),
-    sensor: getRandomKey(series),
-    value: getRandomInt(-20, 30)
-  })
-
-  if (chart.getData().length > 20) {
-    clearInterval(timer)
-  }
-}, 200)
-
-if (typeof window.APP_CONFIG !== 'undefined') {
-  if (window.APP_CONFIG.eventSourceUrl) {
-    const eventSource = new EventSource(APP_CONFIG.eventSourceUrl)
-    eventSource.onmessage = event => {
-      const data = JSON.parse(event.data)
-      const measurement = data.measurement
-      addMeasurement(measurement)
-
-      console.log(measurement)
-      document.getElementById('data').innerHTML += JSON.stringify(measurement)
+  console.log('addMeasurement', measurement.sensor, measurement.sensor in series)
+  if (measurement.sensor in series) {
+    const data = {
+      date: new Date(measurement.measured_at),
+      [measurement.sensor]: measurement.value
     }
+    chart.addData(data)
+
+    // console.log('addMeasurement', data)
   }
 }
 
-$(function () {
-  $('[data-toggle="popover"]').popover({
-      animation: true,
-      placement: 'auto',
-      html: true
-  })
-})
-
+if (options.eventSourceUrl) {
+  const eventSource = new EventSource(options.eventSourceUrl)
+  eventSource.onmessage = event => {
+    const data = JSON.parse(event.data)
+    const measurement = data.measurement
+    addMeasurement(measurement)
+  }
+}

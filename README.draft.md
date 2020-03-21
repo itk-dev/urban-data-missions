@@ -43,6 +43,10 @@ Scorpio Broker: [http://0.0.0.0:9090/ngsi-ld/v1/entities/](http://0.0.0.0:9090/n
 [https://gitlab.iotcrawler.net/core/iotcrawler_core/snippets/5](https://gitlab.iotcrawler.net/core/iotcrawler_core/snippets/5)
 [https://gitlab.iotcrawler.net/core/iotcrawler_core#deployed-components](https://gitlab.iotcrawler.net/core/iotcrawler_core#deployed-components)
 
+## Subscriptions
+
+http://0.0.0.0:9090/ngsi-ld/v1/subscriptions/
+
 ## Creating measurements
 
 ```sh

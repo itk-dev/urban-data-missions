@@ -73,6 +73,7 @@ services:
 ###< symfony/mercure-bundle ###
 
 # https://github.com/ScorpioBroker/ScorpioBroker
+# https://github.com/ScorpioBroker/ScorpioBroker/blob/master/docker-compose-aaio.yml
   zookeeper:
     image: zookeeper
     ports:
