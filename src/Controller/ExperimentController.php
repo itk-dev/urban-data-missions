@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Experiment;
+use App\Entity\ExperimentLogEntry;
 use App\Entity\Measurement;
 use App\Entity\Sensor;
 use App\Form\ExperimentType;
@@ -20,9 +21,10 @@ use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/experiment")
+ * @Route("/experiment", name="experiment_")
  */
 class ExperimentController extends AbstractController implements LoggerAwareInterface
 {
@@ -47,7 +49,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     }
 
     /**
-     * @Route("", name="experiment_index", methods={"GET"})
+     * @Route("", name="index", methods={"GET"})
      */
     public function index(ExperimentRepository $experimentRepository): Response
     {
@@ -57,7 +59,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     }
 
     /**
-     * @Route("/new", name="experiment_new", methods={"GET","POST"})
+     * @Route("/new", name="new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -80,7 +82,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     }
 
     /**
-     * @Route("/{id}", name="experiment_show", methods={"GET"})
+     * @Route("/{id}", name="show", methods={"GET"})
      */
     public function show(Experiment $experiment): Response
     {
@@ -90,7 +92,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     }
 
     /**
-     * @Route("/{id}/edit", name="experiment_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Experiment $experiment): Response
     {
@@ -110,7 +112,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     }
 
     /**
-     * @Route("/{id}", name="experiment_delete", methods={"DELETE"})
+     * @Route("/{id}", name="delete", methods={"DELETE"})
      */
     public function delete(Request $request, Experiment $experiment): Response
     {
@@ -124,9 +126,9 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     }
 
     /**
-     * @Route("/{id}/subscription/notify", name="experiment_subscription_notify", methods={"POST"})
+     * @Route("/{id}/subscription/notify", name="subscription_notify", methods={"POST"})
      */
-    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager, PublisherInterface $publisher): Response
+    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager, PublisherInterface $publisher, SerializerInterface $serializer): Response
     {
         $payload = json_decode($request->getContent(), true);
         foreach ($payload['data'] as $data) {
@@ -156,11 +158,10 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
             $entityManager->persist($measurement);
 
             $update = new Update(
-                $experiment->getSensors()->first()->getId(),
-                json_encode([
-                    'data' => $data,
+                'experiment:'.$experiment->getId(),
+                $serializer->serialize([
                     'measurement' => $measurement,
-                ])
+                ], 'json', ['groups' => ['experiment']]),
             );
             $publisher($update);
         }
@@ -171,14 +172,17 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     }
 
     /**
-     * @Route("/{id}/app", name="experiment_app", methods={"GET"})
+     * @Route("/{id}/app", name="app", methods={"GET"})
      */
     public function app(Experiment $experiment): Response
     {
         $appOptions['eventSourceUrl'] = $this->options['mercure']['event_source_url']
-            .'?'.implode('&', $experiment->getSensors()->map(static function (Sensor $sensor) {
-                return 'topic='.urlencode($sensor->getId());
-            })->toArray());
+            .'?'.http_build_query([
+                'topic' => 'experiment:'.$experiment->getId(),
+            ]);
+
+        $appOptions['measurementsUrl'] = $this->generateUrl('experiment_measurements', ['id' => $experiment->getId()]);
+        $appOptions['logEntriesUrl'] = $this->generateUrl('experiment_log_entries', ['id' => $experiment->getId()]);
 
         $appOptions['sensors'] = array_column(
             $experiment->getSensors()->map(static function (Sensor $sensor) {
@@ -195,5 +199,33 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
             'experiment' => $experiment,
             'app_options' => $appOptions,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/measurements", name="measurements", methods={"GET"})
+     */
+    public function measurements(Experiment $experiment, SerializerInterface $serializer): Response
+    {
+        $measurements = $experiment->getMeasurements()->toArray();
+        usort($measurements, static function (Measurement $a, Measurement $b) {
+            return $a->getMeasuredAt() <=> $b->getMeasuredAt();
+        });
+        $data = $serializer->serialize($measurements, 'json', ['groups' => 'experiment']);
+
+        return (new JsonResponse())->setJson($data);
+    }
+
+    /**
+     * @Route("/{id}/log-entries", name="log_entries", methods={"GET"})
+     */
+    public function logEntries(Experiment $experiment, SerializerInterface $serializer): Response
+    {
+        $measurements = $experiment->getLogEntries()->toArray();
+        usort($measurements, static function (ExperimentLogEntry $a, ExperimentLogEntry $b) {
+            return $a->getLoggedAt() <=> $b->getLoggedAt();
+        });
+        $data = $serializer->serialize($measurements, 'json', ['groups' => 'experiment']);
+
+        return (new JsonResponse())->setJson($data);
     }
 }

@@ -2,16 +2,10 @@
 
 ```sh
 docker-compose up -d
-docker-compose exec phpfpm composer install
 # @TODO: There must be a better way to do this …
 docker-compose exec phpfpm chown -R daemon /app/var
+docker-compose exec phpfpm composer install
 docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction
-```
-
-## Fixtures
-
-```sh
-docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
 ```
 
 ## Assets
@@ -39,13 +33,41 @@ first published page with no parent.
 
 ### Fixtures
 
+Load all fixtures (will destroy all data):
+
 ```sh
-docker-compose exec phpfpm bin/console doctrine:database:drop --force && \
-docker-compose exec phpfpm bin/console doctrine:database:create && \
-docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction && \
-docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
+docker-compose exec -e APP_ENV=dev phpfpm composer load-fixtures
 ```
 
+Load a single fixture group:
+
+```sh
+docker-compose exec phpfpm bin/console doctrine:fixtures:load --group=experiment
+``
+
+### Generating sensor values
+
+Generating a single value:
+
+```sh
+# Update (or create) a temperature measurement
+# min value:      -20
+# max value:       30
+# max change (±):   1
+docker-compose exec phpfpm bin/console app:measurement:add fixture:device:001 temperature -- -20 30 1
+```
+
+Continuously generating values:
+
+```sh
+docker-compose exec phpfpm bash -s <<<EOF
+while true; do
+  bin/console app:measurement:add fixture:device:001 humidity 0 100 10
+  bin/console app:measurement:add fixture:device:001 temperature -- -20 30 1
+  sleep 1 # second
+done
+EOF
+```
 ### Coding standards
 
 ```sh

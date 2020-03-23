@@ -4,3 +4,7 @@ twig:
 
     globals:
         cms_images_base_url: '%app.path.cms_images%'
+
+    date:
+        format: d/m/Y H:i:s
+        timezone: Europe/Copenhagen

@@ -46,10 +46,17 @@ class Experiment implements BlameableInterface, TimestampableInterface
      */
     private $sensors;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ExperimentLogEntry", mappedBy="experiment", orphanRemoval=true)
+     * @ORM\OrderBy({"loggedAt": "DESC"})
+     */
+    private $logEntries;
+
     public function __construct()
     {
         $this->measurements = new ArrayCollection();
         $this->sensors = new ArrayCollection();
+        $this->logEntries = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -133,6 +140,37 @@ class Experiment implements BlameableInterface, TimestampableInterface
     {
         if ($this->sensors->contains($sensor)) {
             $this->sensors->removeElement($sensor);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ExperimentLogEntry[]
+     */
+    public function getLogEntries(): Collection
+    {
+        return $this->logEntries;
+    }
+
+    public function addLogEntry(ExperimentLogEntry $logEntry): self
+    {
+        if (!$this->logEntries->contains($logEntry)) {
+            $this->logEntries[] = $logEntry;
+            $logEntry->setExperiment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogEntry(ExperimentLogEntry $logEntry): self
+    {
+        if ($this->logEntries->contains($logEntry)) {
+            $this->logEntries->removeElement($logEntry);
+            // set the owning side to null (unless already changed)
+            if ($logEntry->getExperiment() === $this) {
+                $logEntry->setExperiment(null);
+            }
         }
 
         return $this;

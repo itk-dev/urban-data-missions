@@ -1,8 +1,7 @@
 /* eslint-env browser */
-/* global APP_CONFIG */
 
 import '../css/app.scss'
-import('@fortawesome/fontawesome-free/js/all')
+import '@fortawesome/fontawesome-free/js/all'
 
 import Chart from './components/Chart'
 
@@ -23,39 +22,48 @@ const chart = new Chart({
   cursor: true
 })
 
-const getRandomInt = (min, max) => {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-
-  return Math.floor(Math.random() * (max - min)) + min // The maximum is exclusive and the minimum is inclusive
-}
-
-const getRandomValue = (values) => {
-  return values[getRandomInt(0, values.length)]
-}
-
-const getRandomKey = (map) => {
-  return getRandomValue(Object.keys(map))
-}
-
+/**
+ * Add measurement to graph.
+ */
 const addMeasurement = (measurement) => {
-  console.log('addMeasurement', measurement.sensor, measurement.sensor in series)
   if (measurement.sensor in series) {
     const data = {
-      date: new Date(measurement.measured_at),
+      date: new Date(measurement.measuredAt),
       [measurement.sensor]: measurement.value
     }
     chart.addData(data)
-
-    // console.log('addMeasurement', data)
   }
 }
 
-if (options.eventSourceUrl) {
-  const eventSource = new EventSource(options.eventSourceUrl)
-  eventSource.onmessage = event => {
-    const data = JSON.parse(event.data)
-    const measurement = data.measurement
-    addMeasurement(measurement)
-  }
+// Get existing data
+if (options.measurementsUrl) {
+  fetch(options.measurementsUrl)
+    .then((response) => {
+      return response.json()
+    })
+    .then(measurements => {
+      measurements.forEach(measurement => addMeasurement(measurement))
+
+      // Subscribe to new data.
+      if (options.eventSourceUrl) {
+        const eventSource = new EventSource(options.eventSourceUrl)
+        eventSource.onmessage = event => {
+          const data = JSON.parse(event.data)
+          if (data.measurement) {
+            addMeasurement(data.measurement)
+          }
+        }
+      }
+    })
+}
+
+if (options.logEntriesUrl) {
+  document.getElementById('log-entries').innerHTML = 'Loading log entries …'
+  fetch(options.logEntriesUrl)
+    .then((response) => {
+      return response.json()
+    })
+    .then(entries => {
+      document.getElementById('log-entries').innerHTML = JSON.stringify(entries, null, 2)
+    })
 }

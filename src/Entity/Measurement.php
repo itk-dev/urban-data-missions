@@ -2,40 +2,44 @@
 
 namespace App\Entity;
 
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MeasurementRepository")
  */
-class Measurement implements JsonSerializable
+class Measurement
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
+     * @Groups({"experiment"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Experiment", inversedBy="measurements")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"experiment"})
      */
     private $experiment;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"experiment"})
      */
     private $sensor;
 
     /**
      * @ORM\Column(type="datetime", precision=6)
+     * @Groups({"experiment"})
      */
     private $measuredAt;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"experiment"})
      */
     private $data = [];
 
@@ -46,10 +50,11 @@ class Measurement implements JsonSerializable
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"experiment"})
      */
     private $value;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -124,14 +129,5 @@ class Measurement implements JsonSerializable
         $this->value = $value;
 
         return $this;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'sensor' => $this->getSensor(),
-            'measured_at' => $this->getMeasuredAt()->format(DateTimeInterface::ATOM),
-            'value' => $this->getValue(),
-        ];
     }
 }

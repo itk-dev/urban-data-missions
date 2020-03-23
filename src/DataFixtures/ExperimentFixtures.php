@@ -4,12 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Experiment;
 use App\Scorpio\SensorManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ExperimentFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
+class ExperimentFixtures extends AbstractFixture implements FixtureGroupInterface, DependentFixtureInterface
 {
     /** @var SensorManager */
     private $sensorManager;
@@ -25,22 +24,22 @@ class ExperimentFixtures extends Fixture implements FixtureGroupInterface, Depen
             [
                 'title' => 'The first experiment',
                 'sensors' => [
-                    ['id' => 'fixture:sensor:001:humidity'],
+                    ['id' => 'fixture:device:001:humidity'],
                 ],
             ],
 
             [
                 'title' => 'Another experiment',
                 'sensors' => [
-                    ['id' => 'fixture:sensor:001:temperature'],
+                    ['id' => 'fixture:device:001:temperature'],
                 ],
             ],
 
             [
                 'title' => 'Third time\'s a charm',
                 'sensors' => [
-                    ['id' => 'fixture:sensor:001:temperature'],
-                    ['id' => 'fixture:sensor:001:humidity'],
+                    ['id' => 'fixture:device:001:temperature'],
+                    ['id' => 'fixture:device:001:humidity'],
                 ],
             ],
         ];
@@ -55,6 +54,7 @@ class ExperimentFixtures extends Fixture implements FixtureGroupInterface, Depen
             foreach ($data['sensors'] as $sensor) {
                 $experiment->addSensor($this->sensorManager->getSensor($sensor['id']));
             }
+            $this->addReference('experiment:'.$experiment->getTitle(), $experiment);
             $manager->persist($experiment);
         }
         $manager->flush();

@@ -3,14 +3,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\CmsPage;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class CmsPageFixtures extends Fixture implements FixtureGroupInterface
+class CmsPageFixtures extends AbstractFixture implements FixtureGroupInterface
 {
     /** @var Filesystem */
     private $filesystem;

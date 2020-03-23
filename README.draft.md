@@ -8,16 +8,16 @@ Based on
 
 ```sh
 docker-compose up -d
-docker-compose exec phpfpm composer install
 # @TODO: There must be a better way to do this …
 docker-compose exec phpfpm chown -R daemon /app/var
+docker-compose exec phpfpm composer install
 docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction
 ```
 
 ## Fixtures
 
 ```sh
-docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
+docker-compose exec phpfpm composer load-fixtures
 ```
 
 ## Sensors

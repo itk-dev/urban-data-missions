@@ -3,12 +3,10 @@
 namespace App\DataFixtures;
 
 use App\Scorpio\MeasurementManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
-class IoTDataFixtures extends Fixture implements FixtureGroupInterface
+class MeasurementFixtures extends AbstractFixture implements FixtureGroupInterface
 {
     /** @var MeasurementManager */
     private $measurementManager;
@@ -20,27 +18,27 @@ class IoTDataFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager)
     {
-        $output = new ConsoleOutput();
-
-        $sensors = [
-            'sensor:001' => [
+        $measurements = [
+            'fixture:device:001' => [
                 'temperature' => 42,
                 'humidity' => 87,
             ],
         ];
 
-        foreach ($sensors as $name => $sensor) {
+        foreach ($measurements as $device => $sensor) {
             foreach ($sensor as $type => $value) {
-                $sensorId = 'fixture:'.$name.':'.$type;
-                $this->measurementManager->deleteMeasurement($sensorId);
-                $this->measurementManager->createMeasurement($sensorId, $type, $value);
-                $output->writeln($this->measurementManager->getMeasurementUrl($sensorId));
+                $this->measurementManager->deleteMeasurement($device, $type);
+                $this->measurementManager->createMeasurement($device, $type, $value);
+                $this->writeln([
+                    sprintf('Measurement: %s %s', $device, $type),
+                    sprintf('Url:         %s', $this->measurementManager->getMeasurementUrl($device, $type)),
+                ]);
             }
         }
     }
 
     public static function getGroups(): array
     {
-        return ['iot-data'];
+        return ['measurement'];
     }
 }

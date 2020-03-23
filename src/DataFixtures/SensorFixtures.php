@@ -3,12 +3,11 @@
 namespace App\DataFixtures;
 
 use App\Scorpio\SensorManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class SensorFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
+class SensorFixtures extends AbstractFixture implements FixtureGroupInterface, DependentFixtureInterface
 {
     /** @var SensorManager */
     private $sensorManager;
@@ -21,6 +20,12 @@ class SensorFixtures extends Fixture implements FixtureGroupInterface, Dependent
     public function load(ObjectManager $manager)
     {
         $this->sensorManager->updateSensors();
+
+        $sensors = $this->sensorManager->getSensors();
+        foreach ($sensors as $sensor) {
+            $this->writeln(sprintf('Sensor: %s', $sensor->getId()));
+            $this->addReference('sensor:'.$sensor->getId(), $sensor);
+        }
     }
 
     public static function getGroups(): array
@@ -30,6 +35,6 @@ class SensorFixtures extends Fixture implements FixtureGroupInterface, Dependent
 
     public function getDependencies()
     {
-        return [IoTDataFixtures::class];
+        return [MeasurementFixtures::class];
     }
 }
