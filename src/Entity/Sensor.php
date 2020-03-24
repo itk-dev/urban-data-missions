@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SensorRepository")
@@ -18,11 +19,13 @@ class Sensor implements TimestampableInterface
     /**
      * @ORM\Id()
      * @ORM\Column(type="string")
+     * @Groups({"sensor", "measurement", "log_entry"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"sensor", "measurement", "log_entry"})
      */
     private $type;
 

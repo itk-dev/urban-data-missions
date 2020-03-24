@@ -8,6 +8,7 @@ use App\Entity\Measurement;
 use App\Entity\Sensor;
 use App\Form\ExperimentType;
 use App\Repository\ExperimentRepository;
+use App\Repository\SensorRepository;
 use App\Traits\LoggerTrait;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -128,7 +129,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     /**
      * @Route("/{id}/subscription/notify", name="subscription_notify", methods={"POST"})
      */
-    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager, PublisherInterface $publisher, SerializerInterface $serializer): Response
+    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager, SensorRepository $sensorRepository, PublisherInterface $publisher, SerializerInterface $serializer): Response
     {
         $payload = json_decode($request->getContent(), true);
         foreach ($payload['data'] as $data) {
@@ -137,7 +138,13 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
                 : null;
 
             if (null === $measuredAt) {
-                return new BadRequestHttpException();
+                return new BadRequestHttpException('Cannot get time of measurement');
+            }
+
+            $sensorId = $data['id'];
+            $sensor = $sensorRepository->find($sensorId);
+            if (null === $sensor) {
+                return new BadRequestHttpException(sprintf('Invalid sensor: %s', $sensorId));
             }
 
             $measuredValue = 0;
@@ -150,7 +157,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
             }
             $measurement = (new Measurement())
                 ->setMeasuredAt($measuredAt)
-                ->setSensor($data['id'])
+                ->setSensor($sensor)
                 ->setValue($measuredValue)
                 ->setData($data)
                 ->setPayload($payload)
@@ -166,19 +173,20 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
             );
             $publisher($update);
 
-            if (0 === mt_rand(0, 3)) {
-                // @TODO Check measurement outside bounds
+            // @TODO Move this to a service
+            // @TODO Check measurement outside bounds
+            if (0 !== 1) {
                 $logEntry = (new ExperimentLogEntry())
                     ->setExperiment($experiment)
-//                ->setSensor($data['id'])
-                    ->setLoggedAt(new DateTimeImmutable())
+                    ->setSensor($sensor)
+                    ->setLoggedAt($measuredAt)
                     ->setType('alert')
                     ->setContent(sprintf('Value %f outside bounds (%f; %f)', $measuredValue, -42, 87));
                 $entityManager->persist($logEntry);
                 $entityManager->flush();
 
                 $update = new Update(
-                    'experiment:' . $experiment->getId(),
+                    'experiment:'.$experiment->getId(),
                     $serializer->serialize([
                         'log_entry' => $logEntry,
                     ], 'json', ['groups' => ['experiment']])
@@ -230,7 +238,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
         usort($measurements, static function (Measurement $a, Measurement $b) {
             return $a->getMeasuredAt() <=> $b->getMeasuredAt();
         });
-        $data = $serializer->serialize($measurements, 'json', ['groups' => 'experiment']);
+        $data = $serializer->serialize($measurements, 'json', ['groups' => ['experiment', 'measurement']]);
 
         return (new JsonResponse())->setJson($data);
     }
@@ -240,11 +248,11 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
      */
     public function logEntries(Experiment $experiment, SerializerInterface $serializer): Response
     {
-        $measurements = $experiment->getLogEntries()->toArray();
-        usort($measurements, static function (ExperimentLogEntry $a, ExperimentLogEntry $b) {
+        $logEntries = $experiment->getLogEntries()->toArray();
+        usort($logEntries, static function (ExperimentLogEntry $a, ExperimentLogEntry $b) {
             return $a->getLoggedAt() <=> $b->getLoggedAt();
         });
-        $data = $serializer->serialize($measurements, 'json', ['groups' => 'experiment']);
+        $data = $serializer->serialize($logEntries, 'json', ['groups' => ['experiment', 'log_entry']]);
 
         return (new JsonResponse())->setJson($data);
     }

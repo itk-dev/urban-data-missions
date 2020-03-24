@@ -33,11 +33,13 @@ class ChartView extends Component {
   }
 
   addMeasurement = (measurement) => {
-    if (measurement.sensor in this.props.series) {
+    const series = measurement.sensor.id
+    if (series !== null && series in this.props.series) {
       const data = {
         date: new Date(measurement.measuredAt),
-        [measurement.sensor]: measurement.value
+        [series]: measurement.value
       }
+
       this.chart.addData(data)
     }
   }

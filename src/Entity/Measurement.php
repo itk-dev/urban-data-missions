@@ -14,32 +14,33 @@ class Measurement
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
-     * @Groups({"experiment"})
+     * @Groups({"measurement", "experiment"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Experiment", inversedBy="measurements")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"experiment"})
+     * @Groups({"measurement", "experiment"})
      */
     private $experiment;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"experiment"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sensor")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"measurement", "experiment"})
      */
     private $sensor;
 
     /**
      * @ORM\Column(type="datetime", precision=6)
-     * @Groups({"experiment"})
+     * @Groups({"measurement", "experiment"})
      */
     private $measuredAt;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"experiment"})
+     * @Groups({"measurement", "experiment"})
      */
     private $data = [];
 
@@ -50,7 +51,7 @@ class Measurement
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"experiment"})
+     * @Groups({"measurement", "experiment"})
      */
     private $value;
 
@@ -71,12 +72,12 @@ class Measurement
         return $this;
     }
 
-    public function getSensor(): ?string
+    public function getSensor(): ?Sensor
     {
         return $this->sensor;
     }
 
-    public function setSensor(string $sensor): self
+    public function setSensor(Sensor $sensor): self
     {
         $this->sensor = $sensor;
 

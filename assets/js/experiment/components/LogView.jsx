@@ -32,17 +32,18 @@ class LogView extends Component {
   render () {
     return (
       <fieldset className='log-view'>
-      <legend>Log</legend>
+        <legend>Log</legend>
 
-      <div className='log-view-content'>
-      {this.state.entries.map((entry, index) => (
-          <div className={`log-entry log-entry-${entry.type}`} key={'log-entry-' + index}>
-            <span className={`badge badge-${entry.type}`}>{entry.type}</span>
-            <div className='logged-at'>{entry.loggedAt}</div>
-            {entry.content}
-          </div>
-        ))}
-      </div>
+        <div className='log-view-content'>
+          {this.state.entries.map((entry, index) => (
+            <div className={`log-entry log-entry-${entry.type}`} key={'log-entry-' + index}>
+              <span className={`badge badge-${entry.type}`}>{entry.type}</span>
+              <div className='logged-at'>{entry.loggedAt}</div>
+              {entry.sensor && <div className='sensor'>{entry.sensor.id}</div>}
+              {entry.content}
+            </div>
+          ))}
+        </div>
       </fieldset>
     )
   }
