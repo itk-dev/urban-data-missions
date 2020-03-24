@@ -1,7 +1,7 @@
 /* Overwrite bootstrap variables */
 
 /* Replace body font color*/
-$body-color: #3F3D56;
+$body-color: #3f3d56;
 
 /* Set primary color */
 $purple: #685ff3;
@@ -14,32 +14,32 @@ $font-family-sans-serif: Roboto, Arial, Helvetica, sans-serif;
 $sizer: 1rem;
 
 /* Import all of Bootstrap */
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
 /* Import partials */
-@import "onboarding";
-@import "navigation";
+@import 'onboarding';
+@import 'navigation';
 
 /* Add styling outside Bootstrap */
 body {
-    background-position: center;
-    background-size: cover;
-    padding: $sizer / 2;
-    background-blend-mode: luminosity;
-    min-height: 100vh;
+  background-blend-mode: luminosity;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  padding: $sizer / 2;
 }
 
 body > .container-fluid {
-    min-height: calc(100vh - #{$sizer});
-    box-shadow: $dropdown-box-shadow;
+  box-shadow: $dropdown-box-shadow;
+  min-height: calc(100vh - #{$sizer});
 }
 
 h1 {
-    font-weight: $font-weight-normal;
+  font-weight: $font-weight-normal;
 }
 
 table {
-    .number {
-        text-align: right;
-    }
+  .number {
+    text-align: right;
+  }
 }

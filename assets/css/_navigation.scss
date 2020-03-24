@@ -1,11 +1,12 @@
 .page-navigation {
-    position: fixed;
-    bottom: $sizer;
-    left: 0;
-    right: 0;
+  bottom: $sizer;
+  left: 0;
+  position: fixed;
+  right: 0;
 }
+
 .close {
-    position: fixed;
-    top: $sizer;
-    right: $sizer;
+  position: fixed;
+  right: $sizer;
+  top: $sizer;
 }
