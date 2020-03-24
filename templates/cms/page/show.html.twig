@@ -4,6 +4,8 @@
 
 {% block body_class %}{{ page.slug|raw }}{% endblock %}
 
+{% block background_image %}style="background-image: url({{ asset('build/images/map_background.png') }});"{% endblock %}
+
 {% macro page_url(page) %}
     {{ path('cms_show', {id: page.slug}) }}
 {% endmacro %}
