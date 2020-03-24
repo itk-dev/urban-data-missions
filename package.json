@@ -1,6 +1,8 @@
 {
     "devDependencies": {
         "@amcharts/amcharts4": "^4.9.9",
+        "@babel/plugin-proposal-class-properties": "^7.8.3",
+        "@babel/preset-react": "^7.9.1",
         "@fortawesome/fontawesome-free": "^5.12.1",
         "@symfony/webpack-encore": "^0.28.2",
         "bootstrap": "^4.4.1",
@@ -8,6 +10,9 @@
         "jquery": "^3.4.1",
         "node-sass": "^4.13.1",
         "popper.js": "^1.16.1",
+        "prop-types": "^15.7.2",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
         "regenerator-runtime": "^0.13.2",
         "sass-loader": "^7.0.1",
         "standard": "^14.3.1",
@@ -27,5 +32,10 @@
         "build": "encore production --progress",
         "coding-standards-check": "standard",
         "coding-standards-apply": "standard --fix"
+    },
+    "eslintConfig": {
+        "env": {
+            "browser": true
+        }
     }
 }

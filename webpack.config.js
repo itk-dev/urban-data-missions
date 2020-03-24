@@ -24,6 +24,7 @@ Encore
  * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
  */
   .addEntry('app', './assets/js/app.js')
+  .addEntry('experiment/app', './assets/js/experiment/app.jsx')
 
 // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
@@ -51,6 +52,10 @@ Encore
     config.corejs = 3
   })
 
+  .configureBabel(function (babelConfig) {
+    babelConfig.plugins.push('@babel/plugin-proposal-class-properties')
+  })
+
 // enables Sass/SCSS support
   .enableSassLoader()
 
@@ -65,7 +70,7 @@ Encore
   .autoProvidejQuery()
 
 // uncomment if you use API Platform Admin (composer req api-admin)
-// .enableReactPreset()
+  .enableReactPreset()
 // .addEntry('admin', './assets/js/admin.js')
 
 // Enable copy of static assets

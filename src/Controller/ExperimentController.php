@@ -156,16 +156,36 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
                 ->setPayload($payload)
                 ->setExperiment($experiment);
             $entityManager->persist($measurement);
+            $entityManager->flush();
 
             $update = new Update(
                 'experiment:'.$experiment->getId(),
                 $serializer->serialize([
                     'measurement' => $measurement,
-                ], 'json', ['groups' => ['experiment']]),
+                ], 'json', ['groups' => ['experiment']])
             );
             $publisher($update);
+
+            if (0 === mt_rand(0, 3)) {
+                // @TODO Check measurement outside bounds
+                $logEntry = (new ExperimentLogEntry())
+                    ->setExperiment($experiment)
+//                ->setSensor($data['id'])
+                    ->setLoggedAt(new DateTimeImmutable())
+                    ->setType('alert')
+                    ->setContent(sprintf('Value %f outside bounds (%f; %f)', $measuredValue, -42, 87));
+                $entityManager->persist($logEntry);
+                $entityManager->flush();
+
+                $update = new Update(
+                    'experiment:' . $experiment->getId(),
+                    $serializer->serialize([
+                        'log_entry' => $logEntry,
+                    ], 'json', ['groups' => ['experiment']])
+                );
+                $publisher($update);
+            }
         }
-        $entityManager->flush();
         $this->info(sprintf('Subscription notification received: %s; %s; %s', $experiment->getId(), $request->get('sensor'), $request->getContent()));
 
         return new JsonResponse(['status' => 'ok']);

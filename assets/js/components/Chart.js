@@ -12,13 +12,14 @@ class Chart {
     this.options = options
     this.chart = am4core.create(options.el || 'chart', am4charts.XYChart)
     this.buildAxes(options.axes || {})
+    this.series = []
 
     if (!options.series) {
       throw new Error('options.series not set in Chart constructor options')
     }
 
     for (const [field, seriesOptions] of Object.entries(options.series)) {
-      this.addSeries(field, seriesOptions)
+      this.series.push(this.addSeries(field, seriesOptions))
     }
 
     if (options.legend) {
@@ -27,6 +28,10 @@ class Chart {
 
     if (options.cursor) {
       this.buildCursor(options.cursor)
+    }
+
+    if (options.scrollbars) {
+      this.buildScrollbars(options.scrollbars)
     }
   }
 
@@ -59,15 +64,17 @@ class Chart {
     this.chart.legend = new am4charts.Legend()
   }
 
-  // // // Create vertical scrollbar and place it before the value axis
-  // // chart.scrollbarY = new am4core.Scrollbar();
-  // // chart.scrollbarY.parent = chart.leftAxesContainer;
-  // // chart.scrollbarY.toBack();
+  buildScrollbars (options) {
+    // Create vertical scrollbar and place it before the value axis
+    this.chart.scrollbarY = new am4core.Scrollbar()
+    this.chart.scrollbarY.parent = this.chart.leftAxesContainer
+    this.chart.scrollbarY.toBack()
 
-  // // // Create a horizontal scrollbar with previe and place it underneath the date axis
-  // // chart.scrollbarX = new am4charts.XYChartScrollbar();
-  // // chart.scrollbarX.series.push(series);
-  // // chart.scrollbarX.parent = chart.bottomAxesContainer;
+    // Create a horizontal scrollbar with previe and place it underneath the date axis
+    this.chart.scrollbarX = new am4charts.XYChartScrollbar()
+    // this.chart.scrollbarX.series.push(this.series[0]);
+    this.chart.scrollbarX.parent = this.chart.bottomAxesContainer
+  }
 
   addSeries (field, options = {}) {
     // Create series
