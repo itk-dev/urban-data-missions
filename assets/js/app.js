@@ -2,6 +2,7 @@ import '../css/app.scss'
 import('@fortawesome/fontawesome-free/js/all')
 
 require('typeface-roboto')
+require('bootstrap')
 
 if (typeof window.APP_CONFIG !== 'undefined') {
   if (window.APP_CONFIG.eventSourceUrl) {
