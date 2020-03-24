@@ -8,6 +8,10 @@
         "regenerator-runtime": "^0.13.2",
         "sass-loader": "^7.0.1",
         "standard": "^14.3.1",
+        "stylelint": "^13.2.1",
+        "stylelint-config-sass-guidelines": "^7.0.0",
+        "stylelint-config-standard-scss": "^1.1.0",
+        "stylelint-scss": "^3.16.0",
         "typeface-roboto": "^0.0.75",
         "webpack-notifier": "^1.6.0"
     },
