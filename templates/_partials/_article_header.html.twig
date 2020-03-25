@@ -1,0 +1,17 @@
+<div class="row my-3">
+    <div class="col-auto">
+        <h2>{{ title }}</h2>
+    </div>
+
+    {% if add_button %}
+        <div class="col">
+            <button class="btn btn-success btn-sm btn-round"><i class="fas fa-plus"></i></button>
+        </div>
+    {% endif %}
+
+    {% if edit_button %}
+        <div class="col-auto">
+            <button class="btn btn-primary btn-sm">{{ 'Edit'|trans }}</i></button>
+        </div>
+    {% endif %}
+</div>
