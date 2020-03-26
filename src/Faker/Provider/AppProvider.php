@@ -6,6 +6,7 @@ use Faker\Generator;
 use Faker\Provider\Base;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AppProvider extends Base
 {
@@ -15,14 +16,33 @@ class AppProvider extends Base
     /** @var Filesystem */
     private $filesystem;
 
-    public function __construct(Generator $generator, Filesystem $filesystem, array $appFakerProviderOptions)
+    public function __construct(Generator $generator, Filesystem $filesystem, array $options)
     {
         parent::__construct($generator);
         $this->filesystem = $filesystem;
-        $this->options = $appFakerProviderOptions;
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
     }
 
-    public function uploadFile(string $type, string $source)
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setRequired(['base_dir', 'source_dirs', 'target_dirs'])
+            ->setAllowedTypes('base_dir', 'string')
+            ->setAllowedTypes('source_dirs', 'string[]')
+            ->setAllowedTypes('target_dirs', 'string[]');
+    }
+
+    /**
+     * Fake upload of a file.
+     *
+     * @param string $type   The upload type
+     * @param string $source The source path relative to a path in source_dir
+     *
+     * @return string The path to the uploaded file; relative to the target dir
+     */
+    public function uploadFile(string $type, string $source): string
     {
         $sourceFilename = $this->getSourceFilename($source);
         if (null === $sourceFilename) {

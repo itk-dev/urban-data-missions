@@ -33,19 +33,11 @@ services:
             $sensorManagerOptions:
                 types: '%sensorTypes%'
 
-            $appFakerProviderOptions:
-                base_dir: '%kernel.project_dir%'
-                # relative to base_dir
-                source_dirs: '%hautelook_alice.fixtures_path%'
-                target_dirs:
-                    # relative to base_dir
-                    cms: 'public%app.path.cms_images%'
-
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Faker,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

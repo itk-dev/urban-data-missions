@@ -1,0 +1,14 @@
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\Faker\Provider\AppProvider:
+        arguments:
+            $options:
+                base_dir: '%kernel.project_dir%'
+                # relative to base_dir
+                source_dirs: '%hautelook_alice.fixtures_path%'
+                target_dirs:
+                    # relative to base_dir
+                    cms: 'public%app.path.cms_images%'
