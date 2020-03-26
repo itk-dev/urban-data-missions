@@ -3,6 +3,8 @@
 {% block title 'Experiment app'|trans %}
 
 {% block content %}
+    <div id="app"></div>
+    {#
     <h1>{{ experiment.title }}</h1>
 
     <ul class="list-unstyled sensors">
@@ -14,13 +16,20 @@
     <fieldset>
         <legend>{{ 'Data'|trans }}</legend>
 
-        <code><pre id="data"></pre></code>
+        <div id="chart"></div>
+
+        <div id="log-entries"></div>
     </fieldset>
+    #}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('experiment/app') }}
 {% endblock %}
 
 {% block javascripts %}
     <script>
-        var APP_CONFIG = {{ app_options|default(null)|json_encode|raw }}
+        var APP_OPTIONS = {{ app_options|default(null)|json_encode|raw }}
     </script>
-    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('experiment/app') }}
 {% endblock %}

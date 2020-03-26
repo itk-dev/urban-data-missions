@@ -2,10 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MeasurementRepository")
+ * @ApiResource(
+ *     paginationClientEnabled=true,
+ *     paginationClientItemsPerPage=true,
+ *     collectionOperations={"GET"},
+ *     itemOperations={"GET"},
+ *     normalizationContext={"groups"={"measurement_read"}},
+ *     denormalizationContext={"groups"={"measurement_write"}}
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"experiment.id": "exact", "sensor.id": "exact"})
+ * @ApiFilter(OrderFilter::class, properties={"measuredAt": "DESC"})
  */
 class Measurement
 {
@@ -13,27 +30,33 @@ class Measurement
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
+     * @Groups({"measurement_read", "experiment"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Experiment", inversedBy="measurements")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"measurement_read", "experiment"})
      */
     private $experiment;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sensor")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"measurement_read", "experiment"})
      */
     private $sensor;
 
     /**
      * @ORM\Column(type="datetime", precision=6)
+     * @Groups({"measurement_read", "experiment"})
      */
     private $measuredAt;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"measurement_read", "experiment"})
      */
     private $data = [];
 
@@ -44,10 +67,21 @@ class Measurement
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"measurement_read", "experiment"})
      */
     private $value;
 
-    public function getId(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SensorWarning", mappedBy="measurement", orphanRemoval=true)
+     */
+    private $sensorWarnings;
+
+    public function __construct()
+    {
+        $this->sensorWarnings = new ArrayCollection();
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -64,12 +98,12 @@ class Measurement
         return $this;
     }
 
-    public function getSensor(): ?string
+    public function getSensor(): ?Sensor
     {
         return $this->sensor;
     }
 
-    public function setSensor(string $sensor): self
+    public function setSensor(Sensor $sensor): self
     {
         $this->sensor = $sensor;
 
@@ -120,6 +154,37 @@ class Measurement
     public function setValue(float $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SensorWarning[]
+     */
+    public function getSensorWarnings(): Collection
+    {
+        return $this->sensorWarnings;
+    }
+
+    public function addSensorWarning(SensorWarning $sensorWarning): self
+    {
+        if (!$this->sensorWarnings->contains($sensorWarning)) {
+            $this->sensorWarnings[] = $sensorWarning;
+            $sensorWarning->setMeasurement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSensorWarning(SensorWarning $sensorWarning): self
+    {
+        if ($this->sensorWarnings->contains($sensorWarning)) {
+            $this->sensorWarnings->removeElement($sensorWarning);
+            // set the owning side to null (unless already changed)
+            if ($sensorWarning->getMeasurement() === $this) {
+                $sensorWarning->setMeasurement(null);
+            }
+        }
 
         return $this;
     }

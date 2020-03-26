@@ -1,0 +1,8 @@
+App\Entity\Sensor:
+    'device:001:humidity':
+        id: 'device:001:humidity'
+        type: humidity
+
+    'device:001:temperature':
+        id: 'device:001:temperature'
+        type: temperature

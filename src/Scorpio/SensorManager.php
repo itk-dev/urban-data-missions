@@ -64,6 +64,7 @@ class SensorManager
                         $sensor
                             ->setData($data);
                         $this->entityManager->persist($sensor);
+                        $sensors[] = $sensor;
                     }
                 }
                 $this->entityManager->flush();

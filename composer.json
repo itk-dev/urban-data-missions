@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "antishov/doctrine-extensions-bundle": "^1.4",
+        "api-platform/api-pack": "^1.2",
         "easycorp/easyadmin-bundle": "^2.3",
         "friendsofsymfony/ckeditor-bundle": "^2.2",
         "knplabs/doctrine-behaviors": "^2.0",
@@ -20,6 +21,7 @@
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
         "symfony/security-csrf": "5.0.*",
+        "symfony/serializer": "5.0.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "5.0.*",
         "symfony/webpack-encore-bundle": "^1.7",
@@ -30,6 +32,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
         "friendsoftwig/twigcs": "^3.2",
+        "hautelook/alice-bundle": "^2.7",
         "symfony/maker-bundle": "^1.14"
     },
     "config": {
@@ -84,6 +87,14 @@
         ],
         "coding-standards-apply": [
             "@coding-standards-apply/php-cs-fixer"
+        ],
+        "load-fixtures": [
+            "composer install",
+            "# Workaround for `Cannot truncate a table referenced in a foreign key constraint` error when using `--purge-with-truncate`",
+            "bin/console doctrine:database:drop --if-exists --force",
+            "bin/console doctrine:database:create",
+            "bin/console doctrine:migrations:migrate --no-interaction",
+            "bin/console hautelook:fixtures:load --no-interaction"
         ]
     },
     "conflict": {

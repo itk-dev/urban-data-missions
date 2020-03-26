@@ -22,8 +22,6 @@ class ExperimentType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $sensors = $this->sensorManager->getSensors();
-
         $builder
             ->add('title')
             ->add('sensors', EntityType::class, [
@@ -32,6 +30,8 @@ class ExperimentType extends AbstractType
                 'multiple' => true,
                 'required' => true,
             ])
+            ->add('latitude')
+            ->add('longitude')
         ;
     }
 

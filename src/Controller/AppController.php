@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppController extends AbstractController
 {
     /**
-     * @Route("/", name="app", methods={"GET"})
+     * @Route("", name="app", methods={"GET"})
      */
     public function index(): Response
     {
