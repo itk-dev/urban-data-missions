@@ -2,6 +2,11 @@ import '../css/app.scss'
 import('@fortawesome/fontawesome-free/js/all')
 
 require('typeface-roboto')
+require('jquery')
+require('popper.js')
+require('bootstrap')
+
+import $ from 'jquery'
 
 if (typeof window.APP_CONFIG !== 'undefined') {
   if (window.APP_CONFIG.eventSourceUrl) {
@@ -12,3 +17,12 @@ if (typeof window.APP_CONFIG !== 'undefined') {
     }
   }
 }
+
+$(function () {
+  $('[data-toggle="popover"]').popover({
+      animation: true,
+      placement: 'auto',
+      html: true
+  })
+})
+
