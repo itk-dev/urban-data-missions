@@ -2,51 +2,73 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExperimentLogEntryRepository")
+ * @ApiResource(
+ *     collectionOperations={"GET", "POST"},
+ *     itemOperations={"GET", "PATCH"},
+ *     normalizationContext={"groups"={"experiment_log_entry_read"}},
+ *     denormalizationContext={"groups"={"experiment_log_entry_write"}}
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"experiment.id": "exact", "type": "exact"})
+ * @ApiFilter(OrderFilter::class, properties={"loggedAt": "DESC"})
  */
 class ExperimentLogEntry
 {
+    public const TYPE_USER = 'user';
+    public const TYPE_SYSTEM = 'system';
+    public const TYPE_ALERT = 'alert';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"experiment"})
+     * @Groups({"experiment_log_entry_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"experiment"})
+     * @Groups({"experiment_log_entry_read", "experiment_log_entry_write"})
+     * @Assert\NotBlank()
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Experiment", inversedBy="logEntries")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"experiment_log_entry_read", "experiment_log_entry_write"})
+     * @Assert\NotNull()
      */
     private $experiment;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"experiment"})
+     * @Groups({"experiment_log_entry_read", "experiment_log_entry_write"})
+     * @Assert\NotNull()
      */
     private $loggedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Sensor")
-     * @Groups({"experiment"})
+     * @Groups({"experiment_log_entry_read", "experiment_log_entry_write"})
      */
     private $sensor;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"experiment"})
+     * @Groups({"experiment_log_entry_read", "experiment_log_entry_write"})
+     * @Assert\NotBlank()
      */
-    private $type;
+    private $type = self::TYPE_USER;
 
     public function getId(): ?int
     {

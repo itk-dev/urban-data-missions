@@ -1,6 +1,7 @@
 /* global fetch, EventSource */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Button from 'react-bootstrap/Button'
 
 class LogView extends Component {
   constructor (props) {
@@ -10,13 +11,16 @@ class LogView extends Component {
     }
   }
 
+  addEntry (logEntry) {
+    this.setState({ entries: [logEntry, ...this.state.entries] })
+  }
+
   componentDidMount () {
-    fetch(this.props.dataUrl)
+    fetch(this.props.dataUrl, { headers: { accept: 'application/json' } })
       .then((response) => {
         return response.json()
       })
       .then(entries => {
-        entries.reverse()
         this.setState({ entries: entries }, () => {
           const eventSource = new EventSource(this.props.eventSourceUrl)
           eventSource.onmessage = event => {
@@ -31,8 +35,13 @@ class LogView extends Component {
 
   render () {
     return (
-      <fieldset className='log-view'>
-        <legend>Log</legend>
+      <section className='log-view'>
+        <header className='d-flex justify-content-between'>
+          <div><h1>Log</h1></div>
+          <div className='log-action'>
+            {this.props.handleAddLogEntry && <Button className='btn-add-annotation' onClick={this.props.handleAddLogEntry}>Add log entry</Button>}
+          </div>
+        </header>
 
         <div className='log-view-content'>
           {this.state.entries.map((entry, index) => (
@@ -44,14 +53,15 @@ class LogView extends Component {
             </div>
           ))}
         </div>
-      </fieldset>
+      </section>
     )
   }
 }
 
 LogView.propTypes = {
   dataUrl: PropTypes.string.isRequired,
-  eventSourceUrl: PropTypes.string.isRequired
+  eventSourceUrl: PropTypes.string.isRequired,
+  onHandleAddLogEntry: PropTypes.func
 }
 
 export default LogView

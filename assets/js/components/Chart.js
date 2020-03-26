@@ -19,7 +19,8 @@ class Chart {
     }
 
     for (const [field, seriesOptions] of Object.entries(options.series)) {
-      this.series.push(this.addSeries(field, seriesOptions))
+      const series = this.addSeries(field, { ...seriesOptions, ...{ bullet: options.bullet } })
+      this.series.push(series)
     }
 
     if (options.legend) {
@@ -78,11 +79,13 @@ class Chart {
 
   addSeries (field, options = {}) {
     // Create series
+    // @see https://www.amcharts.com/docs/v4/reference/lineseries/
     const series = this.chart.series.push(new am4charts.LineSeries())
     series.dataFields.dateX = 'date'
     series.dataFields.valueY = field
     series.name = options.name || field
-    series.tooltipText = '{dateX}: [b]{valueY}[/]'
+    // @see https://www.amcharts.com/docs/v4/reference/tooltip/#tooltipHTML_property
+    series.tooltipHTML = '{dateX}: <strong>{valueY}</strong>'
     series.strokeWidth = 2
     series.minBulletDistance = 15
 
@@ -95,14 +98,20 @@ class Chart {
     series.tooltip.label.textAlign = 'middle'
     series.tooltip.label.textValign = 'middle'
 
-    // Make bullets grow on hover
-    const bullet = series.bullets.push(new am4charts.CircleBullet())
-    bullet.circle.strokeWidth = 2
-    bullet.circle.radius = 4
-    bullet.circle.fill = am4core.color('#fff')
+    if (options.bullet) {
+      // Make bullets grow on hover
+      const bullet = series.bullets.push(new am4charts.CircleBullet())
+      bullet.circle.strokeWidth = 2
+      bullet.circle.radius = 4
+      bullet.circle.fill = am4core.color('#fff')
 
-    const bullethover = bullet.states.create('hover')
-    bullethover.properties.scale = 1.3
+      if (options.bullet.onHit) {
+        bullet.events.on('hit', options.bullet.onHit, this)
+      }
+
+      const bullethover = bullet.states.create('hover')
+      bullethover.properties.scale = 1.3
+    }
 
     return series
   }
@@ -113,6 +122,10 @@ class Chart {
 
   getData () {
     return this.chart.data
+  }
+
+  getChart () {
+    return this.chart
   }
 }
 

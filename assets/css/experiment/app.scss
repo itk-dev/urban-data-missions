@@ -13,3 +13,8 @@
 .log-entry-alert {
     @extend .alert-danger;
 }
+
+.btn-add-log-entry,
+.btn-add-annotation {
+    @extend .btn-secondary;
+}

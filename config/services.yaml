@@ -53,3 +53,9 @@ services:
                 name: 'doctrine.event_listener'
                 # this is the only required option for the lifecycle listener tag
                 event: 'onFlush'
+
+    App\EventListener\UpdatePublisher:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'postPersist'

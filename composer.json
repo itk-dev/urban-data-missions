@@ -32,6 +32,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
         "friendsoftwig/twigcs": "^3.2",
+        "hautelook/alice-bundle": "^2.7",
         "symfony/maker-bundle": "^1.14"
     },
     "config": {

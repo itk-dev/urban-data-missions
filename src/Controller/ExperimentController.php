@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Mercure\PublisherInterface;
-use Symfony\Component\Mercure\Update;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -129,9 +127,12 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     /**
      * @Route("/{id}/subscription/notify", name="subscription_notify", methods={"POST"})
      */
-    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager, SensorRepository $sensorRepository, PublisherInterface $publisher, SerializerInterface $serializer): Response
+    public function subscriptionNotity(Request $request, Experiment $experiment, EntityManagerInterface $entityManager, SensorRepository $sensorRepository): Response
     {
         $payload = json_decode($request->getContent(), true);
+
+        $this->info(sprintf('Subscription notification received: %s; %s', $experiment->getId(), $request->getContent()));
+
         foreach ($payload['data'] as $data) {
             $measuredAt = isset($data['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'])
                 ? new DateTimeImmutable($data['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'])
@@ -165,14 +166,6 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
             $entityManager->persist($measurement);
             $entityManager->flush();
 
-            $update = new Update(
-                'experiment:'.$experiment->getId(),
-                $serializer->serialize([
-                    'measurement' => $measurement,
-                ], 'json', ['groups' => ['experiment']])
-            );
-            $publisher($update);
-
             // @TODO Move this to a service
             // @TODO Check measurement outside bounds
             if (0 !== 1) {
@@ -184,17 +177,8 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
                     ->setContent(sprintf('Value %f outside bounds (%f; %f)', $measuredValue, -42, 87));
                 $entityManager->persist($logEntry);
                 $entityManager->flush();
-
-                $update = new Update(
-                    'experiment:'.$experiment->getId(),
-                    $serializer->serialize([
-                        'log_entry' => $logEntry,
-                    ], 'json', ['groups' => ['experiment']])
-                );
-                $publisher($update);
             }
         }
-        $this->info(sprintf('Subscription notification received: %s; %s; %s', $experiment->getId(), $request->get('sensor'), $request->getContent()));
 
         return new JsonResponse(['status' => 'ok']);
     }
@@ -202,15 +186,28 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     /**
      * @Route("/{id}/app", name="app", methods={"GET"})
      */
-    public function app(Experiment $experiment): Response
+    public function app(Experiment $experiment, SerializerInterface $serializer): Response
     {
         $appOptions['eventSourceUrl'] = $this->options['mercure']['event_source_url']
             .'?'.http_build_query([
                 'topic' => 'experiment:'.$experiment->getId(),
             ]);
 
-        $appOptions['measurementsUrl'] = $this->generateUrl('experiment_measurements', ['id' => $experiment->getId()]);
-        $appOptions['logEntriesUrl'] = $this->generateUrl('experiment_log_entries', ['id' => $experiment->getId()]);
+        $appOptions['measurementsUrl'] = $this->generateUrl('api_measurements_GET_collection', [
+            'experiment.id' => $experiment->getId(),
+            'order' => ['measuredAt' => 'asc'],
+            'pagination' => false,
+        ]);
+        $appOptions['logEntriesUrl'] = $this->generateUrl('api_experiment_log_entries_GET_collection', [
+            'experiment.id' => $experiment->getId(),
+            'order' => ['loggedAt' => 'desc'],
+            'pagination' => false,
+        ]);
+        $appOptions['logEntryPostUrl'] = $this->generateUrl('api_experiment_log_entries_POST_collection', [
+//            'id' => $experiment->getId()
+        ]);
+
+        $appOptions['experiment'] = $serializer->serialize($experiment, 'jsonld', ['groups' => 'experiment_read']);
 
         $appOptions['sensors'] = array_column(
             $experiment->getSensors()->map(static function (Sensor $sensor) {
@@ -255,5 +252,12 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
         $data = $serializer->serialize($logEntries, 'json', ['groups' => ['experiment', 'log_entry']]);
 
         return (new JsonResponse())->setJson($data);
+    }
+
+    /**
+     * @Route("/{id}/log-entries", name="log_entries_post", methods={"POST"})
+     */
+    public function logEntryCreate(Request $request, Experiment $experiment): Response
+    {
     }
 }

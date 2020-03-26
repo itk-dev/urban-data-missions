@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SensorRepository")
+ * @ApiResource()
  */
 class Sensor implements TimestampableInterface
 {
@@ -19,13 +21,13 @@ class Sensor implements TimestampableInterface
     /**
      * @ORM\Id()
      * @ORM\Column(type="string")
-     * @Groups({"sensor", "measurement", "log_entry"})
+     * @Groups({"sensor", "measurement_read", "experiment_log_entry_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"sensor", "measurement", "log_entry"})
+     * @Groups({"sensor", "measurement_read", "experiment_log_entry_read"})
      */
     private $type;
 
@@ -39,9 +41,15 @@ class Sensor implements TimestampableInterface
      */
     private $data = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SensorWarning", mappedBy="sensor", orphanRemoval=true)
+     */
+    private $sensorWarnings;
+
     public function __construct()
     {
         $this->experiments = new ArrayCollection();
+        $this->sensorWarnings = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -115,5 +123,36 @@ class Sensor implements TimestampableInterface
     public function __toString()
     {
         return $this->getId() ?? self::class;
+    }
+
+    /**
+     * @return Collection|SensorWarning[]
+     */
+    public function getSensorWarnings(): Collection
+    {
+        return $this->sensorWarnings;
+    }
+
+    public function addSensorWarning(SensorWarning $sensorWarning): self
+    {
+        if (!$this->sensorWarnings->contains($sensorWarning)) {
+            $this->sensorWarnings[] = $sensorWarning;
+            $sensorWarning->setSensor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSensorWarning(SensorWarning $sensorWarning): self
+    {
+        if ($this->sensorWarnings->contains($sensorWarning)) {
+            $this->sensorWarnings->removeElement($sensorWarning);
+            // set the owning side to null (unless already changed)
+            if ($sensorWarning->getSensor() === $this) {
+                $sensorWarning->setSensor(null);
+            }
+        }
+
+        return $this;
     }
 }

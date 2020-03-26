@@ -8,11 +8,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Sensors</th>
-                <th>Measurements</th>
-                <th>Created at</th>
-                <th>actions</th>
+                <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Sensors'|trans }}</th>
+                <th>{{ 'Measurements'|trans }}</th>
+                <th>{{ 'Created at'|trans }}</th>
+                <th>{{ 'Finished at'|trans }}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,7 @@
                 <td>{{ experiment.sensors|length }}</td>
                 <td>{{ experiment.measurements|length }}</td>
                 <td>{{ experiment.createdAt ? experiment.createdAt|date }}</td>
+                <td>{{ experiment.finishedAt ? experiment.finishedAt|date }}</td>
                 <td>
                     <a href="{{ path('experiment_show', {'id': experiment.id}) }}">{{ 'Show'|trans }}</a>
                     <a href="{{ path('experiment_edit', {'id': experiment.id}) }}">{{ 'Edit'|trans }}</a>
