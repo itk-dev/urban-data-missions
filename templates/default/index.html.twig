@@ -3,5 +3,15 @@
 {% block title %}IoT Crawler App{% endblock %}
 
 {% block content %}
-    <a class="btn btn-primary btn-lg btn-block" href="{{ path('app') }}">{{ 'App'|trans }}</a>
+    <ul class="nav flex-column">
+        {% for url, text in {
+            (path('app')): 'App'|trans,
+            (path('experiment_index')): 'Experiment'|trans,
+            (path('mockup', {path:''})): 'Mock-up'|trans,
+            } %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url }}">{{ text }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

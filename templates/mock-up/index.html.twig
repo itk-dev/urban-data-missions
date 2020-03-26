@@ -1,1 +1,11 @@
-{{ dump() }}
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <ul class="nav flex-column">
+        {% for path in paths|default([]) %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('mockup', {path: path}) }}">{{ path }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
