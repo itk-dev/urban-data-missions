@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body_class %}new-mission{% endblock %}
+
+{% block background_image %}style="background-image: url({{ asset('build/images/map_background.png') }});"{% endblock %}
+
+{% block content %}
+    <div class="container-fluid bg-white">
+        <article class="mission py-3">
+            {% include "_partials/_nav_close.html.twig" with {'nav_path': '/mock-up/explore' }%}
+
+            <h1>{{ "Mission theme"|trans }}</h1>
+            <p>{{ "Before you can create a datamission you need to select a mission theme"|trans }}</p>
+
+            <div id="carouselMissionThemes" class="carousel slide" data-ride="false" data-interval="false">
+
+                <div class="carousel-inner bg-success-300 p-3 text-center">
+                    {% include "_partials/_create_mission_theme_entry.html.twig" with {
+                        'active': true,
+                        'title': 'Den sundeste vej i skole',
+                        'fa_icon': 'road',
+                        'description': 'Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.'
+                        }
+                    %}
+                    {% include "_partials/_create_mission_theme_entry.html.twig" with {
+                        'active': false,
+                        'title': 'Missions tema 2',
+                        'fa_icon': 'star',
+                        'description': 'Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.'
+                        }
+                    %}
+                    {% include "_partials/_create_mission_theme_entry.html.twig" with {
+                        'active': false,
+                        'title': 'Missions tema 3',
+                        'fa_icon': 'archive',
+                        'description': '3 Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.'
+                        }
+                    %}
+                </div>
+                <ol class="carousel-indicators my-3">
+                    <li data-target="#carouselMissionThemes" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselMissionThemes" data-slide-to="1"></li>
+                    <li data-target="#carouselMissionThemes" data-slide-to="2"></li>
+                </ol>
+            </div>
+
+        </article>
+    </div>
+{% endblock %}

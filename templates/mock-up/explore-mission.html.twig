@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block body_class %}explore{% endblock %}
+{% block body_class %}explore-mission{% endblock %}
 
 {% block background_image %}style="background-image: url({{ asset('build/images/map_background.png') }});"{% endblock %}
 
@@ -12,7 +12,7 @@
             <p class='text-primary-faded'>Den sundeste vej i skole<br/><i class='fas fa-map-marker-alt mr-1'></i>Værkmestergade 2, 8000 Aarhus C</p>
             <p>Der kan være stor forskel på luftkvaliteten i aarhus, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             <article class="mission-chart">
-                {# {% include "_partials/_amchart_demo.html.twig" %} #}
+                {% include "_partials/_amchart_demo.html.twig" %}
             </article>
             <article class="mission-log">
                 {% include "_partials/_article_header.html.twig" with {'title': 'Mission log', 'add_button': true, 'edit_button': false } %}

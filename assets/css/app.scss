@@ -7,22 +7,25 @@ $body-color: #3f3d56;
 $purple: #685ff3;
 $primary: $purple;
 
+/* Set secondary color */
+$green: #55b390;
+$success: $green;
+
 /* Set faded primary color */
 $primary-faded: #696791;
 $primary-100: lighten($primary, 10%);
 $primary-200: lighten($primary, 20%);
 $primary-300: lighten($primary, 25%);
 $primary-400: lighten($primary, 30%);
+$success-300: lighten($success, 30%);
 
 $theme-colors: (
   'primary-100': $primary-100,
   'primary-200': $primary-200,
   'primary-300': $primary-300,
-  'primary-400': $primary-400
+  'primary-400': $primary-400,
+  'success-300': $success-300
 );
-
-/* Set secondary color */
-$green: #55b390;
 
 /* Set primary font */
 $font-family-sans-serif: Roboto, Arial, Helvetica, sans-serif;
@@ -48,8 +51,8 @@ $sizer: 1rem;
 @import 'onboarding';
 @import 'navigation';
 @import 'explore';
-@import 'btn';
 @import 'text';
+@import 'carousel';
 
 /* Add generic styling outside Bootstrap */
 body {
