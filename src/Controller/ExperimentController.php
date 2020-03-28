@@ -131,7 +131,7 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
     {
         $payload = json_decode($request->getContent(), true);
 
-        $this->info(sprintf('Subscription notification received: %s; %s', $experiment->getId(), $request->getContent()));
+        $this->debug(sprintf('Subscription notification received: %s; %s', $experiment->getId(), $request->getContent()));
 
         foreach ($payload['data'] as $data) {
             $measuredAt = isset($data['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'])
@@ -145,6 +145,8 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
             $sensorId = $data['id'];
             $sensor = $sensorRepository->find($sensorId);
             if (null === $sensor) {
+                $this->debug(sprintf('Cannot find sensor with id: %s', $sensorId));
+
                 return new BadRequestHttpException(sprintf('Invalid sensor: %s', $sensorId));
             }
 
@@ -165,19 +167,6 @@ class ExperimentController extends AbstractController implements LoggerAwareInte
                 ->setExperiment($experiment);
             $entityManager->persist($measurement);
             $entityManager->flush();
-
-            // @TODO Move this to a service
-            // @TODO Check measurement outside bounds
-            if (0 !== 1) {
-                $logEntry = (new ExperimentLogEntry())
-                    ->setExperiment($experiment)
-                    ->setSensor($sensor)
-                    ->setLoggedAt($measuredAt)
-                    ->setType('alert')
-                    ->setContent(sprintf('Value %f outside bounds (%f; %f)', $measuredValue, -42, 87));
-                $entityManager->persist($logEntry);
-                $entityManager->flush();
-            }
         }
 
         return new JsonResponse(['status' => 'ok']);

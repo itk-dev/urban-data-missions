@@ -1,7 +1,13 @@
 App\Entity\SensorWarning:
     'sensor-warning:001':
-        sensor: '@device:001:humidity'
-        experiment: '@experiment:001'
-        message: 'Humidity %value% outside expected range (%min%, %max%)'
+        sensor: '@sensor-001:humidity'
+        experiment: '@experiment-001'
+        message: 'Humidity %value% outside expected range [%min%, %max%]'
         min: 20
         max: 60
+
+    'sensor-warning:002':
+        sensor: '@sensor-001:temperature'
+        experiment: '@experiment-003'
+        message: 'Temperature measured at %value% outside expected range [%min%, %max%]'
+        min: 20

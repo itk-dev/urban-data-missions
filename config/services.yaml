@@ -54,6 +54,12 @@ services:
                 # this is the only required option for the lifecycle listener tag
                 event: 'onFlush'
 
+    App\EventListener\MeasurementListener:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'prePersist'
+
     App\EventListener\UpdatePublisher:
         tags:
             -

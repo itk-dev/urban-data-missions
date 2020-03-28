@@ -20,29 +20,29 @@ class MeasurementManager implements LoggerAwareInterface
         $this->client = $client;
     }
 
-    public function getMeasurementUrl(string $device, string $type)
+    public function getMeasurementUrl(string $sensor, string $type)
     {
-        return $this->client->getUrl('/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($device, $type)));
+        return $this->client->getUrl('/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type)));
     }
 
-    private function getEntityId(string $device, string $type): string
+    private function getEntityId(string $sensor, string $type): string
     {
-        return $device.':'.$type;
+        return $sensor.':'.$type;
     }
 
-    public function getMeasurement(string $device, string $type)
+    public function getMeasurement(string $sensor, string $type)
     {
-        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($device, $type));
+        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type));
         $response = $this->client->get($path);
 
         return Response::HTTP_OK === $response->getStatusCode() ? $response->toArray() : null;
     }
 
-    public function createMeasurement(string $device, string $type, $value, ?DateTimeInterface $measuredAt = null)
+    public function createMeasurement(string $sensor, string $type, $value, ?DateTimeInterface $measuredAt = null)
     {
         $path = '/ngsi-ld/v1/entities/';
         $payload = [
-            'id' => $this->getEntityId($device, $type),
+            'id' => $this->getEntityId($sensor, $type),
             'type' => $type,
             'dateObserved' => [
                 'type' => 'Property',
@@ -60,7 +60,7 @@ class MeasurementManager implements LoggerAwareInterface
             ],
         ];
 
-        $this->info(sprintf('Creating measurement %s for %s', $type, $device));
+        $this->info(sprintf('Creating measurement %s for %s', $type, $sensor));
         $response = $this->client->post($path, [
             'json' => $payload,
         ]);
@@ -68,15 +68,15 @@ class MeasurementManager implements LoggerAwareInterface
         return Response::HTTP_CREATED === $response->getStatusCode();
     }
 
-    public function updateMeasurement(string $device, string $type, $value, ?DateTimeInterface $measuredAt = null)
+    public function updateMeasurement(string $sensor, string $type, $value, ?DateTimeInterface $measuredAt = null)
     {
-        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($device, $type)).'/attrs';
+        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type)).'/attrs';
         $payload = [
             'dateObserved' => [
                 'type' => 'Property',
                 'value' => [
                     '@type' => 'DateTime',
-                    '@value' => ($measuredAt ?? new DateTimeImmutable())->format(DateTimeInterface::ATOM),
+                    '@value' => $measuredAt->format(DateTimeInterface::ATOM),
                 ],
             ],
             $type => [
@@ -88,7 +88,7 @@ class MeasurementManager implements LoggerAwareInterface
             ],
         ];
 
-        $this->info(sprintf('Updating measurement %s for %s', $type, $device));
+        $this->info(sprintf('Updating measurement %s.%s; value: %f; measured at %s', $sensor, $type, $value, $measuredAt->format(DateTimeImmutable::ATOM)));
         $response = $this->client->patch($path, [
             'json' => $payload,
         ]);
@@ -96,9 +96,9 @@ class MeasurementManager implements LoggerAwareInterface
         return Response::HTTP_NO_CONTENT === $response->getStatusCode();
     }
 
-    public function deleteMeasurement(string $device, string $type)
+    public function deleteMeasurement(string $sensor, string $type)
     {
-        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($device, $type));
+        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type));
 
         $this->info('Deleting measurement');
         $response = $this->client->delete($path);

@@ -36,14 +36,14 @@ class UpdatePublisher implements LoggerAwareInterface
             $measurement = $entity;
             $data = $this->serializer->serialize([
                 'measurement' => $measurement,
-            ], 'json', ['groups' => ['experiment_read', 'measurement_read']]);
+            ], 'jsonld', ['groups' => ['experiment_read', 'measurement_read']]);
 
             $this->publishExperimentUpdate($measurement->getExperiment(), $data);
         } elseif ($entity instanceof ExperimentLogEntry) {
             $logEntry = $entity;
             $data = $this->serializer->serialize([
                 'log_entry' => $logEntry,
-            ], 'json', ['groups' => ['experiment_read', 'experiment_log_entry_read']]);
+            ], 'jsonld', ['groups' => ['experiment_read', 'experiment_log_entry_read']]);
 
             $this->publishExperimentUpdate($logEntry->getExperiment(), $data);
         }

@@ -1,8 +1,8 @@
 App\Entity\Sensor:
-    'device:001:humidity':
-        id: 'device:001:humidity'
-        type: humidity
+    'sensor-001:humidity':
+        id: 'sensor-001:humidity'
+        type: 'https://uri.fiware.org/ns/data-models#humidity'
 
-    'device:001:temperature':
-        id: 'device:001:temperature'
-        type: temperature
+    'sensor-001:temperature':
+        id: 'sensor-001:temperature'
+        type: 'https://uri.fiware.org/ns/data-models#temperature'

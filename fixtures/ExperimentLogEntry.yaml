@@ -1,13 +1,13 @@
 App\Entity\ExperimentLogEntry:
-    'log_entry:001':
-         experiment: '@experiment:001'
+    'log_entry-001':
+         experiment: '@experiment-001'
          loggedAt: '<DateTime(2020-03-23T00:00:00)>'
          content: 'Experiment started'
          type: 'system'
 
-    'log_entry:002':
-        experiment: '@experiment:001'
+    'log_entry-002':
+        experiment: '@experiment-001'
         loggedAt: '<DateTime(2020-03-23T12:01:04)>'
         content: 'Something happened!'
         type: 'user'
-        sensor: '@device:001:temperature'
+        sensor: '@sensor-001:temperature'
