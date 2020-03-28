@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Chart from './../../components/Chart'
+import Button from 'react-bootstrap/Button'
 
 class ChartView extends Component {
   // @see https://www.amcharts.com/docs/v4/getting-started/integrations/using-react/
@@ -70,13 +71,28 @@ class ChartView extends Component {
     return this.chart.getChart()
   }
 
+  handleAddLogEntry = () => {
+    const logEntry = {
+      loggedAt: (new Date('1975-05-23')).toISOString(),
+      sensor: '/api/sensors/device:001:temperature'
+    }
+    this.props.onHandleAddLogEntry && this.props.onHandleAddLogEntry(logEntry)
+  }
+
   render () {
     return (
-      <fieldset className='chart-view'>
-        <legend>Chart</legend>
+      <section className='chart-view'>
+        <header className='d-flex justify-content-between'>
+          <div><h1>Chart</h1></div>
+          <div className='log-action'>
+            {this.props.onHandleAddLogEntry && <Button className='btn-add-annotation' onClick={this.handleAddLogEntry}>Add log entry</Button>}
+          </div>
+        </header>
 
-        <div id='chart' />
-      </fieldset>
+        <div className='chart-view-content'>
+          <div id='chart' />
+        </div>
+      </section>
     )
   }
 }

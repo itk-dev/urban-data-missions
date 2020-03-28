@@ -10,8 +10,6 @@ require('jquery')
 require('popper.js')
 require('bootstrap')
 
-import $ from 'jquery'
-
 const options = window.APP_OPTIONS || {}
 
 const series = options.sensors

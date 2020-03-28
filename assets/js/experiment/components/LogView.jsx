@@ -33,13 +33,20 @@ class LogView extends Component {
       })
   }
 
+  handleAddLogEntry = () => {
+    const logEntry = {
+      loggedAt: (new Date()).toISOString()
+    }
+    this.props.onHandleAddLogEntry && this.props.onHandleAddLogEntry(logEntry)
+  }
+
   render () {
     return (
       <section className='log-view'>
         <header className='d-flex justify-content-between'>
           <div><h1>Log</h1></div>
           <div className='log-action'>
-            {this.props.handleAddLogEntry && <Button className='btn-add-annotation' onClick={this.props.handleAddLogEntry}>Add log entry</Button>}
+            {this.props.onHandleAddLogEntry && <Button className='btn-add-annotation' onClick={this.handleAddLogEntry}>Add log entry</Button>}
           </div>
         </header>
 
@@ -61,7 +68,7 @@ class LogView extends Component {
 LogView.propTypes = {
   dataUrl: PropTypes.string.isRequired,
   eventSourceUrl: PropTypes.string.isRequired,
-  onHandleAddLogEntry: PropTypes.func
+  onHandleAddLogEntry: PropTypes.func.isRequired
 }
 
 export default LogView

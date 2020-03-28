@@ -9,33 +9,30 @@ import Alert from 'react-bootstrap/Alert'
 class LogEntry extends Component {
   constructor (props) {
     super(props)
-    this.state = this.getInitialState()
+    this.state = this.getInitialState(this.props.logEntry)
   }
 
-  getInitialState = () => ({
+  getInitialState = (logEntry) => ({
     show: false,
     isSubmitting: false,
-    logEntry: {
-      experiment: this.props.experiment['@id'],
-      content: '',
-      sensor: null, // '/api/sensors/fixture:device:001:humidity',
-      loggedAt: (new Date()).toISOString()
-    },
+    logEntry: logEntry || {},
     violations: {},
     message: null,
     messageType: null
   })
 
+  componentDidUpdate (prevProps) {
+    if (prevProps.logEntry !== this.props.logEntry) {
+      this.setState({ logEntry: this.props.logEntry || {} })
+    }
+  }
+
   resetState = () => {
     this.setState(this.getInitialState())
   }
 
-  handleShow = () => {
-    this.setState({ show: true })
-  }
-
   handleClose = () => {
-    this.setState({ show: false })
+    this.props.onHandleLogEntryAdded(null)
   }
 
   handleChange = (event) => {
@@ -90,6 +87,8 @@ class LogEntry extends Component {
     })
   }
 
+  showModal = () => Object.keys(this.state.logEntry).length > 0
+
   render () {
     const form = (
       <Form onSubmit={this.handleSubmit}>
@@ -116,9 +115,7 @@ class LogEntry extends Component {
 
     return (
       <>
-        <Button variant='primary' onClick={this.handleShow}>Add log entry</Button>
-
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal show={this.showModal()} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Add log entry</Modal.Title>
           </Modal.Header>
@@ -141,7 +138,8 @@ class LogEntry extends Component {
 
 LogEntry.propTypes = {
   experiment: PropTypes.object.isRequired,
-  postUrl: PropTypes.string.isRequired
+  postUrl: PropTypes.string.isRequired,
+  onHandleLogEntryAdded: PropTypes.func.isRequired
 }
 
 export default LogEntry

@@ -9,8 +9,29 @@ import LogView from './components/LogView'
 import LogEntry from './components/LogEntry'
 
 class App extends Component {
-  handleAddLogEntry = (event) => {
-    console.log('App.handleAddLogEntry')
+  constructor (props) {
+    super(props)
+    this.state = {
+      logEntry: null
+    }
+  }
+
+  handleAddLogEntry = (data) => {
+    const logEntry = {
+      ...{
+        // Required and default values
+        experiment: this.props.experiment['@id'],
+        loggedAt: (new Date()).toISOString()
+      },
+      ...data
+    }
+    console.log('App.handleAddLogEntry', logEntry)
+    this.setState({ logEntry: logEntry })
+  }
+
+  handleLogEntryAdded = (logEntry) => {
+    console.log('App.handleLogEntryAdded', logEntry)
+    this.setState({ logEntry: null })
   }
 
   render () {
@@ -27,7 +48,10 @@ class App extends Component {
           </div>
           <div className='flex-fill'>
 
-            <LogEntry experiment={this.props.experiment} postUrl={this.props.logEntryPostUrl} />
+            <LogEntry
+              experiment={this.props.experiment} postUrl={this.props.logEntryPostUrl} logEntry={this.state.logEntry}
+              onHandleLogEntryAdded={this.handleLogEntryAdded}
+            />
 
             <LogView
               dataUrl={this.props.logEntriesUrl}
