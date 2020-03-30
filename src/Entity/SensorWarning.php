@@ -17,12 +17,6 @@ class SensorWarning
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Experiment", inversedBy="sensorWarnings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $experiment;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Sensor", inversedBy="sensorWarnings")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -43,21 +37,15 @@ class SensorWarning
      */
     private $max;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mission", inversedBy="sensorWarnings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mission;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getExperiment(): ?Experiment
-    {
-        return $this->experiment;
-    }
-
-    public function setExperiment(?Experiment $experiment): self
-    {
-        $this->experiment = $experiment;
-
-        return $this;
     }
 
     public function getSensor(): ?Sensor
@@ -106,5 +94,22 @@ class SensorWarning
         $this->max = $max;
 
         return $this;
+    }
+
+    public function getMission(): ?Mission
+    {
+        return $this->mission;
+    }
+
+    public function setMission(?Mission $mission): self
+    {
+        $this->mission = $mission;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return static::class.'#'.$this->getId();
     }
 }

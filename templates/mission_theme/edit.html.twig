@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit MissionTheme{% endblock %}
+
+{% block body %}
+    <h1>Edit MissionTheme</h1>
+
+    {{ include('mission_theme/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('mission_theme_index') }}">back to list</a>
+
+    {{ include('mission_theme/_delete_form.html.twig') }}
+{% endblock %}

@@ -2,7 +2,7 @@
 
 namespace App\Scorpio;
 
-use App\Entity\Experiment;
+use App\Entity\Mission;
 use App\Entity\Sensor;
 use App\Traits\LoggerTrait;
 use Psr\Log\LoggerAwareInterface;
@@ -27,19 +27,19 @@ class SubscriptionManager implements LoggerAwareInterface
         $this->router = $router;
     }
 
-    public function ensureSubscription(Experiment $experiment)
+    public function ensureSubscription(Mission $mission)
     {
-        $subscription = $this->getSubscription($experiment);
+        $subscription = $this->getSubscription($mission);
 
         return null === $subscription
-            ? $this->createSubscription($experiment)
-            : $this->updateSubscription($experiment);
+            ? $this->createSubscription($mission)
+            : $this->updateSubscription($mission);
     }
 
-    public function getSubscription(Experiment $experiment): ?array
+    public function getSubscription(Mission $mission): ?array
     {
         try {
-            $response = $this->client->get('/ngsi-ld/v1/subscriptions/'.$this->getSubscriptionId($experiment));
+            $response = $this->client->get('/ngsi-ld/v1/subscriptions/'.$this->getSubscriptionId($mission));
 
             return $response->toArray();
         } catch (ClientException $exception) {
@@ -49,15 +49,15 @@ class SubscriptionManager implements LoggerAwareInterface
         return null;
     }
 
-    public function createSubscription(Experiment $experiment): ?string
+    public function createSubscription(Mission $mission): ?string
     {
-        $this->debug(sprintf('Creating subscription for experiment %s', $experiment->getId()));
-        if (null === $experiment->getId() || $experiment->getSensors()->isEmpty()) {
+        $this->debug(sprintf('Creating subscription for mission %s', $mission->getId()));
+        if (null === $mission->getId() || $mission->getSensors()->isEmpty()) {
             return null;
         }
 
-        $payload = $this->buildSubscriptionPayload($experiment);
-        $payload['id'] = $this->getSubscriptionId($experiment);
+        $payload = $this->buildSubscriptionPayload($mission);
+        $payload['id'] = $this->getSubscriptionId($mission);
 
         $response = $this->client->post('/ngsi-ld/v1/subscriptions/', [
             'json' => $payload,
@@ -67,8 +67,8 @@ class SubscriptionManager implements LoggerAwareInterface
             return $response->getContent();
         }
 
-        $this->error(sprintf('Error creating subscription for experiment %s', $experiment->getId()), [
-            'experiment' => $experiment,
+        $this->error(sprintf('Error creating subscription for mission %s', $mission->getId()), [
+            'mission' => $mission,
             'response' => [
                 'status_code' => $response->getStatusCode(),
                 'content' => $response->getContent(),
@@ -78,13 +78,13 @@ class SubscriptionManager implements LoggerAwareInterface
         return null;
     }
 
-    public function updateSubscription(Experiment $experiment): bool
+    public function updateSubscription(Mission $mission): bool
     {
-        $this->debug(sprintf('Updating subscription for experiment %s', $experiment->getId()));
+        $this->debug(sprintf('Updating subscription for mission %s', $mission->getId()));
 
-        $payload = $this->buildSubscriptionPayload($experiment);
+        $payload = $this->buildSubscriptionPayload($mission);
 
-        $subscriptionId = $this->getSubscriptionId($experiment);
+        $subscriptionId = $this->getSubscriptionId($mission);
         $response = $this->client->patch('/ngsi-ld/v1/subscriptions/'.urlencode($subscriptionId),
             [
                 'json' => $payload,
@@ -95,8 +95,8 @@ class SubscriptionManager implements LoggerAwareInterface
             return true;
         }
 
-        $this->error(sprintf('Error updating subscription for experiment %s: status code: %d', $experiment->getId(), $response->getStatusCode()), [
-            'experiment' => $experiment,
+        $this->error(sprintf('Error updating subscription for mission %s: status code: %d', $mission->getId(), $response->getStatusCode()), [
+            'mission' => $mission,
             'response' => [
                 'status_code' => $response->getStatusCode(),
                 // 'content' => $response->getContent(),
@@ -106,18 +106,29 @@ class SubscriptionManager implements LoggerAwareInterface
         return false;
     }
 
-    private function buildSubscriptionPayload(Experiment $experiment): array
+    public function deleteSubscription(Mission $mission)
     {
-        $endpoint = $this->router->generate('experiment_subscription_notify', [
-            'id' => $experiment->getId(),
+        $description = sprintf('Deleting subscription for mission %s', $mission->getId());
+        $subscriptionId = $this->getSubscriptionId($mission);
+        $response = $this->client->delete('/ngsi-ld/v1/subscriptions/'.urlencode($subscriptionId));
+
+        $description = sprintf('Deleting subscription for mission %s: response: %d', $mission->getId(), $response->getStatusCode());
+
+        return Response::HTTP_NO_CONTENT === $response->getStatusCode();
+    }
+
+    private function buildSubscriptionPayload(Mission $mission): array
+    {
+        $endpoint = $this->router->generate('mission_subscription_notify', [
+            'id' => $mission->getId(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $description = sprintf('Subscription for experiment %s', $experiment->getId());
+        $description = sprintf('Subscription for mission %s', $mission->getId());
 
         return [
             'type' => 'Subscription',
             'description' => $description,
-            'entities' => $experiment->getSensors()->map(static function (Sensor $sensor) {
+            'entities' => $mission->getSensors()->map(static function (Sensor $sensor) {
                 return [
                     // Apparently, using 'id' => $sensor breaks something ...
                     'idPattern' => $sensor->getId(),
@@ -136,8 +147,8 @@ class SubscriptionManager implements LoggerAwareInterface
         ];
     }
 
-    private function getSubscriptionId(Experiment $experiment): string
+    private function getSubscriptionId(Mission $mission): string
     {
-        return 'urn:ngsi-ld:Subscription:experiment:'.$experiment->getId();
+        return 'urn:ngsi-ld:Subscription:mission:'.$mission->getId();
     }
 }

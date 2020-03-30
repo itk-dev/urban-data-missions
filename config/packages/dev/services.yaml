@@ -11,4 +11,5 @@ services:
                 source_dirs: '%hautelook_alice.fixtures_path%'
                 target_dirs:
                     # relative to base_dir
+                    images: 'public%app.path.images%'
                     cms: 'public%app.path.cms_images%'

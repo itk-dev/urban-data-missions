@@ -15,6 +15,7 @@ parameters:
     env(SENSOR_TYPES): '["https://uri.fiware.org/ns/data-models#humidity","https://uri.fiware.org/ns/data-models#temperature"]'
     sensorTypes: '%env(json:SENSOR_TYPES)%'
 
+    app.path.images: /uploads/images
     app.path.cms_images: /uploads/cms/images
     app.cms.page.type.choices:
         'Onboarding guide': onboarding
@@ -27,7 +28,7 @@ services:
 
         bind:
             $ngsiLdBrokerUrl: '%env(NGSI_LD_BROKER_URL)%'
-            $experimentOptions:
+            $missionOptions:
                 mercure:
                     event_source_url: '%env(MERCURE_EVENT_SOURCE_URL)%'
             $sensorManagerOptions:
@@ -47,8 +48,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\EventListener\ExperimentListener:
+    App\EventListener\MissionListener:
         tags:
+            -
+                name: 'doctrine.event_listener'
+                # this is the only required option for the lifecycle listener tag
+                event: 'prePersist'
+
             -
                 name: 'doctrine.event_listener'
                 # this is the only required option for the lifecycle listener tag

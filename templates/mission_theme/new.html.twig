@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MissionTheme{% endblock %}
+
+{% block body %}
+    <h1>Create new MissionTheme</h1>
+
+    {{ include('mission_theme/_form.html.twig') }}
+
+    <a href="{{ path('mission_theme_index') }}">back to list</a>
+{% endblock %}

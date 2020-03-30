@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Data mission: %title%'|trans({'%title%': mission.title}) }}{% endblock %}
+
+{% block body_class %}explore-mission{% endblock %}
+
+{% block background_image %}style="background-image: url({{ asset('build/images/map_background.png') }});"{% endblock %}
+
+{% block content %}
+    <div class="container-fluid bg-white">
+        <article class="mission py-3">
+            {# @TODO: Design: Where to go on cancel? #}
+            {#% include "mock-up/_partials/_nav_close.html.twig" with {'nav_path': '/mock-up/explore' }%#}
+
+            <h1>{{ mission.title }}</h1>
+            <p class='text-primary-faded'>
+                {{ mission.theme.title }}<br/>
+                <i class='fas fa-map-marker-alt mr-1'></i>{{ mission.location }}
+            </p>
+            <p>{{ mission.description }}</p>
+
+            <div id="app" data-options="{{ app_options|default(null)|json_encode }}"></div>
+
+            <article class="mission-sources">
+                <div class="row my-3">
+                    <div class="col-auto">
+                        <h2>{{ 'Sensors'|trans }}</h2>
+                    </div>
+                    <div class="col">
+                        <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit'|trans }}</a>
+                    </div>
+                </div>
+
+                {% for sensor in mission.sensors %}
+                    <div class="row">
+                        <div class="col">
+                            <span>{{ sensor.id }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </article>
+
+            <article class="mission-export">
+                {% include "mock-up/_partials/_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false } %}
+                <div class="row">
+                    <div class="col-auto">
+                        <button type="button" name="export_png" id="" class="btn btn-success" >Export png</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" name="export_png" id="" class="btn btn-success" >Export json</button>
+                    </div>
+                </div>
+            </article>
+
+            {% if mission.finishedAt %}
+                {# @TODO: Design #}
+                <div>
+                    {{ 'Mission finished at %finished_at%'|trans({'%finished_at%': mission.finishedAt|date}) }}
+                </div>
+            {% elseif finish_mission_form is defined %}
+                <article class="mission-finish">
+                    {{ form_start(finish_mission_form) }}
+                        <div class="row">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-danger">{{ 'Finish mission'|trans }}</button>
+                            </div>
+                        </div>
+                    {{ form_end(finish_mission_form) }}
+                </article>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission/app') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('mission/app') }}
+{% endblock %}

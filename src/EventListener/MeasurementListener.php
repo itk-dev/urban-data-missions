@@ -2,8 +2,8 @@
 
 namespace App\EventListener;
 
-use App\Entity\ExperimentLogEntry;
 use App\Entity\Measurement;
+use App\Entity\MissionLogEntry;
 use App\Repository\SensorWarningRepository;
 use App\Traits\LoggerTrait;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
@@ -33,10 +33,10 @@ class MeasurementListener implements LoggerAwareInterface
         if ($entity instanceof Measurement) {
             $measurement = $entity;
 
-            $experiment = $measurement->getExperiment();
+            $mission = $measurement->getMission();
             $sensor = $measurement->getSensor();
             $warnings = $this->sensorWarningRepository->findBy([
-                'experiment' => $experiment,
+                'mission' => $mission,
                 'sensor' => $sensor,
             ]);
 
@@ -54,11 +54,11 @@ class MeasurementListener implements LoggerAwareInterface
                         ]
                     );
                     $this->debug($content);
-                    $logEntry = (new ExperimentLogEntry())
-                        ->setExperiment($measurement->getExperiment())
+                    $logEntry = (new MissionLogEntry())
+                        ->setMission($measurement->getMission())
                         ->setSensor($sensor)
                         ->setLoggedAt($measurement->getMeasuredAt())
-                        ->setType(ExperimentLogEntry::TYPE_ALERT)
+                        ->setType(MissionLogEntry::TYPE_ALERT)
                         ->setContent($content);
                     $this->entityManager->persist($logEntry);
                 }

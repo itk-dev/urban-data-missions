@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"measurement_read"}},
  *     denormalizationContext={"groups"={"measurement_write"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"experiment.id": "exact", "sensor.id": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"mission.id": "exact", "sensor.id": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"measuredAt": "DESC"})
  */
 class Measurement
@@ -30,33 +30,33 @@ class Measurement
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
-     * @Groups({"measurement_read", "experiment"})
+     * @Groups({"measurement_read", "mission"})
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Experiment", inversedBy="measurements")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mission")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"measurement_read", "experiment"})
+     * @Groups({"measurement_read", "mission"})
      */
-    private $experiment;
+    private $mission;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Sensor")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"measurement_read", "experiment"})
+     * @Groups({"measurement_read", "mission"})
      */
     private $sensor;
 
     /**
      * @ORM\Column(type="datetime", precision=6)
-     * @Groups({"measurement_read", "experiment"})
+     * @Groups({"measurement_read", "mission"})
      */
     private $measuredAt;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"measurement_read", "experiment"})
+     * @Groups({"measurement_read", "mission"})
      */
     private $data = [];
 
@@ -67,7 +67,7 @@ class Measurement
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"measurement_read", "experiment"})
+     * @Groups({"measurement_read", "mission"})
      */
     private $value;
 
@@ -86,14 +86,14 @@ class Measurement
         return $this->id;
     }
 
-    public function getExperiment(): ?Experiment
+    public function getMission(): ?Mission
     {
-        return $this->experiment;
+        return $this->mission;
     }
 
-    public function setExperiment(?Experiment $experiment): self
+    public function setMission(Mission $mission): self
     {
-        $this->experiment = $experiment;
+        $this->mission = $mission;
 
         return $this;
     }

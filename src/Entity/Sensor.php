@@ -20,20 +20,20 @@ class Sensor
     /**
      * @ORM\Id()
      * @ORM\Column(type="string")
-     * @Groups({"sensor", "measurement_read", "experiment_log_entry_read"})
+     * @Groups({"sensor", "measurement_read", "mission_log_entry_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"sensor", "measurement_read", "experiment_log_entry_read"})
+     * @Groups({"sensor", "measurement_read", "mission_log_entry_read"})
      */
     private $type;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Experiment", mappedBy="sensors")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Mission", mappedBy="sensors")
      */
-    private $experiments;
+    private $missions;
 
     /**
      * @ORM\Column(type="json")
@@ -47,7 +47,7 @@ class Sensor
 
     public function __construct()
     {
-        $this->experiments = new ArrayCollection();
+        $this->missions = new ArrayCollection();
         $this->sensorWarnings = new ArrayCollection();
     }
 
@@ -76,28 +76,28 @@ class Sensor
     }
 
     /**
-     * @return Collection|Experiment[]
+     * @return Collection|Mission[]
      */
-    public function getExperiments(): Collection
+    public function getMissions(): Collection
     {
-        return $this->experiments;
+        return $this->missions;
     }
 
-    public function addExperiment(Experiment $experiment): self
+    public function addMission(Mission $mission): self
     {
-        if (!$this->experiments->contains($experiment)) {
-            $this->experiments[] = $experiment;
-            $experiment->addSensor($this);
+        if (!$this->missions->contains($mission)) {
+            $this->missions[] = $mission;
+            $mission->addSensor($this);
         }
 
         return $this;
     }
 
-    public function removeExperiment(Experiment $experiment): self
+    public function removeMission(Mission $mission): self
     {
-        if ($this->experiments->contains($experiment)) {
-            $this->experiments->removeElement($experiment);
-            $experiment->removeSensor($this);
+        if ($this->missions->contains($mission)) {
+            $this->missions->removeElement($mission);
+            $mission->removeSensor($this);
         }
 
         return $this;
