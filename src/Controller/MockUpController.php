@@ -38,7 +38,8 @@ class MockUpController extends AbstractController
                 $finder = (new Finder())
                     ->in($paths)
                     ->filter(static function (SplFileInfo $file) use ($pattern) {
-                        return false === strpos($file->getFilename(), 'index.html.twig')
+                        return false === strpos($file->getPathname(), '_')
+                            && false === strpos($file->getFilename(), 'index.html.twig')
                             && 1 === preg_match($pattern, $file->getFilename());
                     });
                 /** @var SplFileInfo $file */
