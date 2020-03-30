@@ -16,12 +16,12 @@ class LogView extends Component {
   }
 
   componentDidMount () {
-    fetch(this.props.dataUrl, { headers: { accept: 'application/json' } })
+    fetch(this.props.dataUrl, { headers: { accept: 'application/ld+json' } })
       .then((response) => {
         return response.json()
       })
-      .then(entries => {
-        this.setState({ entries: entries }, () => {
+      .then(data => {
+        this.setState({ entries: data['hydra:member'] }, () => {
           const eventSource = new EventSource(this.props.eventSourceUrl)
           eventSource.onmessage = event => {
             const data = JSON.parse(event.data)

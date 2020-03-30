@@ -11,21 +11,23 @@ class ChartView extends Component {
     const chart = new Chart({
       series: this.props.series,
       bullet: {
-        onHit: function (event) {
+        onHit: function (chartEvent) {
           const chart = this.getChart()
           chart.closeAllPopups()
           const popup = chart.openPopup('Add annotation …')
-          popup.left = event.svgPoint.x + 15
-          popup.top = event.svgPoint.y + 15
+          popup.left = chartEvent.svgPoint.x + 15
+          popup.top = chartEvent.svgPoint.y + 15
           popup.title = ''
-          popup.content = '<button class="btn btn-add-annotation">Add annotation</button>'
+          popup.content = '<button class="btn btn-add-annotation">Add log entry</button>'
           const button = popup.elements.content.querySelector('button')
+          const dataContext = chartEvent.target.dataItem.dataContext
           button.addEventListener('click', function (event) {
-            // alert(arguments)
+            chart.closeAllPopups()
             if (handleAddLogEntry) {
               handleAddLogEntry({
-                loggedAt: (new Date()).toISOString(),
-                sensor: 'null'
+                loggedAt: dataContext.date,
+                type: 'sensor',
+                sensor: decodeURIComponent(dataContext.measurement.sensor['@id'])
               })
             }
           })
@@ -38,12 +40,12 @@ class ChartView extends Component {
 
     this.chart = chart
 
-    fetch(this.props.dataUrl, { headers: { accept: 'application/json' } })
+    fetch(this.props.dataUrl, { headers: { accept: 'application/ld+json' } })
       .then((response) => {
         return response.json()
       })
-      .then(measurements => {
-        measurements.forEach(this.addMeasurement)
+      .then(data => {
+        data['hydra:member'].forEach(this.addMeasurement)
 
         const eventSource = new EventSource(this.props.eventSourceUrl)
         eventSource.onmessage = event => {
@@ -56,11 +58,13 @@ class ChartView extends Component {
   }
 
   addMeasurement = (measurement) => {
+    ;;; console.log('addMeasurement', measurement)
     const series = measurement.sensor.id
     if (series !== null && series in this.props.series) {
       const data = {
         date: new Date(measurement.measuredAt),
-        [series]: measurement.value
+        [series]: measurement.value,
+        measurement: measurement
       }
 
       this.chart.addData(data)
@@ -84,9 +88,6 @@ class ChartView extends Component {
       <section className='chart-view'>
         <header className='d-flex justify-content-between'>
           <div><h1>Chart</h1></div>
-          <div className='log-action'>
-            {this.props.onHandleAddLogEntry && <Button className='btn-add-annotation' onClick={this.handleAddLogEntry}>Add log entry</Button>}
-          </div>
         </header>
 
         <div className='chart-view-content'>
