@@ -29,3 +29,9 @@ App\Entity\Mission:
         sensors:
             - '@sensor-001:temperature'
             - '@sensor-001:humidity'
+
+App\Entity\MissionSensor:
+    mission-sensor-001:
+        mission: '@mission-003'
+        sensor: '@sensor-001:temperature'
+        name: 'The temperature'

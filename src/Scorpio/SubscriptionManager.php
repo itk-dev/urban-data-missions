@@ -3,7 +3,7 @@
 namespace App\Scorpio;
 
 use App\Entity\Mission;
-use App\Entity\Sensor;
+use App\Entity\MissionSensor;
 use App\Traits\LoggerTrait;
 use Psr\Log\LoggerAwareInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
@@ -21,10 +21,14 @@ class SubscriptionManager implements LoggerAwareInterface
     /** @var RouterInterface */
     private $router;
 
-    public function __construct(Client $client, RouterInterface $router)
+    /** @var array */
+    private $options;
+
+    public function __construct(Client $client, RouterInterface $router, array $subscriptionManagerOptions)
     {
         $this->client = $client;
         $this->router = $router;
+        $this->options = $subscriptionManagerOptions;
     }
 
     public function ensureSubscription(Mission $mission)
@@ -52,7 +56,7 @@ class SubscriptionManager implements LoggerAwareInterface
     public function createSubscription(Mission $mission): ?string
     {
         $this->debug(sprintf('Creating subscription for mission %s', $mission->getId()));
-        if (null === $mission->getId() || $mission->getSensors()->isEmpty()) {
+        if (null === $mission->getId() || $mission->getMissionSensors()->isEmpty()) {
             return null;
         }
 
@@ -108,17 +112,35 @@ class SubscriptionManager implements LoggerAwareInterface
 
     public function deleteSubscription(Mission $mission)
     {
-        $description = sprintf('Deleting subscription for mission %s', $mission->getId());
         $subscriptionId = $this->getSubscriptionId($mission);
         $response = $this->client->delete('/ngsi-ld/v1/subscriptions/'.urlencode($subscriptionId));
-
-        $description = sprintf('Deleting subscription for mission %s: response: %d', $mission->getId(), $response->getStatusCode());
 
         return Response::HTTP_NO_CONTENT === $response->getStatusCode();
     }
 
     private function buildSubscriptionPayload(Mission $mission): array
     {
+        // Make sure that notifications are sent correctly inside docker world.
+        if (isset($this->options['router']['context'])) {
+            $context = $this->router->getContext();
+            if (isset($this->options['router']['context']['schema'])) {
+                $context->setScheme($this->options['router']['context']['schema']);
+            }
+            if (isset($this->options['router']['context']['host'])) {
+                $context->setHost($this->options['router']['context']['host']);
+            }
+            if (!empty($this->options['router']['context']['port'])) {
+                if ('https' === $context->getScheme()) {
+                    $context->setHttpsPort($this->options['router']['context']['port']);
+                } else {
+                    $context->setHttpPort($this->options['router']['context']['port']);
+                }
+            }
+            if (isset($this->options['router']['context']['base_url'])) {
+                $context->setBaseUrl($this->options['router']['context']['base_url']);
+            }
+        }
+
         $endpoint = $this->router->generate('mission_subscription_notify', [
             'id' => $mission->getId(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -128,7 +150,9 @@ class SubscriptionManager implements LoggerAwareInterface
         return [
             'type' => 'Subscription',
             'description' => $description,
-            'entities' => $mission->getSensors()->map(static function (Sensor $sensor) {
+            'entities' => $mission->getMissionSensors()->map(static function (MissionSensor $missionSensor) {
+                $sensor = $missionSensor->getSensor();
+
                 return [
                     // Apparently, using 'id' => $sensor breaks something ...
                     'idPattern' => $sensor->getId(),

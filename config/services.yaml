@@ -6,9 +6,11 @@
 parameters:
     # https://symfony.com/doc/current/routing.html#generating-urls-in-commands
     'env(ROUTER_REQUEST_CONTEXT_SCHEME)': 'https'
+    'env(ROUTER_REQUEST_CONTEXT_PORT)': ''
     'env(ROUTER_REQUEST_CONTEXT_BASE_URL)': ''
     router.request_context.scheme: '%env(ROUTER_REQUEST_CONTEXT_SCHEME)%'
     router.request_context.host: '%env(ROUTER_REQUEST_CONTEXT_HOST)%'
+    router.request_context.port: '%env(ROUTER_REQUEST_CONTEXT_PORT)%'
     router.request_context.base_url: '%env(ROUTER_REQUEST_CONTEXT_BASE_URL)%'
     asset.request_context.base_path: '%router.request_context.base_url%'
 
@@ -28,11 +30,21 @@ services:
 
         bind:
             $ngsiLdBrokerUrl: '%env(NGSI_LD_BROKER_URL)%'
+
             $missionOptions:
                 mercure:
                     event_source_url: '%env(MERCURE_EVENT_SOURCE_URL)%'
+
             $sensorManagerOptions:
                 types: '%sensorTypes%'
+
+            $subscriptionManagerOptions:
+                router:
+                    context:
+                        scheme: '%env(ROUTER_REQUEST_CONTEXT_SCHEME)%'
+                        host: '%env(ROUTER_REQUEST_CONTEXT_HOST)%'
+                        port: '%env(ROUTER_REQUEST_CONTEXT_PORT)%'
+                        base_url: '%env(ROUTER_REQUEST_CONTEXT_BASE_URL)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

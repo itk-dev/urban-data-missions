@@ -225,7 +225,7 @@ class Mission
 
     public function __toString()
     {
-        return $this->getTitle();
+        return $this->getTitle() ?? static::class;
     }
 
     /**

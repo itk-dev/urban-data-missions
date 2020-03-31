@@ -31,10 +31,14 @@
                     </div>
                 </div>
 
-                {% for sensor in mission.missionSensors %}
+                {% for missionSensor in mission.missionSensors %}
                     <div class="row">
                         <div class="col">
-                            <span>{{ sensor.id }}</span>
+                            <span class="sensor-id">{{ missionSensor.sensor.id }}</span>
+                            <span class="sensor-type">{{ missionSensor.sensor.type }}</span>
+                            {% if missionSensor.name %}
+                                <span class="sensor-name">{{ missionSensor.name }}</span>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

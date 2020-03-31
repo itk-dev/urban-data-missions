@@ -3,8 +3,6 @@
 namespace App\Form\Type;
 
 use App\Entity\Mission;
-use App\Entity\MissionSensor;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,6 +38,8 @@ class MissionType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'block_prefix' => 'mission_sensor',
+                // Apparently this is needed to set mission_id correctly, but why?
+                'by_reference' => false,
             ])
         ;
     }
