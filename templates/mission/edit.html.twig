@@ -6,6 +6,9 @@
     <h1>Edit Mission</h1>
 
     {{ include('mission/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}
 
-    <a href="{{ path('mission_index') }}">back to list</a>
+{% block javascripts %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('mission/edit') }}
 {% endblock %}

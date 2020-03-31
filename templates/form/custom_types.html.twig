@@ -1,0 +1,51 @@
+{#
+Templates for custom form types.
+
+@see https://symfony.com/doc/current/form/create_custom_field_type.html#creating-the-form-type-template
+#}
+
+{# App\Form\Type\MissionType #}
+
+{# https://symfony.com/blog/new-in-symfony-4-3-simpler-form-theming #}
+{% block mission_sensor_widget %}
+    <div class="mission-sensor-widget">
+        {{- block('collection_widget') -}}
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button"
+            data-collection-add-new-widget-selector="#{{ form.vars.id }}"
+            class="btn btn-outline-primary">{{ 'Add sensor'|trans }}</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block mission_sensor_item_row %}
+    <div class="row mission-sensor-item border-bottom pb-3 mb-3" id="{{ id }}">
+        <div class="col-12">
+
+            {% for child in form.children|filter(child => not child.rendered) %}
+                <div class="form-group row">
+                    <div class="col-sm-2 col-form-label">
+                        {{ form_label(child) }}
+                    </div>
+                    <div class="col-sm-10">
+                        {{ form_widget(child) }}
+                    </div>
+                    <div class="col-sm-10 offset-sm-2">
+                        {{ form_help(child) }}
+                    </div>
+                    <div class="col-sm-10 offset-sm-2">
+                        {{ form_errors(child) }}
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <div class="col-12">
+            <div class="float-right">
+                <button type="button" class="btn text-danger btn-sm ml-0 pl-0" data-collection-remove-widget-selector="#{{ id }}">{{ 'Remove sensor'|trans }}</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

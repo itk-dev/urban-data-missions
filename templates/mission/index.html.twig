@@ -12,6 +12,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Location</th>
+                <th>Geolocation</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,13 @@
                 <td>{{ mission.title }}</td>
                 <td>{{ mission.description }}</td>
                 <td>{{ mission.location }}</td>
+                <td>
+                    {% if mission.latitude and mission.longitude %}
+                        ({{ mission.latitude|number_format(4) }}, {{ mission.longitude|number_format(4) }})
+                    {% else %}
+                        –
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('mission_show', {'id': mission.id}) }}">show</a>
                     <a href="{{ path('mission_edit', {'id': mission.id}) }}">edit</a>
@@ -36,4 +44,10 @@
     </table>
 
     <a href="{{ path('mission_new') }}">Create new</a>
+
+    <div id="chart"></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('mission/map') }}
 {% endblock %}

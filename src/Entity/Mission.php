@@ -75,19 +75,20 @@ class Mission
     private $subscription;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sensor")
-     */
-    private $sensors;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\SensorWarning", mappedBy="mission", orphanRemoval=true)
      */
     private $sensorWarnings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MissionSensor", mappedBy="mission", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $missionSensors;
 
     public function __construct()
     {
         $this->sensors = new ArrayCollection();
         $this->sensorWarnings = new ArrayCollection();
+        $this->missionSensors = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -192,32 +193,6 @@ class Mission
     }
 
     /**
-     * @return Collection|Sensor[]
-     */
-    public function getSensors(): Collection
-    {
-        return $this->sensors;
-    }
-
-    public function addSensor(Sensor $sensor): self
-    {
-        if (!$this->sensors->contains($sensor)) {
-            $this->sensors[] = $sensor;
-        }
-
-        return $this;
-    }
-
-    public function removeSensor(Sensor $sensor): self
-    {
-        if ($this->sensors->contains($sensor)) {
-            $this->sensors->removeElement($sensor);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|SensorWarning[]
      */
     public function getSensorWarnings(): Collection
@@ -250,6 +225,37 @@ class Mission
 
     public function __toString()
     {
-        return $this->getTitle();
+        return $this->getTitle() ?? static::class;
+    }
+
+    /**
+     * @return Collection|MissionSensor[]
+     */
+    public function getMissionSensors(): Collection
+    {
+        return $this->missionSensors;
+    }
+
+    public function addMissionSensor(MissionSensor $missionSensor): self
+    {
+        if (!$this->missionSensors->contains($missionSensor)) {
+            $this->missionSensors[] = $missionSensor;
+            $missionSensor->setMission($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMissionSensor(MissionSensor $missionSensor): self
+    {
+        if ($this->missionSensors->contains($missionSensor)) {
+            $this->missionSensors->removeElement($missionSensor);
+            // set the owning side to null (unless already changed)
+            if ($missionSensor->getMission() === $this) {
+                $missionSensor->setMission(null);
+            }
+        }
+
+        return $this;
     }
 }

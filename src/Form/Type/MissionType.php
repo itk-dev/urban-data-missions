@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\Entity\Mission;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +29,18 @@ class MissionType extends AbstractType
             ])
             ->add('latitude', TextType::class)
             ->add('longitude', TextType::class)
-            ->add('sensors')
+            ->add('missionSensors', CollectionType::class, [
+                'entry_type' => MissionSensorType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'block_prefix' => 'mission_sensor_item',
+                ],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'block_prefix' => 'mission_sensor',
+                // Apparently this is needed to set mission_id correctly, but why?
+                'by_reference' => false,
+            ])
         ;
     }
 
