@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\Entity\MissionTheme;
 use Symfony\Component\Form\AbstractType;

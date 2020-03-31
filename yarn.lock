@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@amcharts/amcharts4-geodata@^4.1.14":
+  version "4.1.14"
+  resolved "https://registry.yarnpkg.com/@amcharts/amcharts4-geodata/-/amcharts4-geodata-4.1.14.tgz#ecc70d20a52f09e8598631c478b0b01a3fec1a71"
+  integrity sha512-zb9eo88CcASLtGvyvKZ/ICM8xedPWK9HWSX8rixT1ObrmSv0jetQ3ky8K89smw3xfesTpZ68h5J1Isv/Fhj8aQ==
+
 "@amcharts/amcharts4@^4.9.9":
   version "4.9.12"
   resolved "https://registry.yarnpkg.com/@amcharts/amcharts4/-/amcharts4-4.9.12.tgz#3d3453ac42f9a2b8412abe9748212bc7d1d986d8"
@@ -8086,6 +8091,11 @@ select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
+
+select2@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/select2/-/select2-4.0.13.tgz#0dbe377df3f96167c4c1626033e924372d8ef44d"
+  integrity sha512-1JeB87s6oN/TDxQQYCvS5EFoQyvV6eYMZZ0AeA4tdFDYWN3BAGZ8npr17UBFddU0lgAt3H0yjX3X6/ekOj1yjw==
 
 selfsigned@^1.10.7:
   version "1.10.7"

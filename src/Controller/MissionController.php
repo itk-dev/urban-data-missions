@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Measurement;
 use App\Entity\Mission;
 use App\Entity\Sensor;
-use App\Form\MissionType;
+use App\Form\Type\MissionType;
 use App\Repository\MissionRepository;
 use App\Repository\MissionThemeRepository;
 use App\Repository\SensorRepository;
@@ -125,7 +125,7 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
         $appOptions['mission'] = $this->serializer->serialize($mission, 'jsonld', ['groups' => 'mission_read']);
 
         $appOptions['sensors'] = array_column(
-            $mission->getSensors()->map(static function (Sensor $sensor) {
+            $mission->getMissionSensors()->map(static function (Sensor $sensor) {
                 return [
                     'id' => $sensor->getId(),
                     'name' => $sensor->getId(),
