@@ -5,21 +5,26 @@
 {% block body %}
     <h1>Mission index</h1>
 
+    {% set map_options = {
+        missions: missions_data,
+        show_url_template: path('mission_show', {'id': '%id%'})|replace({('%'|url_encode): '%'})
+    } %}
+
+    <div id="map" data-options="{{ map_options|json_encode }}"></div>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Location</th>
-                <th>Geolocation</th>
-                <th>actions</th>
+                <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Description'|trans }}</th>
+                <th>{{ 'Location'|trans }}</th>
+                <th>{{ 'Geolocation'|trans }}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for mission in missions %}
             <tr>
-                <td>{{ mission.id }}</td>
                 <td>{{ mission.title }}</td>
                 <td>{{ mission.description }}</td>
                 <td>{{ mission.location }}</td>
@@ -32,7 +37,6 @@
                 </td>
                 <td>
                     <a href="{{ path('mission_show', {'id': mission.id}) }}">show</a>
-                    <a href="{{ path('mission_edit', {'id': mission.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -43,11 +47,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('mission_new') }}">Create new</a>
+    <a class="btn btn-success" href="{{ path('theme_index') }}">{{ 'Create new mission'|trans }}</a>
+{% endblock %}
 
-    <div id="chart"></div>
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission/index') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('mission/map') }}
+    {{ encore_entry_script_tags('mission/index') }}
 {% endblock %}

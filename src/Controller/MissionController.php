@@ -58,8 +58,12 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
      */
     public function index(MissionRepository $missionRepository): Response
     {
+        $missions = $missionRepository->findAll();
+
         return $this->render('mission/index.html.twig', [
-            'missions' => $missionRepository->findAll(),
+            'missions' => $missions,
+            'missions_url' => $this->generateUrl('api_missions_get_collection'),
+            'missions_data' => json_decode($this->serializer->serialize($missions, 'jsonld', ['groups' => 'mission_read'])),
         ]);
     }
 

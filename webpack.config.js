@@ -25,8 +25,7 @@ Encore
  */
   .addEntry('app', './assets/js/app.js')
   .addEntry('mission/app', './assets/mission/js/app.jsx')
-  .addEntry('mission/map', './assets/mission/js/map.jsx')
-
+  .addEntry('mission/index', './assets/mission/js/index.js')
   .addEntry('mission/edit', './assets/mission/js/edit.js')
 
 // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
