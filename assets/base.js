@@ -1,9 +1,7 @@
 /* eslint-env browser */
 
-import '../css/app.scss'
+import './base.scss'
 import '@fortawesome/fontawesome-free/js/all'
-
-import Chart from './components/Chart'
 
 require('typeface-roboto')
 require('jquery')

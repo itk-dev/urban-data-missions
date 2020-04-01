@@ -1,0 +1,56 @@
+// Custom bootstrap variables
+@import "custom-variables";
+
+// Bootstrap configuration
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+
+// Bootstrap Layout & components
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+
+body {
+  background-blend-mode: luminosity;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  padding: $sizer / 2;
+}
+
+body > .container-fluid {
+  box-shadow: $dropdown-box-shadow;
+  min-height: calc(100vh - #{$sizer});
+}
+
+table {
+  .number {
+    text-align: right;
+  }
+}
+
+#chart {
+    width: 100%;
+    height: 500px;
+}
+
+.text-primary-faded {
+  color: $primary-faded;
+}
+
+.page-navigation {
+  bottom: $sizer;
+  left: 0;
+  position: fixed;
+  right: 0;
+}
+
+.close {
+  position: fixed;
+  right: $sizer;
+  top: $sizer;
+}
+

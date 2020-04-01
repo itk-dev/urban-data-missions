@@ -83,9 +83,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('mission/app') }}
+    {{ encore_entry_link_tags('mission') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('mission/app') }}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission') }}
 {% endblock %}

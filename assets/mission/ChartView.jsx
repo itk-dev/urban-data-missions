@@ -1,7 +1,7 @@
 /* global fetch, EventSource */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Chart from '../../../js/components/Chart'
+import Chart from './Chart'
 
 class ChartView extends Component {
   // @see https://www.amcharts.com/docs/v4/getting-started/integrations/using-react/

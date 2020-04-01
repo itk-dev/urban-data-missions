@@ -2,6 +2,11 @@
 
 {% block title %}Edit MissionTheme{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission-theme') }}
+{% endblock %}
+
 {% block body %}
     <h1>Edit MissionTheme</h1>
 
@@ -10,4 +15,9 @@
     <a href="{{ path('mission_theme_index') }}">back to list</a>
 
     {{ include('mission_theme/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission-theme') }}
 {% endblock %}

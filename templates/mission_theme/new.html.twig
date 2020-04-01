@@ -2,10 +2,20 @@
 
 {% block title %}New MissionTheme{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission-theme') }}
+{% endblock %}
+
 {% block body %}
     <h1>Create new MissionTheme</h1>
 
     {{ include('mission_theme/_form.html.twig') }}
 
     <a href="{{ path('mission_theme_index') }}">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission-theme') }}
 {% endblock %}

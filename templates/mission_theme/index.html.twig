@@ -2,6 +2,11 @@
 
 {% block title 'Mission theme'|trans %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission-theme') }}
+{% endblock %}
+
 {% block body_class 'new-mission' %}
 
 {% block background_image %}style="background-image: url({{ asset('build/images/map_background.png') }});"{% endblock %}
@@ -43,4 +48,9 @@
 
         </article>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission-theme') }}
 {% endblock %}

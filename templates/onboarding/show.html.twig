@@ -2,6 +2,11 @@
 
 {% block title page.title %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('onboarding') }}
+{% endblock %}
+
 {% block body_class %}{{ page.slug|raw }}{% endblock %}
 
 {% block background_image %}style="background-image: url({{ asset('build/images/map_background.png') }});"{% endblock %}
@@ -91,4 +96,9 @@
             {% endblock %}
         </article>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('onboarding') }}
 {% endblock %}

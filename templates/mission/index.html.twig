@@ -52,9 +52,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('mission/index') }}
+    {{ encore_entry_link_tags('mission') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('mission/index') }}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission') }}
 {% endblock %}

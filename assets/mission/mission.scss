@@ -1,0 +1,72 @@
+@import "../_custom-variables";
+@import "~bootstrap/scss/_badge.scss";
+@import "~bootstrap/scss/_buttons.scss";
+@import "~bootstrap/scss/_forms.scss";
+
+
+@import '~leaflet/dist/leaflet';
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.map-marker-icon {
+  width: 12px;
+  height: 12px;
+  background: rgba(0, 127, 0, .75);
+  border-radius: 6px;
+  // @TODO: Design: Add a fontawesome marker or something …
+}
+
+// @TODO: Hide element when map is shown
+.map-shown {
+  display: none;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.map-marker-icon {
+  width: 12px;
+  height: 12px;
+  background: rgba(0, 127, 0, .75);
+  border-radius: 6px;
+  // @TODO: Design: Add a fontawesome marker or something …
+}
+
+.mission-dot {
+  background-color: $primary;
+  border-radius: 50%;
+  box-shadow: $box-shadow-sm;
+  display: inline-block;
+  height: $spacer;
+  margin: 0;
+  padding: 0;
+  width: $spacer;
+}
+
+// @TODO: Design
+.badge-log-entry-type {
+  @include badge-variant($primary-300);
+}
+
+.badge-log-entry-type-user {
+  @include badge-variant($primary-400);
+}
+
+.badge-log-entry-type-system {
+  @include badge-variant($primary-200);
+}
+
+.log-view-content {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+
+.badge {
+  font-weight: 400;
+}
