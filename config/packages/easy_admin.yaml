@@ -12,6 +12,8 @@ easy_admin:
                 fields:
                     - property: title
                     - property: icon
+                    - createdBy
+                    - createdAt
 
             form:
                 fields:
