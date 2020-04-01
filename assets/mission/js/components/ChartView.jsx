@@ -38,7 +38,8 @@ Add log entry
       },
       legend: true,
       cursor: true,
-      scrollbars: true
+      scrollbars: true,
+      export: true
     })
 
     this.chart = chart

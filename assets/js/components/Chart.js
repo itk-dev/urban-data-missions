@@ -34,6 +34,14 @@ class Chart {
     if (options.scrollbars) {
       this.buildScrollbars(options.scrollbars)
     }
+
+    if (options.export) {
+      this.buildExport(options.export)
+    }
+  }
+
+  buildExport (options) {
+    this.chart.exporting.menu = new am4core.ExportMenu()
   }
 
   buildAxes (options) {
