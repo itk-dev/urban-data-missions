@@ -6,8 +6,6 @@ App\Entity\Mission:
         location: Dokk1
         latitude: 56.1534662
         longitude: 10.2110899
-        sensors:
-            - '@sensor-001:humidity'
 
     'mission-002':
         theme: '@mission_theme/002'
@@ -16,8 +14,6 @@ App\Entity\Mission:
         location: Dokk1
         latitude: 56.1543005
         longitude: 10.2049514
-        sensors:
-            - '@sensor-001:temperature'
 
     'mission-003':
         theme: '@mission_theme/003'
@@ -26,9 +22,6 @@ App\Entity\Mission:
         location: Dokk1
         latitude: 56.1534662
         longitude: 10.2110899
-        sensors:
-            - '@sensor-001:temperature'
-            - '@sensor-001:humidity'
 
 App\Entity\MissionSensor:
     mission-sensor-001:

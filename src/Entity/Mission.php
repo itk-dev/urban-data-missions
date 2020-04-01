@@ -86,7 +86,6 @@ class Mission
 
     public function __construct()
     {
-        $this->sensors = new ArrayCollection();
         $this->sensorWarnings = new ArrayCollection();
         $this->missionSensors = new ArrayCollection();
     }
