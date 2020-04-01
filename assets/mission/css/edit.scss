@@ -1,0 +1,19 @@
+@import '../../../node_modules/leaflet/dist/leaflet';
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.map-marker-icon {
+  width: 12px;
+  height: 12px;
+  background: rgba(0, 127, 0, .75);
+  border-radius: 6px;
+  // @TODO: Design: Add a fontawesome marker or something …
+}
+
+// @TODO: Hide element when map is shown
+.map-shown {
+  display: none;
+}

@@ -41,6 +41,11 @@
                             {% endif %}
                         </div>
                     </div>
+                {% else %}
+                    {# @TODO: Design #}
+                    <div class="alert alert-warning">
+                        {{ 'No sensors added yet'|trans }}
+                        <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a></div>
                 {% endfor %}
             </article>
 

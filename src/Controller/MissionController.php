@@ -73,6 +73,10 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
     public function new(Request $request, MissionThemeRepository $missionThemeRepository): Response
     {
         $theme = $missionThemeRepository->find($request->get('theme'));
+        if (null === $theme) {
+            return $this->redirectToRoute('theme_index');
+        }
+
         $mission = (new Mission())
             ->setTheme($theme);
         $form = $this->createForm(MissionType::class, $mission);
