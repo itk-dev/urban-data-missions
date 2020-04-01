@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
+import '@fortawesome/fontawesome-free/js/all'
 import '../../css/app.scss'
 
 import ChartView from './components/ChartView'
