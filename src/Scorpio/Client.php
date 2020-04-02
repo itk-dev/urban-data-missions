@@ -37,6 +37,11 @@ class Client implements LoggerAwareInterface
         return $this->request('GET', $path, $options);
     }
 
+    public function getUrl(string $path, array $options = []): string
+    {
+        return $this->ngsiLdBrokerUrl.$path;
+    }
+
     public function post(string $path, array $options = []): ResponseInterface
     {
         return $this->request('POST', $path, $options);

@@ -1,0 +1,5 @@
+App\Entity\User:
+    admin:
+        email: 'admin@example.com'
+        password: 'password'
+        roles: ['ROLE_ADMIN']

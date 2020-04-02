@@ -20,14 +20,19 @@ class MeasurementManager implements LoggerAwareInterface
         $this->client = $client;
     }
 
-    public function getMeasurementUrl(string $sensor)
+    public function getMeasurementUrl(string $sensor, string $type)
     {
-        return '/ngsi-ld/v1/entities/'.urlencode($sensor);
+        return $this->client->getUrl('/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type)));
     }
 
-    public function getMeasurement(string $sensor)
+    private function getEntityId(string $sensor, string $type): string
     {
-        $path = '/ngsi-ld/v1/entities/'.urlencode($sensor);
+        return $sensor.':'.$type;
+    }
+
+    public function getMeasurement(string $sensor, string $type)
+    {
+        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type));
         $response = $this->client->get($path);
 
         return Response::HTTP_OK === $response->getStatusCode() ? $response->toArray() : null;
@@ -37,7 +42,7 @@ class MeasurementManager implements LoggerAwareInterface
     {
         $path = '/ngsi-ld/v1/entities/';
         $payload = [
-            'id' => $sensor,
+            'id' => $this->getEntityId($sensor, $type),
             'type' => $type,
             'dateObserved' => [
                 'type' => 'Property',
@@ -65,13 +70,13 @@ class MeasurementManager implements LoggerAwareInterface
 
     public function updateMeasurement(string $sensor, string $type, $value, ?DateTimeInterface $measuredAt = null)
     {
-        $path = '/ngsi-ld/v1/entities/'.urlencode($sensor).'/attrs';
+        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type)).'/attrs';
         $payload = [
             'dateObserved' => [
                 'type' => 'Property',
                 'value' => [
                     '@type' => 'DateTime',
-                    '@value' => ($measuredAt ?? new DateTimeImmutable())->format(DateTimeInterface::ATOM),
+                    '@value' => $measuredAt->format(DateTimeInterface::ATOM),
                 ],
             ],
             $type => [
@@ -83,7 +88,7 @@ class MeasurementManager implements LoggerAwareInterface
             ],
         ];
 
-        $this->info(sprintf('Updating measurement %s for %s', $type, $sensor));
+        $this->info(sprintf('Updating measurement %s.%s; value: %f; measured at %s', $sensor, $type, $value, $measuredAt->format(DateTimeImmutable::ATOM)));
         $response = $this->client->patch($path, [
             'json' => $payload,
         ]);
@@ -91,13 +96,19 @@ class MeasurementManager implements LoggerAwareInterface
         return Response::HTTP_NO_CONTENT === $response->getStatusCode();
     }
 
-    public function deleteMeasurement(string $sensor)
+    public function deleteMeasurement(string $sensor, string $type)
     {
-        $path = '/ngsi-ld/v1/entities/'.urlencode($sensor);
+        $path = '/ngsi-ld/v1/entities/'.urlencode($this->getEntityId($sensor, $type));
 
         $this->info('Deleting measurement');
         $response = $this->client->delete($path);
 
         return Response::HTTP_NO_CONTENT === $response->getStatusCode();
+    }
+
+    public function getValue(array $measurement)
+    {
+        // @TODO Make this hack more robust!
+        return $measurement[$measurement['type'] ?? null]['value'] ?? null;
     }
 }

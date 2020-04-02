@@ -1,0 +1,21 @@
+App\Entity\MissionTheme:
+    missiontheme/den-sundeste-vej-i-skole:
+        title: Den sundeste vej i skole
+        description: '\<p>Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.</p>'
+        icon: road
+        createdBy: '@admin'
+        createdAt: '<dateTimeBetween("2020-01-01", "2020-01-01")>'
+
+    missiontheme/002:
+        title: Missionstema 2
+        description: '\<p>Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.</p>'
+        icon: star
+        createdBy: '@admin'
+        createdAt: '<dateTimeBetween("2020-01-01", "2020-01-01")>'
+
+    missiontheme/003:
+        title: Missionstema 3
+        description: '\<p>Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.</p>'
+        icon: archive
+        createdBy: '@admin'
+        createdAt: '<dateTimeBetween("2020-01-05T12:32:23", "2020-01-05T12:32:23")>'

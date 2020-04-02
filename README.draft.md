@@ -8,16 +8,16 @@ Based on
 
 ```sh
 docker-compose up -d
-docker-compose exec phpfpm composer install
 # @TODO: There must be a better way to do this …
 docker-compose exec phpfpm chown -R daemon /app/var
+docker-compose exec phpfpm composer install
 docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction
 ```
 
 ## Fixtures
 
 ```sh
-docker-compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
+docker-compose exec phpfpm composer load-fixtures
 ```
 
 ## Sensors
@@ -42,6 +42,10 @@ Scorpio Broker: [http://0.0.0.0:9090/ngsi-ld/v1/entities/](http://0.0.0.0:9090/n
 
 [https://gitlab.iotcrawler.net/core/iotcrawler_core/snippets/5](https://gitlab.iotcrawler.net/core/iotcrawler_core/snippets/5)
 [https://gitlab.iotcrawler.net/core/iotcrawler_core#deployed-components](https://gitlab.iotcrawler.net/core/iotcrawler_core#deployed-components)
+
+## Subscriptions
+
+http://0.0.0.0:9090/ngsi-ld/v1/subscriptions/
 
 ## Creating measurements
 

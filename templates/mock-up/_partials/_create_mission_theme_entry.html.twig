@@ -1,0 +1,14 @@
+<div class="carousel-item {% if active %}active{% endif %} my-3">
+    <h1>{{ title }}</h1>
+
+    <span class="fa-8x">
+        <span class="fa-layers fa-fw">
+            <i class="fas fa-circle text-white"></i>
+            <i class="fas fa-invers fa-{{ fa_icon }}" data-fa-transform="shrink-6"></i>
+        </span>
+    </span>
+
+    <p class="description">{{ description }}</p>
+    <a href="/mock-up/create-mission" class="btn btn-success">{{ "Create new mission"|trans }}</a>
+</div>
+

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
+IFS=$'\n\t'
+
+dir=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../ && pwd)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+cd "$dir"
+
+echo "${bold}Installing asset build tools${normal}"
+docker run --volume "${PWD}":/app --workdir /app node:latest yarn install
+
+echo "${bold}Building assets${normal}"
+docker run --volume "${PWD}":/app --workdir /app node:latest yarn build
+
+echo "${bold}Bringing up Docker compose containers${normal}"
+docker-compose up -d
+docker-compose exec -e APP_ENV=prod phpfpm chown -R daemon /app/var
+
+echo "${bold}Composer installing${normal}"
+docker-compose exec -e APP_ENV=prod phpfpm composer install --no-dev --classmap-authoritative
+docker-compose exec -e APP_ENV=prod phpfpm composer dump-env prod
+
+echo "${bold}Clearing and warming up cache${normal}"
+docker-compose exec -e APP_ENV=prod phpfpm bin/console cache:clear --no-warmup
+docker-compose exec -e APP_ENV=prod phpfpm bin/console cache:warmup
+
+echo "${bold}Running migrations${normal}"
+docker-compose exec -e APP_ENV=prod phpfpm bin/console doctrine:migrations:migrate --no-interaction
