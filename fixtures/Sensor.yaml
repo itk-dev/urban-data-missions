@@ -1,8 +1,20 @@
 App\Entity\Sensor:
-    'sensor-001:humidity':
+    'sensor_001:humidity':
         id: 'sensor-001:humidity'
         type: 'https://uri.fiware.org/ns/data-models#humidity'
 
-    'sensor-001:temperature':
+    'sensor_001:temperature':
         id: 'sensor-001:temperature'
         type: 'https://uri.fiware.org/ns/data-models#temperature'
+
+    'sensor_001:water_temperature':
+        id: 'sensor-001:water_temperature'
+        type: 'https://uri.fiware.org/ns/data-models#water_temperature'
+
+    'sensor_001:noise':
+        id: 'sensor-001:noise'
+        type: 'https://uri.fiware.org/ns/data-models#noise'
+
+    'sensor_001:polution':
+        id: 'sensor-001:polution'
+        type: 'https://uri.fiware.org/ns/data-models#polution'
