@@ -4,13 +4,10 @@ import '../base.scss'
 /* Import this components styling */
 import './mission.scss'
 
-/* Require roboto typeface */
-require('typeface-roboto')
+import '@fortawesome/fontawesome-free/js/all'
 require('jquery')
 require('popper.js')
 require('bootstrap')
-
-import '@fortawesome/fontawesome-free/js/all'
 
 const L = require('leaflet')
 
@@ -36,7 +33,8 @@ for (const mission of missions) {
 
   const showUrl = mapOptions.show_url_template.replace('%id%', mission.id)
   // @TODO: Design
-  marker.bindPopup(`<div class="mission-title">${mission.title}</div> <a class="btn btn-secondary" href="${showUrl}">Show</a>`)
+  marker.bindPopup(`<p class="mb-0 h4">${mission.title}</p><p class="text-primary"><i class="fas fa-map-marker-alt mr-1"></i>${mission.location}</p><p>${mission.desctiption}</p><a href="${showUrl}" class="btn btn-primary btn-sm btn-block">Show mission</a>`)
 }
 
 map.fitBounds(bounds)
+
