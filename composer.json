@@ -9,7 +9,6 @@
         "api-platform/api-pack": "^1.2",
         "easycorp/easyadmin-bundle": "^2.3",
         "friendsofsymfony/ckeditor-bundle": "^2.2",
-        "knplabs/doctrine-behaviors": "^2.0",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
@@ -31,9 +30,10 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "friendsoftwig/twigcs": "^3.2",
+        "friendsoftwig/twigcs": "^4.0",
         "hautelook/alice-bundle": "^2.7",
-        "symfony/maker-bundle": "^1.14"
+        "symfony/maker-bundle": "^1.14",
+        "symfony/profiler-pack": "^1.0"
     },
     "config": {
         "preferred-install": {
@@ -105,5 +105,6 @@
             "allow-contrib": true,
             "require": "5.0.*"
         }
-    }
+    },
+    "minimum-stability": "beta"
 }

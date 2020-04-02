@@ -2,9 +2,9 @@
 
 namespace App\EventListener;
 
-use App\Entity\Experiment;
-use App\Entity\ExperimentLogEntry;
 use App\Entity\Measurement;
+use App\Entity\Mission;
+use App\Entity\MissionLogEntry;
 use App\Traits\LoggerTrait;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerAwareInterface;
@@ -36,23 +36,23 @@ class UpdatePublisher implements LoggerAwareInterface
             $measurement = $entity;
             $data = $this->serializer->serialize([
                 'measurement' => $measurement,
-            ], 'json', ['groups' => ['experiment_read', 'measurement_read']]);
+            ], 'jsonld', ['groups' => ['mission_read', 'measurement_read']]);
 
-            $this->publishExperimentUpdate($measurement->getExperiment(), $data);
-        } elseif ($entity instanceof ExperimentLogEntry) {
+            $this->publishMissionUpdate($measurement->getMission(), $data);
+        } elseif ($entity instanceof MissionLogEntry) {
             $logEntry = $entity;
             $data = $this->serializer->serialize([
                 'log_entry' => $logEntry,
-            ], 'json', ['groups' => ['experiment_read', 'experiment_log_entry_read']]);
+            ], 'jsonld', ['groups' => ['mission_read', 'mission_log_entry_read']]);
 
-            $this->publishExperimentUpdate($logEntry->getExperiment(), $data);
+            $this->publishMissionUpdate($logEntry->getMission(), $data);
         }
     }
 
-    private function publishExperimentUpdate(Experiment $experiment, string $data)
+    private function publishMissionUpdate(Mission $mission, string $data)
     {
         $update = new Update(
-            'experiment:'.$experiment->getId(),
+            'mission:'.$mission->getId(),
             $data
         );
 

@@ -28,7 +28,7 @@ class MeasurementAddCommand extends Command
     protected function configure()
     {
         $this
-            ->addArgument('device', InputArgument::REQUIRED, 'Device id')
+            ->addArgument('sensor', InputArgument::REQUIRED, 'Sensor id')
             ->addArgument('type', InputArgument::REQUIRED, 'The measurement type, e.g. "temperature"')
             ->addArgument('min', InputArgument::REQUIRED, 'The min value, e.g. -42')
             ->addArgument('max', InputArgument::REQUIRED, 'The max value, e.g. 87')
@@ -39,17 +39,17 @@ class MeasurementAddCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $device = $input->getArgument('device');
+        $sensor = $input->getArgument('sensor');
         $type = $input->getArgument('type');
         $min = $this->getNumber($input->getArgument('min'));
         $max = $this->getNumber($input->getArgument('max'));
         $step = $this->getNumber($input->getArgument('step'));
-        $measuredAt = $input->getOption('measured-at') ? new DateTimeImmutable($input->getOption('measured-at')) : null;
+        $measuredAt = new DateTimeImmutable($input->getOption('measured-at') ?? 'now');
 
         $logger = new ConsoleLogger($output);
         $this->measurementManager->setLogger($logger);
 
-        $existingMeasurement = $this->measurementManager->getMeasurement($device, $type);
+        $existingMeasurement = $this->measurementManager->getMeasurement($sensor, $type);
 
         if (null !== $existingMeasurement) {
             $value = $this->measurementManager->getValue($existingMeasurement);
@@ -58,17 +58,17 @@ class MeasurementAddCommand extends Command
             $newValue = $value + $delta;
             $newValue = min($max, $newValue);
             $newValue = max($min, $newValue);
-            $status = $this->measurementManager->updateMeasurement($device, $type, $newValue, $measuredAt);
+            $status = $this->measurementManager->updateMeasurement($sensor, $type, $newValue, $measuredAt);
             if ($status) {
-                $logger->info(sprintf('%s %s updated; %f -> %f', $device, $type, $value, $newValue));
+                $logger->info(sprintf('%s %s updated; value: %f -> %f', $sensor, $type, $value, $newValue));
             } else {
                 $logger->info('Error updating measurement. Sad but true!');
             }
         } else {
             $value = $this->getRandomValue($min, $max);
-            $status = $this->measurementManager->createMeasurement($device, $type, $value, $measuredAt);
+            $status = $this->measurementManager->createMeasurement($sensor, $type, $value, $measuredAt);
             if ($status) {
-                $logger->info(sprintf('%s:%s created; %f', $device, $type, $value));
+                $logger->info(sprintf('%s %s created; value: %f', $sensor, $type, $value));
             } else {
                 $logger->info('Error creating measurement. Sad but true!');
             }

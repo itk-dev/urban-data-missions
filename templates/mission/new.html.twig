@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'New Mission'|trans %}
+
+{% block content %}
+    <div class="container-fluid bg-white">
+        <article class="mission py-3">
+            {% include '_nav_close.html.twig' with {'nav_path': path('mission')} %}
+
+            <h1>{{ 'Create mission'|trans }}</h1>
+
+            {# TODO: Get the real mission theme #}
+            <p class="text-primary-faded text-uppercase small">{{ "Den sundeste vej i skole"|trans }}
+                {# <a href="" class="ml-3">Show theme</a> #}
+            </p>
+
+            {{ include('mission/_form.html.twig', {button_label: 'Create mission'|trans}) }}
+        </article>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('mission') }}
+{% endblock %}

@@ -54,7 +54,7 @@ Generating a single value:
 # min value:      -20
 # max value:       30
 # max change (±):   1
-docker-compose exec phpfpm bin/console app:measurement:add fixture:device:001 temperature -- -20 30 1
+docker-compose exec phpfpm bin/console app:measurement:add sensor-001 temperature -- -20 30 1
 ```
 
 Continuously generating values:
@@ -62,8 +62,8 @@ Continuously generating values:
 ```sh
 docker-compose exec phpfpm bash -s <<<EOF
 while true; do
-  bin/console app:measurement:add fixture:device:001 humidity 0 100 10
-  bin/console app:measurement:add fixture:device:001 temperature -- -20 30 1
+  bin/console app:measurement:add sensor-001 humidity 0 100 10
+  bin/console app:measurement:add sensor-001 temperature -- -20 30 1
   sleep 1 # second
 done
 EOF
@@ -72,8 +72,10 @@ EOF
 
 ```sh
 composer coding-standards-check
+yarn coding-standards-check
 ```
 
 ```sh
 composer coding-standards-apply
+yarn coding-standards-apply
 ```

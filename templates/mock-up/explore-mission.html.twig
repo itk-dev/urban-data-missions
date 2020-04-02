@@ -7,79 +7,71 @@
 {% block content %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
-            {% include "_partials/_nav_close.html.twig" with {'nav_path': '/mock-up/explore' }%}
+            {% include "mock-up/_partials/_nav_close.html.twig" with {'nav_path': '/mock-up/explore'} %}
             <h1>Katedralskolens mobilitets mission</h1>
             <p class='text-primary-faded'>Den sundeste vej i skole<br/><i class='fas fa-map-marker-alt mr-1'></i>Værkmestergade 2, 8000 Aarhus C</p>
             <p>Der kan være stor forskel på luftkvaliteten i aarhus, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             <article class="mission-chart">
-                {% include "_partials/_amchart_demo.html.twig" %}
+                {% include "mock-up/_partials/_amchart_demo.html.twig" %}
             </article>
             <article class="mission-log">
-                {% include "_partials/_article_header.html.twig" with {'title': 'Mission log', 'add_button': true, 'edit_button': false } %}
+                {% include "mock-up/_partials/_article_header.html.twig" with {'title': 'Mission log', 'add_button': true, 'edit_button': false} %}
 
-                {% include "_partials/_mission_log_entry.html.twig" with {
+                {% include "mock-up/_partials/_mission_log_entry.html.twig" with {
                     'date_time': '20.01.2020',
                     'type': 'User',
                     'message': 'Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.'
-                    }
-                %}
+                    } %}
 
-                {% include "_partials/_mission_log_entry.html.twig" with {
+                {% include "mock-up/_partials/_mission_log_entry.html.twig" with {
                     'date_time': '16.01.2020',
                     'type': 'sensor',
                     'message': 'Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.'
-                    }
-                %}
+                    } %}
 
-                {% include "_partials/_mission_log_entry.html.twig" with {
+                {% include "mock-up/_partials/_mission_log_entry.html.twig" with {
                     'date_time': '12.01.2020',
                     'type': 'system',
                     'message': 'Ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet nibh dolor.'
-                    }
-                %}
+                    } %}
             </article>
             <article class="mission-sources">
-                {% include "_partials/_article_header.html.twig" with {'title': 'Data sources', 'add_button': true, 'edit_button': true } %}
+                {% include "mock-up/_partials/_article_header.html.twig" with {'title': 'Data sources', 'add_button': true, 'edit_button': true} %}
 
-                {% include "_partials/_data_source_entry.html.twig" with {
+                {% include "mock-up/_partials/_data_source_entry.html.twig" with {
                     'sensor': 'CO2',
                     'amount': '120.61',
                     'description': 'Kuffertsensor CO2 ID#1293892890'
-                    }
-                %}
+                    } %}
 
-                {% include "_partials/_data_source_entry.html.twig" with {
+                {% include "mock-up/_partials/_data_source_entry.html.twig" with {
                     'sensor': 'Partikler',
                     'amount': '607.00',
                     'description': 'IoTcrawler sensor ID#8329012898'
-                    }
-                %}
+                    } %}
 
-                {% include "_partials/_data_source_entry.html.twig" with {
+                {% include "mock-up/_partials/_data_source_entry.html.twig" with {
                     'sensor': 'Vibra',
                     'amount': '98.00',
                     'description': 'IoTcrawler sensor ID#8329012898'
-                    }
-                %}
+                    } %}
 
-                {% include "_partials/_data_source_entry.html.twig" with {
+                {% include "mock-up/_partials/_data_source_entry.html.twig" with {
                     'sensor': 'UV',
                     'amount': '72.01',
                     'description': 'IoTcrawler sensor ID#8329012898'
-                    }
-                %}
+                    } %}
 
-                {% include "_partials/_data_source_entry.html.twig" with {
+                {% include "mock-up/_partials/_data_source_entry.html.twig" with {
                     'sensor': 'DBA',
                     'amount': '180.24',
                     'description': 'IoTcrawler sensor ID#8329012898'
-                    }
-                %}
+                    } %}
 
             </article>
 
             <article class="mission-export">
-                {% include "_partials/_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false } %}
+                {% include "mock-up/_partials/_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false} %}
                 <div class="row">
                     <div class="col-auto">
                         <button type="button" name="export_png" id="" class="btn btn-success" >Export png</button>
@@ -91,7 +83,7 @@
             </article>
 
             <article class="mission-finish">
-                {% include "_partials/_article_header.html.twig" with {'title': 'Finish mission', 'add_button': false, 'edit_button': false } %}
+                {% include "mock-up/_partials/_article_header.html.twig" with {'title': 'Finish mission', 'add_button': false, 'edit_button': false} %}
                 <div class="row">
                     <div class="col-auto">
                         <button type="button" name="export_png" id="" class="btn btn-danger" >Finish mission</button>

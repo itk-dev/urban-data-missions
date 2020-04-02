@@ -1,0 +1,65 @@
+@import '../custom-variables';
+@import '~bootstrap/scss/badge';
+@import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/alert';
+@import '~bootstrap/scss/navbar';
+@import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/modal';
+
+@import '~leaflet/dist/leaflet';
+
+.map {
+  height: calc(100vh - 56px);
+  width: 100vw;
+}
+
+.map-marker-icon {
+  background-color: $primary;
+  border-radius: 50%;
+  box-shadow: $box-shadow-sm;
+  display: inline-block;
+  height: $spacer;
+  margin: 0;
+  padding: 0;
+  width: $spacer;
+}
+
+// @TODO: Hide element when map is shown
+.map-shown {
+  display: none;
+}
+
+// @TODO: Design
+.badge-log-entry-type {
+  @include badge-variant($primary-300);
+}
+
+.badge-log-entry-type-user {
+  @include badge-variant($primary-400);
+}
+
+.badge-log-entry-type-system {
+  @include badge-variant($primary-200);
+}
+
+.log-view-content {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.badge {
+  font-weight: 400;
+}
+
+.btn-add-new-mission {
+  bottom: $spacer;
+  position: fixed;
+  right: $spacer;
+  z-index: $zindex-fixed;
+}
+
+// Hack default color from leaflet css
+.leaflet-container .leaflet-popup-content a {
+  color: $white;
+}

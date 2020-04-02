@@ -1,0 +1,6 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-success btn-block">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

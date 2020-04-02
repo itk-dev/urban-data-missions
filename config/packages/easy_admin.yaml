@@ -5,6 +5,39 @@ easy_admin:
             - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
 
     entities:
+        Theme:
+            class: App\Entity\MissionTheme
+
+            list:
+                fields:
+                    - property: title
+                    - property: icon
+                    - createdBy
+                    - createdAt
+
+            form:
+                fields:
+                    - property: title
+                    - property: description
+                      type: fos_ckeditor
+                      # type_options: { 'config': { 'toolbar': [ { name: 'styles', items: ['Bold', 'Italic', 'BulletedList', 'Link'] } ] } } }
+                    - property: icon
+
+        Mission:
+            class: App\Entity\Mission
+
+            list:
+                actions:
+                    view:
+                        label: View
+                        type: route
+                        name: mission_show
+
+                fields:
+                    - property: title
+                    - property: createdAt
+                    - property: finishedAt
+
         Page:
             class: App\Entity\CmsPage
 
@@ -19,8 +52,11 @@ easy_admin:
 
                 fields:
                     - property: title
-                    - property: slug
                     - property: type
+                    - property: slug
+                    - property: image
+                      type: image
+                      base_path: '%app.path.cms_images%'
                     - property: parent
                     - property: position
                     - property: children
@@ -57,6 +93,6 @@ easy_admin:
                       type: fos_ckeditor
                       # type_options: { 'config': { 'toolbar': [ { name: 'styles', items: ['Bold', 'Italic', 'BulletedList', 'Link'] } ] } } }
                     - property: imageFile
-                      type: file
+                      type: vich_image
                     - property: parent
                     - property: position

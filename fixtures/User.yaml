@@ -1,0 +1,10 @@
+parameters:
+    # Password "password" generated with
+    #   bin/console security:encode-password "password"
+    admin_password: '$argon2id$v=19$m=65536,t=4,p=1$91dzQCxP23N8DKV+dpoqTQ$5RLu6akT4Ay86wr/qHc3wZ/OVpU3aGCbZ6B09/ajtRY'
+
+App\Entity\User:
+    admin:
+        email: 'admin@example.com'
+        password: '<{admin_password}>'
+        roles: ['ROLE_ADMIN']

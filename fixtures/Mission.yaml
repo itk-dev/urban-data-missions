@@ -1,0 +1,30 @@
+App\Entity\Mission:
+    'mission-001':
+        theme: '@mission_theme/den-sundeste-vej-i-skole'
+        title: 'The first mission'
+        description: 'This is our first mission'
+        location: Dokk1
+        latitude: 56.1534662
+        longitude: 10.2110899
+
+    'mission-002':
+        theme: '@mission_theme/002'
+        title: 'Another mission'
+        description: 'Another mission'
+        location: Dokk1
+        latitude: 56.1543005
+        longitude: 10.2049514
+
+    'mission-003':
+        theme: '@mission_theme/003'
+        title: 'Third time''s a charm'
+        description: 'Now we''re at it again …'
+        location: Dokk1
+        latitude: 56.1534662
+        longitude: 10.2110899
+
+App\Entity\MissionSensor:
+    mission-sensor-001:
+        mission: '@mission-003'
+        sensor: '@sensor-001:temperature'
+        name: 'The temperature'

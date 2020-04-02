@@ -23,8 +23,12 @@ Encore
  * Each entry will result in one JavaScript file (e.g. app.js)
  * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
  */
-  .addEntry('app', './assets/js/app.js')
-  .addEntry('experiment/app', './assets/js/experiment/app.jsx')
+  .addEntry('base', './assets/base.js')
+  .addEntry('mission', './assets/mission/index.js')
+  .addEntry('mission/show', './assets/mission/show.jsx')
+  .addEntry('mission/edit', './assets/mission/edit.js')
+  .addEntry('mission-theme', './assets/mission_theme/index.js')
+  .addEntry('onboarding', './assets/onboarding/index.js')
 
 // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
@@ -74,12 +78,12 @@ Encore
 // .addEntry('admin', './assets/js/admin.js')
 
 // Enable copy of static assets
-  .copyFiles({
-    from: './assets/images',
-    // if versioning is enabled, add the file hash too
-    to: 'images/[path][name].[hash:8].[ext]',
-    // only copy files matching this pattern
-    pattern: /\.(png|jpg|jpeg)$/
-  })
+// .copyFiles({
+//   from: './assets/images',
+//   // if versioning is enabled, add the file hash too
+//   to: 'images/[path][name].[hash:8].[ext]',
+//   // only copy files matching this pattern
+//   pattern: /\.(png|jpg|jpeg)$/
+// })
 
 module.exports = Encore.getWebpackConfig()

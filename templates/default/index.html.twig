@@ -5,9 +5,9 @@
 {% block content %}
     <ul class="nav flex-column">
         {% for url, text in {
-            (path('app')): 'App'|trans,
-            (path('experiment_index')): 'Experiment'|trans,
-            (path('mockup', {path:''})): 'Mock-up'|trans,
+            (path('theme_index')): 'Themes'|trans,
+            (path('mission_index')): 'Mission'|trans,
+            (path('mockup', {path: ''})): 'Mock-up'|trans,
             } %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url }}">{{ text }}</a>
