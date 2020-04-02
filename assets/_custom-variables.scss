@@ -44,7 +44,7 @@ $h5-font-size: $font-size-base * 1.1;
 /* Set sizeing variable */
 $sizer: 1rem;
 
-@import "~bootstrap/scss/_functions.scss";
-@import "~bootstrap/scss/_mixins.scss";
-@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/variables';
 

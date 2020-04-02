@@ -95,7 +95,7 @@ Add log entry
         </header>
 
         <div className='chart-view-content'>
-          <div id='chart' />
+          <div id='chart' className='chart' />
         </div>
       </section>
     )

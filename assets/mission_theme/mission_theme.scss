@@ -1,5 +1,7 @@
-@import "../custom-variables";
-@import "~bootstrap/scss/carousel";
+@import '../custom-variables';
+@import '~bootstrap/scss/carousel';
+@import '~bootstrap/scss/buttons';
+
 
 .carousel-indicators {
   position: static;
