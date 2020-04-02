@@ -3,9 +3,16 @@
 {% block title %}Edit Mission{% endblock %}
 
 {% block body %}
-    <h1>Edit Mission</h1>
+    <div class="container-fluid bg-white">
+        <article class="mission py-3">
 
-    {{ include('mission/_form.html.twig', {'button_label': 'Update'}) }}
+
+            <h1>Edit Mission</h1>
+
+            {{ include('mission/_form.html.twig', {'button_label': 'Update'}) }}
+
+        </article>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,5 +22,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-	{{ encore_entry_script_tags('mission') }}
+	{{ encore_entry_script_tags('mission/edit') }}
 {% endblock %}
