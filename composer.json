@@ -30,7 +30,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "friendsoftwig/twigcs": "^3.2",
+        "friendsoftwig/twigcs": "^4.0",
         "hautelook/alice-bundle": "^2.7",
         "symfony/maker-bundle": "^1.14",
         "symfony/profiler-pack": "^1.0"
@@ -105,5 +105,6 @@
             "allow-contrib": true,
             "require": "5.0.*"
         }
-    }
+    },
+    "minimum-stability": "beta"
 }

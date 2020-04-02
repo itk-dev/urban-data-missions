@@ -6,7 +6,7 @@
     <div class="container-fluid bg-white">
         <article class="mission py-3">
 
-            {% include '_nav_close.html.twig' with {'nav_path': path('mission_index') } %}
+            {% include '_nav_close.html.twig' with {'nav_path': path('mission_index')} %}
 
             <h1>{{ mission.title }}</h1>
             <p class='text-primary-faded'>
@@ -62,7 +62,7 @@
             </article>
 
             <article class="mission-export mb-3">
-                {% include "_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false } %}
+                {% include "_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false} %}
                 <div class="row">
                     <div class="col-auto">
                         <button type="button" name="export_png" id="" class="btn btn-success" >Export png</button>
@@ -80,7 +80,7 @@
                 </div>
             {% elseif finish_mission_form is defined %}
                 <article class="mission-finish mb-3">
-                    {% include "_article_header.html.twig" with {'title': 'End mission', 'add_button': false, 'edit_button': false } %}
+                    {% include "_article_header.html.twig" with {'title': 'End mission', 'add_button': false, 'edit_button': false} %}
                     {{ form_start(finish_mission_form) }}
                         <div class="row">
                             <div class="col-auto">

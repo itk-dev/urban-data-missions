@@ -7,7 +7,7 @@
         {% for url, text in {
             (path('theme_index')): 'Themes'|trans,
             (path('mission_index')): 'Mission'|trans,
-            (path('mockup', {path:''})): 'Mock-up'|trans,
+            (path('mockup', {path: ''})): 'Mock-up'|trans,
             } %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url }}">{{ text }}</a>

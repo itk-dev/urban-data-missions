@@ -37,4 +37,3 @@ for (const mission of missions) {
 }
 
 map.fitBounds(bounds)
-

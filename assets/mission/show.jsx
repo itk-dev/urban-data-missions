@@ -4,10 +4,6 @@ import '../base.scss'
 /* Import this components styling */
 import './mission.scss'
 
-require('jquery')
-require('popper.js')
-require('bootstrap')
-
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
@@ -17,6 +13,10 @@ import LogView from './LogView'
 import LogEntry from './LogEntry'
 
 import '@fortawesome/fontawesome-free/js/all'
+
+require('jquery')
+require('popper.js')
+require('bootstrap')
 
 class App extends Component {
   constructor (props) {

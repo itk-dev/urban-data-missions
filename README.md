@@ -72,8 +72,10 @@ EOF
 
 ```sh
 composer coding-standards-check
+yarn coding-standards-check
 ```
 
 ```sh
 composer coding-standards-apply
+yarn coding-standards-apply
 ```

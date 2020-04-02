@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
-            {% include '_nav_close.html.twig' with {'nav_path': path('mission') } %}
+            {% include '_nav_close.html.twig' with {'nav_path': path('mission')} %}
 
             <h1>{{ 'Create mission'|trans }}</h1>
 
@@ -14,7 +14,7 @@
                 {# <a href="" class="ml-3">Show theme</a> #}
             </p>
 
-            {{ include('mission/_form.html.twig', { button_label: 'Create mission'|trans}) }}
+            {{ include('mission/_form.html.twig', {button_label: 'Create mission'|trans}) }}
         </article>
     </div>
 {% endblock %}
