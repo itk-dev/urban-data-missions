@@ -1,61 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mission index{% endblock %}
+{% block title %}Mission index
+{% endblock %}
 
 {% block body %}
-    <h1>Mission index</h1>
 
-    {% set map_options = {
+	{% set map_options = {
         missions: missions_data,
         show_url_template: path('mission_show', {'id': '%id%'})|replace({('%'|url_encode): '%'})
     } %}
 
-    <div id="map" data-options="{{ map_options|json_encode }}"></div>
+	<nav class="navbar navbar-light bg-light">
+		<a class="navbar-brand" href="#">Navbar</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+		</button>
+		<div class="collapse navbar-collapse" id="collapsibleNavId">
+			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+				{% for mission in missions %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('mission_show', {'id': mission.id}) }}">{{ mission.title }}</a>
+					</li>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>{{ 'Title'|trans }}</th>
-                <th>{{ 'Description'|trans }}</th>
-                <th>{{ 'Location'|trans }}</th>
-                <th>{{ 'Geolocation'|trans }}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for mission in missions %}
-            <tr>
-                <td>{{ mission.title }}</td>
-                <td>{{ mission.description }}</td>
-                <td>{{ mission.location }}</td>
-                <td>
-                    {% if mission.latitude and mission.longitude %}
-                        ({{ mission.latitude|number_format(4) }}, {{ mission.longitude|number_format(4) }})
-                    {% else %}
-                        –
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('mission_show', {'id': mission.id}) }}">show</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a class="btn btn-success" href="{{ path('theme_index') }}">{{ 'Create new mission'|trans }}</a>
+				{% else %}
+					<li class="nav-item disabled">
+						<span>{{ "No records found"|trans }}</span>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</nav>
+
+	<div id="map" class="map" data-options="{{ map_options|json_encode }}"></div>
+
+	<a href="{{ path('theme_index') }}" class="btn btn-lg btn-success rounded-circle btn-add-new-mission shadow">
+		<i class="fas fa-plus"></i>
+		<span class="sr-only">{{ 'Create new mission'|trans }}</span>
+	</a>
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('mission') }}
+	{{ parent() }}
+	{{ encore_entry_link_tags('mission') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('mission') }}
+	{{ parent() }}
+	{{ encore_entry_script_tags('mission') }}
 {% endblock %}

@@ -40,14 +40,6 @@
 @import '~bootstrap/scss/utilities';
 // @import '~bootstrap/scss/print';
 
-body {
-  background-blend-mode: luminosity;
-  background-position: center;
-  background-size: cover;
-  min-height: 100vh;
-  padding: $sizer / 2;
-}
-
 body > .container-fluid {
   box-shadow: $dropdown-box-shadow;
   min-height: calc(100vh - #{$sizer});
