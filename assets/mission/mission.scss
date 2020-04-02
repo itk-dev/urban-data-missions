@@ -15,8 +15,7 @@
 }
 
 .map-marker-icon {
-  background-color: $primary;
-  border-radius: 50%;
+  color: $primary;
   box-shadow: $box-shadow-sm;
   display: inline-block;
   height: $spacer;
@@ -28,6 +27,12 @@
 // @TODO: Hide element when map is shown
 .map-shown {
   display: none;
+}
+
+// @TODO: Design
+.mission-location-map {
+  height: 300px;
+  width: 100%;
 }
 
 // @TODO: Design

@@ -44,6 +44,7 @@ $(() => {
     // Insert map into form.
     const el = document.createElement('div')
     el.id = 'map'
+    el.classList.add('mission-location-map')
     latitude.parentNode.parentNode.insertBefore(el, latitude.parentNode)
 
     latitude.parentNode.classList.add('map-shown')
@@ -52,14 +53,18 @@ $(() => {
     const map = L.map(el, {
       // @TODO Prevent zooming when scrolling past map.
       scrollWheelZoom: false
-    }).setView([56.1535, 10.2111], 13)
+    }).setView([parseFloat(latitude.value), parseFloat(longitude.value)], 13)
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
     }).addTo(map)
 
-    const markerIcon = L.divIcon({ className: 'map-marker-icon' })
+    const markerIcon = L.divIcon({
+      className: 'map-marker-icon',
+      // iconSize: L.point(24, 24),
+      html: '<i class="fas fa-map-marker-alt"></i>'
+    })
 
     const center = L.marker(map.getCenter(), {
       icon: markerIcon

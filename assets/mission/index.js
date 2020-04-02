@@ -22,7 +22,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
 }).addTo(map)
 
-const markerIcon = L.divIcon({ className: 'map-marker-icon' })
+const markerIcon = L.divIcon({
+  className: 'map-marker-icon',
+  // iconSize: L.point(24, 24),
+  html: '<i class="fas fa-map-marker-alt"></i>'
+})
 
 const bounds = L.latLngBounds()
 for (const mission of missions) {
