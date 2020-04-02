@@ -4,6 +4,10 @@ import '../base.scss'
 /* Import this components styling */
 import './mission.scss'
 
+require('jquery')
+require('popper.js')
+require('bootstrap')
+
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
