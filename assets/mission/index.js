@@ -10,7 +10,6 @@ require('jquery')
 require('popper.js')
 require('bootstrap')
 
-
 import '@fortawesome/fontawesome-free/js/all'
 
 const L = require('leaflet')

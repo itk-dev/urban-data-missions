@@ -5,8 +5,7 @@
 {% block content %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
-            {# @TODO: Design: Where to go on cancel? #}
-            {% include 'mock-up/_partials/_nav_close.html.twig' with {'nav_path': path('theme_index', {theme: mission.theme.id}) } %}
+            {% include '_nav_close.html.twig' with {'nav_path': path('mission') } %}
 
             <h1>{{ 'Create mission'|trans }}</h1>
             <p class="text-primary-faded text-uppercase small">{{ "Den sundeste vej i skole"|trans }}

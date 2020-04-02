@@ -25,6 +25,8 @@ Encore
  */
   .addEntry('base', './assets/base.js')
   .addEntry('mission', './assets/mission/index.js')
+  .addEntry('mission/show', './assets/mission/show.jsx')
+  .addEntry('mission/edit', './assets/mission/edit.js')
   .addEntry('mission-theme', './assets/mission_theme/index.js')
   .addEntry('onboarding', './assets/onboarding/index.js')
 

@@ -1,3 +1,9 @@
+/* Import base styling */
+import '../base.scss'
+
+/* Import this components styling */
+import './mission.scss'
+
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
@@ -5,6 +11,8 @@ import PropTypes from 'prop-types'
 import ChartView from './ChartView'
 import LogView from './LogView'
 import LogEntry from './LogEntry'
+
+import '@fortawesome/fontawesome-free/js/all'
 
 class App extends Component {
   constructor (props) {

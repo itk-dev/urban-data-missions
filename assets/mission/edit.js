@@ -1,4 +1,8 @@
-import '../css/edit.scss'
+/* Import base styling */
+import '../base.scss'
+
+/* Import this components styling */
+import './mission.scss'
 
 import 'select2'
 

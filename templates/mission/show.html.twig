@@ -2,15 +2,11 @@
 
 {% block title %}{{ 'Data mission: %title%'|trans({'%title%': mission.title}) }}{% endblock %}
 
-{% block body_class %}explore-mission{% endblock %}
-
-{% block background_image %}style="background-image: url({{ asset('build/images/map_background.png') }});"{% endblock %}
-
 {% block content %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
-            {# @TODO: Design: Where to go on cancel? #}
-            {#% include "mock-up/_partials/_nav_close.html.twig" with {'nav_path': '/mock-up/explore' }%#}
+
+            {% include '_nav_close.html.twig' with {'nav_path': path('mission_index') } %}
 
             <h1>{{ mission.title }}</h1>
             <p class='text-primary-faded'>
@@ -88,5 +84,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('mission') }}
+    {{ encore_entry_script_tags('mission/show') }}
 {% endblock %}
