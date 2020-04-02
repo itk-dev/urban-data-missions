@@ -37,7 +37,7 @@ for (const mission of missions) {
 
   const showUrl = mapOptions.show_url_template.replace('%id%', mission.id)
   // @TODO: Design
-  marker.bindPopup(`<p class="mb-0 h4">${mission.title}</p><p class="text-primary"><i class="fas fa-map-marker-alt mr-1"></i>${mission.location}</p><p>${mission.desctiption}</p><a href="${showUrl}" class="btn btn-primary btn-sm btn-block">Show mission</a>`)
+  marker.bindPopup(`<p class="mb-0 h4">${mission.title}</p><p class="text-primary"><i class="fas fa-map-marker-alt mr-1"></i>${mission.location}</p><p>${mission.description}</p><a href="${showUrl}" class="btn btn-primary btn-sm btn-block">Show mission</a>`)
 }
 
 map.fitBounds(bounds)
