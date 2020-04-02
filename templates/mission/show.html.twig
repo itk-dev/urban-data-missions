@@ -28,25 +28,41 @@
                 </div>
 
                 {% for missionSensor in mission.missionSensors %}
-                    <div class="row">
+
+                    <div class="row mb-3">
                         <div class="col">
-                            <span class="sensor-id">{{ missionSensor.sensor.id }}</span>
-                            <span class="sensor-type">{{ missionSensor.sensor.type }}</span>
-                            {% if missionSensor.name %}
-                                <span class="sensor-name">{{ missionSensor.name }}</span>
-                            {% endif %}
+                            <div class="row">
+                                {% if missionSensor.name %}
+                                    <div class="col">
+                                        <span>{{ missionSensor.name }}</span>
+                                    </div>
+                                {% endif %}
+                                <div class="col bg-light text-right">
+                                    <span>{{ missionSensor.sensor.type }}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-toggle="popover" title="{{ missionSensor.sensor.type }}" data-content="<p>{{ missionSensor.sensor.type }}</p><a href='#' class='btn btn-primary btn-sm btn-block'>Læs mere</a>">
+                                        <i class="fas fa-info-circle text-primary-100"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>{{ missionSensor.sensor.id }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% else %}
                     {# @TODO: Design #}
-                    <div class="alert alert-warning">
+                    <div class="alert alert-info">
                         {{ 'No sensors added yet'|trans }}
                         <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a></div>
                 {% endfor %}
             </article>
 
-            <article class="mission-export">
-                {% include "mock-up/_partials/_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false } %}
+            <article class="mission-export mb-3">
+                {% include "_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false } %}
                 <div class="row">
                     <div class="col-auto">
                         <button type="button" name="export_png" id="" class="btn btn-success" >Export png</button>
@@ -63,7 +79,8 @@
                     {{ 'Mission finished at %finished_at%'|trans({'%finished_at%': mission.finishedAt|date}) }}
                 </div>
             {% elseif finish_mission_form is defined %}
-                <article class="mission-finish">
+                <article class="mission-finish mb-3">
+                    {% include "_article_header.html.twig" with {'title': 'End mission', 'add_button': false, 'edit_button': false } %}
                     {{ form_start(finish_mission_form) }}
                         <div class="row">
                             <div class="col-auto">
