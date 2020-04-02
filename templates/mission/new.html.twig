@@ -5,12 +5,12 @@
 {% block content %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
-            {% include '_nav_close.html.twig' with {'nav_path': path('mission')} %}
+            {% include '_nav_close.html.twig' with {'nav_path': path('mission_index')} %}
 
             <h1>{{ 'Create mission'|trans }}</h1>
 
             {# TODO: Get the real mission theme #}
-            <p class="text-primary-faded text-uppercase small">{{ "Den sundeste vej i skole"|trans }}
+            <p class="text-primary-faded text-uppercase small">{{ mission.theme.title }}
                 {# <a href="" class="ml-3">Show theme</a> #}
             </p>
 
