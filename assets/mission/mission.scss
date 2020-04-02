@@ -58,3 +58,8 @@
   right: $spacer;
   z-index: $zindex-fixed;
 }
+
+// Hack default color from leaflet css
+.leaflet-container .leaflet-popup-content a {
+  color: $white;
+}
