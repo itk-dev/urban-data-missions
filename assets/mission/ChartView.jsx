@@ -91,7 +91,7 @@ Add log entry
     return (
       <section className='chart-view'>
         <header className='d-flex justify-content-between'>
-          <div><h1>Chart</h1></div>
+          <div><h2>Chart</h2></div>
         </header>
 
         <div className='chart-view-content'>
