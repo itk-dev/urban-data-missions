@@ -4,6 +4,8 @@ import '../base.scss'
 /* Import this components styling */
 import './mission.scss'
 
+import 'bootstrap/js/dist/collapse';
+
 /* Import FontAwesome icons */
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons/faMapMarkerAlt";
@@ -13,10 +15,6 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons/faTimesCircle";
 
 library.add(faMapMarkerAlt, faBars, faPlus, faTimesCircle);
 dom.watch();
-
-require('jquery')
-require('popper.js')
-require('bootstrap')
 
 const L = require('leaflet')
 
