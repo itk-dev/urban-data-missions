@@ -13,8 +13,6 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons/faMapMarkerAlt
 library.add(faMapMarkerAlt);
 dom.watch();
 
-// require('../scss/data-flow.scss')
-
 const $ = require('jquery')
 
 // @see https://symfony.com/doc/current/form/dynamic_form_modification.html#dynamic-generation-for-submitted-forms
