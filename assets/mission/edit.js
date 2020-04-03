@@ -6,7 +6,12 @@ import './mission.scss'
 
 import 'select2'
 
-// require('../scss/data-flow.scss')
+/* Import FontAwesome icons */
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons/faMapMarkerAlt";
+
+library.add(faMapMarkerAlt);
+dom.watch();
 
 const $ = require('jquery')
 
