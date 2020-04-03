@@ -4,11 +4,11 @@ import './mission.scss'
 import 'select2'
 
 /* Import FontAwesome icons */
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons/faMapMarkerAlt";
+import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt'
 
-library.add(faMapMarkerAlt);
-dom.watch();
+library.add(faMapMarkerAlt)
+dom.watch()
 
 const $ = require('jquery')
 

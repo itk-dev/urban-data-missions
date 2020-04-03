@@ -6,9 +6,8 @@ import './mission_theme.scss'
 
 /* Import FontAwesome icons */
 import '@fortawesome/fontawesome-free/js/all'
-
+import 'bootstrap/js/dist/carousel'
 
 /* Require roboto typeface */
 require('typeface-roboto')
 require('jquery')
-import 'bootstrap/js/dist/carousel';
