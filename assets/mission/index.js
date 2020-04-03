@@ -4,7 +4,16 @@ import '../base.scss'
 /* Import this components styling */
 import './mission.scss'
 
-import '@fortawesome/fontawesome-free/js/all'
+/* Import FontAwesome icons */
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons/faMapMarkerAlt";
+import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons/faTimesCircle";
+
+library.add(faMapMarkerAlt, faBars, faPlus, faTimesCircle);
+dom.watch();
+
 require('jquery')
 require('popper.js')
 require('bootstrap')
