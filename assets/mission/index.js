@@ -35,16 +35,31 @@ const markerIcon = L.divIcon({
   html: '<i class="fas fa-map-marker-alt"></i>'
 })
 
+// Missions grouped by theme
+const themeMissions = {}
 const bounds = L.latLngBounds()
 for (const mission of missions) {
   const marker = L.marker([mission.latitude, mission.longitude], {
     icon: markerIcon
-  }).addTo(map)
+  })
   bounds.extend(marker.getLatLng())
 
   const showUrl = mapOptions.show_url_template.replace('%id%', mission.id)
   // @TODO: Design
   marker.bindPopup(`<p class="mb-0 h4">${mission.title}</p><p class="text-primary"><i class="fas fa-map-marker-alt mr-1"></i>${mission.location}</p><p>${mission.description}</p><a href="${showUrl}" class="btn btn-primary btn-sm btn-block">Show mission</a>`)
+
+  let layerGroup = themeMissions[mission.theme.title]
+  if (!layerGroup) {
+    layerGroup = L.layerGroup()
+    layerGroup.addTo(map)
+    themeMissions[mission.theme.title] = layerGroup
+  }
+  marker.addTo(layerGroup)
 }
 
 map.fitBounds(bounds)
+
+// @TODO: Add a header to the theme missions selector.
+L.control.layers(null, themeMissions, {
+  collapsed: false
+}).addTo(map)
