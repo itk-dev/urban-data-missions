@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import ChartView from './ChartView'
 import LogView from './LogView'
 import LogEntry from './LogEntry'
+import Messenger from './Messenger'
 
 import '@fortawesome/fontawesome-free/js/all'
 
@@ -21,6 +22,7 @@ class App extends Component {
     this.state = {
       logEntry: null
     }
+    this.messenger = new Messenger()
   }
 
   handleAddLogEntry = (data) => {
@@ -51,6 +53,7 @@ class App extends Component {
               dataUrl={this.props.measurementsUrl}
               eventSourceUrl={this.props.eventSourceUrl}
               onHandleAddLogEntry={this.handleAddLogEntry}
+              messenger={this.messenger}
             />
           </div>
           <div className='flex-fill'>
@@ -58,12 +61,14 @@ class App extends Component {
             <LogEntry
               mission={this.props.mission} postUrl={this.props.logEntryPostUrl} logEntry={this.state.logEntry}
               onHandleLogEntryAdded={this.handleLogEntryAdded}
+              messenger={this.messenger}
             />
 
             <LogView
               dataUrl={this.props.logEntriesUrl}
               eventSourceUrl={this.props.eventSourceUrl}
               onHandleAddLogEntry={this.handleAddLogEntry}
+              messenger={this.messenger}
             />
           </div>
         </div>

@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
+import Messenger from './Messenger'
 
 class LogEntry extends Component {
   constructor (props) {
@@ -154,7 +155,8 @@ class LogEntry extends Component {
 LogEntry.propTypes = {
   mission: PropTypes.object.isRequired,
   postUrl: PropTypes.string.isRequired,
-  onHandleLogEntryAdded: PropTypes.func.isRequired
+  onHandleLogEntryAdded: PropTypes.func.isRequired,
+  messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 
 export default LogEntry

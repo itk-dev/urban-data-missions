@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Chart from './Chart'
+import Messenger from './Messenger'
 
 class ChartView extends Component {
   // @see https://www.amcharts.com/docs/v4/getting-started/integrations/using-react/
@@ -96,7 +97,8 @@ ChartView.propTypes = {
   series: PropTypes.object.isRequired,
   dataUrl: PropTypes.string.isRequired,
   eventSourceUrl: PropTypes.string.isRequired,
-  onHandleAddLogEntry: PropTypes.func
+  onHandleAddLogEntry: PropTypes.func,
+  messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 
 export default ChartView

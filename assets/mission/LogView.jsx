@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import Alert from 'react-bootstrap/Alert'
+import Messenger from './Messenger'
 
 class LogView extends Component {
   constructor (props) {
@@ -143,7 +144,8 @@ class LogView extends Component {
 LogView.propTypes = {
   dataUrl: PropTypes.string.isRequired,
   eventSourceUrl: PropTypes.string.isRequired,
-  onHandleAddLogEntry: PropTypes.func.isRequired
+  onHandleAddLogEntry: PropTypes.func.isRequired,
+  messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 
 export default LogView
