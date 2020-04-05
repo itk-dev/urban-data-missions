@@ -42,7 +42,15 @@ class LogEntry extends Component {
 
   handleSubmit = () => {
     this.setState({ isSubmitting: true }, () => {
-      const data = this.state.logEntry
+      const logEntry = this.state.logEntry
+      const data = {
+        mission: logEntry.mission,
+        content: logEntry.content,
+        loggedAt: logEntry.loggedAt
+      }
+      if (logEntry.measurement) {
+        data.measurement = logEntry.measurement['@id']
+      }
       fetch(this.props.postUrl, {
         method: 'POST',
         headers: {
@@ -99,11 +107,18 @@ class LogEntry extends Component {
           {this.state.violations.content && <div className='invalid-feedback'>{this.state.violations.content}</div>}
         </Form.Group>
 
-        {this.state.logEntry.sensor &&
-          <Form.Group controlId='formSensor'>
-            <Form.Label>Sensor</Form.Label>
-            <Form.Control name='sensor' value={this.state.logEntry.sensor} readOnly />
-          </Form.Group>}
+        {this.state.logEntry.measurement &&
+          <>
+            <Form.Group controlId='formSensor'>
+              <Form.Label>Sensor</Form.Label>
+              {/* @TODO: Use sensor name here */}
+              <Form.Control name='measurement' value={this.state.logEntry.measurement.sensor.id} readOnly />
+            </Form.Group>
+            <Form.Group controlId='formValue'>
+              <Form.Label>Value</Form.Label>
+              <Form.Control name='measurement' value={this.state.logEntry.measurement.value} readOnly />
+            </Form.Group>
+          </>}
 
         {this.state.logEntry.loggedAt &&
           <Form.Group controlId='formLoggedAt'>

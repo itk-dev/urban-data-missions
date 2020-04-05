@@ -2,6 +2,8 @@
 
 namespace App\Faker\Provider;
 
+use DateTime;
+use DateTimeZone;
 use Faker\Generator;
 use Faker\Provider\Base;
 use InvalidArgumentException;
@@ -32,6 +34,11 @@ class AppProvider extends Base
             ->setAllowedTypes('base_dir', 'string')
             ->setAllowedTypes('source_dirs', 'string[]')
             ->setAllowedTypes('target_dirs', 'string[]');
+    }
+
+    public function fixedDateTime(string $time, string $timeZone = 'UTC')
+    {
+        return new DateTime($time, new DateTimeZone($timeZone));
     }
 
     /**

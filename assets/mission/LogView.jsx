@@ -130,7 +130,7 @@ class LogView extends Component {
                 <div className='col'>
                   <p>{entry.content}</p>
                   {/* @TODO: Design */}
-                  {entry.sensor && <div className='sensor'>{entry.sensor.id}</div>}
+                  {entry.measurement && <div className='sensor' onClick={() => this.showSensorAlert(entry)}>{entry.measurement.sensor.id}: {entry.measurement.value}</div>}
                 </div>
               </article>
             ))}

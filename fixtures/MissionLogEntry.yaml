@@ -4,3 +4,18 @@ App\Entity\MissionLogEntry:
          loggedAt: '<dateTime()>'
          content: '<text()>'
          type: '<randomElement(["user", "system", "alert"])>'
+
+    alert-001:
+        mission: '@mission-003'
+        loggedAt: '<fixedDateTime("2020-01-01T00:02:00")>'
+        content: 'This is out of bounds!'
+        type: 'user'
+        measurement: '@measurement_002'
+
+    alert-002:
+        mission: '@mission-003'
+        loggedAt: '<fixedDateTime("2020-01-01T00:03:00")>'
+        content: 'Looks good'
+        type: 'user'
+        measurement: '@measurement_003'
+

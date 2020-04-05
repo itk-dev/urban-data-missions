@@ -30,7 +30,7 @@ class Measurement
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
-     * @Groups({"measurement_read", "mission"})
+     * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
      */
     private $id;
 
@@ -44,13 +44,13 @@ class Measurement
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Sensor")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"measurement_read", "mission"})
+     * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
      */
     private $sensor;
 
     /**
      * @ORM\Column(type="datetime", precision=6)
-     * @Groups({"measurement_read", "mission"})
+     * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
      */
     private $measuredAt;
 
@@ -67,7 +67,7 @@ class Measurement
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"measurement_read", "mission"})
+     * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
      */
     private $value;
 

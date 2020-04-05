@@ -6,7 +6,6 @@ use App\Entity\Mission;
 use App\Entity\MissionLogEntry;
 use App\Scorpio\SubscriptionManager;
 use App\Traits\LoggerTrait;
-use DateTime;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Psr\Log\LoggerAwareInterface;
@@ -23,7 +22,7 @@ class MissionListener implements LoggerAwareInterface
         $this->subscriptionManager = $subscriptionManager;
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args)
     {
         $em = $args->getEntityManager();
         $entity = $args->getEntity();
@@ -31,7 +30,7 @@ class MissionListener implements LoggerAwareInterface
         if ($entity instanceof Mission) {
             $logEntry = (new MissionLogEntry())
                 ->setMission($entity)
-                ->setLoggedAt(new DateTime())
+                ->setLoggedAt($entity->getCreatedAt())
                 ->setType(MissionLogEntry::TYPE_SYSTEM)
                 ->setContent('Mission started');
 

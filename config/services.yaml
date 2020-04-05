@@ -65,7 +65,7 @@ services:
             -
                 name: 'doctrine.event_listener'
                 # this is the only required option for the lifecycle listener tag
-                event: 'prePersist'
+                event: 'postPersist'
 
             -
                 name: 'doctrine.event_listener'
@@ -76,7 +76,7 @@ services:
         tags:
             -
                 name: 'doctrine.event_listener'
-                event: 'prePersist'
+                event: 'postPersist'
 
     App\EventListener\UpdatePublisher:
         tags:

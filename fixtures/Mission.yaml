@@ -22,6 +22,7 @@ App\Entity\Mission:
         location: Dokk1
         latitude: 56.1534662
         longitude: 10.2110899
+        createdAt: '<fixedDateTime("2020-01-01T00:00:00")>'
 
     'mission_{1..32}':
         theme: '@missiontheme*'
@@ -41,6 +42,11 @@ App\Entity\MissionSensor:
     mission-sensor-001:
         mission: '@mission-003'
         sensor: '@sensor_001:temperature'
+        name: 'The temperature'
+
+    mission-sensor-002:
+        mission: '@mission-003'
+        sensor: '@sensor_001:humidity'
         name: 'The temperature'
 
     'mission-sensor_{1..64}':

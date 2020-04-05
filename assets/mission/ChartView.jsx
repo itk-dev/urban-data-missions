@@ -29,8 +29,8 @@ Add log entry
             if (handleAddLogEntry) {
               handleAddLogEntry({
                 loggedAt: dataContext.date.toISOString(),
-                type: 'sensor',
-                sensor: decodeURIComponent(dataContext.measurement.sensor['@id'])
+                type: 'measurement',
+                measurement: dataContext.measurement
               })
             }
           })
@@ -62,7 +62,6 @@ Add log entry
   }
 
   addMeasurement = (measurement) => {
-    ;;; console.log('addMeasurement', measurement)
     const series = measurement.sensor.id
     if (series !== null && series in this.props.series) {
       const data = {
@@ -70,21 +69,12 @@ Add log entry
         [series]: measurement.value,
         measurement: measurement
       }
-
       this.chart.addData(data)
     }
   }
 
   getChart () {
     return this.chart.getChart()
-  }
-
-  handleAddLogEntry = () => {
-    const logEntry = {
-      loggedAt: (new Date('1975-05-23')).toISOString(),
-      sensor: '/api/sensors/device:001:temperature'
-    }
-    this.props.onHandleAddLogEntry && this.props.onHandleAddLogEntry(logEntry)
   }
 
   render () {

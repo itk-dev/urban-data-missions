@@ -58,10 +58,10 @@ class MissionLogEntry
     private $loggedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sensor")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Measurement")
      * @Groups({"mission_log_entry_read", "mission_log_entry_write"})
      */
-    private $sensor;
+    private $measurement;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -111,14 +111,14 @@ class MissionLogEntry
         return $this;
     }
 
-    public function getSensor(): ?Sensor
+    public function getMeasurement(): ?Measurement
     {
-        return $this->sensor;
+        return $this->measurement;
     }
 
-    public function setSensor(?Sensor $sensor): self
+    public function setMeasurement(?Measurement $measurement): self
     {
-        $this->sensor = $sensor;
+        $this->measurement = $measurement;
 
         return $this;
     }

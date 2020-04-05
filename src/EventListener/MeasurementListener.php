@@ -26,7 +26,7 @@ class MeasurementListener implements LoggerAwareInterface
         $this->sensorWarningRepository = $sensorWarningRepository;
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
 
@@ -53,10 +53,9 @@ class MeasurementListener implements LoggerAwareInterface
                             '%max%' => sprintf('%f', $max),
                         ]
                     );
-                    $this->debug($content);
                     $logEntry = (new MissionLogEntry())
                         ->setMission($measurement->getMission())
-                        ->setSensor($sensor)
+                        ->setMeasurement($measurement)
                         ->setLoggedAt($measurement->getMeasuredAt())
                         ->setType(MissionLogEntry::TYPE_ALERT)
                         ->setContent($content);
