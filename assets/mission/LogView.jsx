@@ -1,4 +1,4 @@
-/* global fetch, EventSource */
+/* global fetch */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
@@ -36,9 +36,7 @@ class LogView extends Component {
       })
       .then(data => {
         this.setState({ entries: data['hydra:member'] }, () => {
-          const eventSource = new EventSource(this.props.eventSourceUrl)
-          eventSource.onmessage = event => {
-            const data = JSON.parse(event.data)
+          this.props.messenger.on('message', data => {
             if (data.log_entry) {
               const entries = [data.log_entry, ...this.state.entries]
               // Sort by loggedAt desc
@@ -52,7 +50,7 @@ class LogView extends Component {
               })
               this.setState({ entries: entries })
             }
-          }
+          })
         })
       })
 
@@ -170,7 +168,6 @@ class LogView extends Component {
 LogView.propTypes = {
   mission: PropTypes.object.isRequired,
   dataUrl: PropTypes.string.isRequired,
-  eventSourceUrl: PropTypes.string.isRequired,
   messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 

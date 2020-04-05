@@ -19,7 +19,9 @@ require('bootstrap')
 class App extends Component {
   constructor (props) {
     super(props)
-    this.messenger = new Messenger()
+    this.messenger = new Messenger({
+      eventSourceUrl: this.props.eventSourceUrl
+    })
   }
 
   render () {
@@ -31,7 +33,6 @@ class App extends Component {
               mission={this.props.mission}
               series={this.props.sensors}
               dataUrl={this.props.measurementsUrl}
-              eventSourceUrl={this.props.eventSourceUrl}
               messenger={this.messenger}
             />
           </div>
@@ -45,7 +46,6 @@ class App extends Component {
             <LogView
               mission={this.props.mission}
               dataUrl={this.props.logEntriesUrl}
-              eventSourceUrl={this.props.eventSourceUrl}
               messenger={this.messenger}
             />
           </div>

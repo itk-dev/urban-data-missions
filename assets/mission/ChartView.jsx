@@ -1,4 +1,4 @@
-/* global fetch, EventSource */
+/* global fetch */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Chart from './Chart'
@@ -60,13 +60,11 @@ Add log entry
       .then(data => {
         data['hydra:member'].forEach(this.addMeasurement)
 
-        const eventSource = new EventSource(this.props.eventSourceUrl)
-        eventSource.onmessage = event => {
-          const data = JSON.parse(event.data)
+        this.props.messenger.on('message', data => {
           if (data.measurement) {
             this.addMeasurement(data.measurement)
           }
-        }
+        })
       })
 
     this.props.messenger.on('logEntryCreated', (data) => {
@@ -124,7 +122,6 @@ ChartView.propTypes = {
   mission: PropTypes.object.isRequired,
   series: PropTypes.object.isRequired,
   dataUrl: PropTypes.string.isRequired,
-  eventSourceUrl: PropTypes.string.isRequired,
   messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 

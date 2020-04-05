@@ -1,8 +1,17 @@
+/* global EventSource */
 const EventEmitter = require('events')
 
 class Messenger {
-  constructor () {
+  constructor (options) {
     this.emitter = new EventEmitter()
+
+    if (options.eventSourceUrl) {
+      this.eventSource = new EventSource(options.eventSourceUrl)
+      this.eventSource.onmessage = event => {
+        const data = JSON.parse(event.data)
+        this.emit('message', data)
+      }
+    }
   }
 
   emit () {
