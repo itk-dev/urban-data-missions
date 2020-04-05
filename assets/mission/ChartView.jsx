@@ -3,11 +3,20 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Chart from './Chart'
 import Messenger from './Messenger'
+import Alert from 'react-bootstrap/Alert'
 
 class ChartView extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      message: null
+    }
+  }
+
   // @see https://www.amcharts.com/docs/v4/getting-started/integrations/using-react/
   componentDidMount () {
-    const handleAddLogEntry = this.props.onHandleAddLogEntry || (() => {})
+    const messenger = this.props.messenger
+    const mission = this.props.mission
     const chart = new Chart({
       series: this.props.series,
       bullet: {
@@ -27,13 +36,12 @@ Add log entry
           const dataContext = chartEvent.target.dataItem.dataContext
           button.addEventListener('click', function (event) {
             chart.closeAllPopups()
-            if (handleAddLogEntry) {
-              handleAddLogEntry({
-                loggedAt: dataContext.date.toISOString(),
-                type: 'measurement',
-                measurement: dataContext.measurement
-              })
-            }
+            messenger.emit('addLogEntry', {
+              mission: mission,
+              loggedAt: dataContext.date.toISOString(),
+              type: 'measurement',
+              measurement: dataContext.measurement
+            })
           })
         }
       },
@@ -60,6 +68,22 @@ Add log entry
           }
         }
       })
+
+    this.props.messenger.on('logEntryCreated', (data) => {
+      const entry = data.result
+      if (entry && entry.measurement) {
+        this.setState({
+          message: {
+            content: 'Log entry created: ' + entry.content,
+            type: 'success'
+          }
+        })
+      }
+    })
+
+    this.props.messenger.on('showMeasurementLogEntry', (logEntry) => {
+      console.log('ChartView.showMeasurementLogEntry', logEntry)
+    })
   }
 
   addMeasurement = (measurement) => {
@@ -83,6 +107,9 @@ Add log entry
       <section className='chart-view'>
         <header className='d-flex justify-content-between'>
           <div><h2>Chart</h2></div>
+          <div>
+            {this.state.message && <Alert dismissible onClose={() => this.setState({ message: null })} variant={this.state.message.type}>{this.state.message.content}</Alert>}
+          </div>
         </header>
 
         <div className='chart-view-content'>
@@ -94,10 +121,10 @@ Add log entry
 }
 
 ChartView.propTypes = {
+  mission: PropTypes.object.isRequired,
   series: PropTypes.object.isRequired,
   dataUrl: PropTypes.string.isRequired,
   eventSourceUrl: PropTypes.string.isRequired,
-  onHandleAddLogEntry: PropTypes.func,
   messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 

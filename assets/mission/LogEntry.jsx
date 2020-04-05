@@ -10,22 +10,20 @@ import Messenger from './Messenger'
 class LogEntry extends Component {
   constructor (props) {
     super(props)
-    this.state = this.getInitialState(this.props.logEntry)
+    this.state = this.getInitialState()
   }
 
-  getInitialState = (logEntry) => ({
+  getInitialState = () => ({
+    logEntry: null,
     show: false,
     isSubmitting: false,
-    logEntry: logEntry || {},
     violations: {},
     message: null,
     messageType: null
   })
 
-  componentDidUpdate (prevProps) {
-    if (prevProps.logEntry !== this.props.logEntry) {
-      this.setState({ logEntry: this.props.logEntry || {} })
-    }
+  componentDidMount () {
+    this.props.messenger.on('addLogEntry', (logEntry) => this.setState({ logEntry: logEntry }))
   }
 
   resetState = () => {
@@ -33,11 +31,10 @@ class LogEntry extends Component {
   }
 
   handleClose = () => {
-    this.props.onHandleLogEntryAdded(null)
   }
 
   handleChange = (event) => {
-    const logEntry = this.state.logEntry
+    const logEntry = this.state.logEntry || {}
     this.setState({ logEntry: { ...logEntry, ...{ [event.target.name]: event.target.value } } })
   }
 
@@ -45,7 +42,7 @@ class LogEntry extends Component {
     this.setState({ isSubmitting: true }, () => {
       const logEntry = this.state.logEntry
       const data = {
-        mission: logEntry.mission,
+        mission: logEntry.mission['@id'],
         content: logEntry.content,
         loggedAt: logEntry.loggedAt
       }
@@ -78,15 +75,12 @@ class LogEntry extends Component {
             })
           } else {
             response.json().then((data) => {
-              this.setState({
-                message: 'Log entry created',
-                messageType: 'success'
-              }, () => {
-                setTimeout(() => {
-                  this.resetState()
-                  this.handleClose()
-                }, 1000)
+              this.props.messenger.emit('logEntryCreated', {
+                result: data,
+                logEntry: logEntry
               })
+              this.resetState()
+              this.handleClose()
             })
           }
         })
@@ -96,19 +90,17 @@ class LogEntry extends Component {
     })
   }
 
-  showModal = () => Object.keys(this.state.logEntry).length > 0
-
   render () {
     const form = (
       <Form onSubmit={this.handleSubmit}>
         {this.state.message && <Alert variant={this.state.messageType}>{this.state.message}</Alert>}
         <Form.Group controlId='formContent'>
           <Form.Label>Content</Form.Label>
-          <Form.Control as='textarea' name='content' className={{ 'is-invalid': this.state.violations.content }} placeholder='Enter a log entry' value={this.state.logEntry.content} onChange={this.handleChange} />
+          <Form.Control as='textarea' name='content' className={{ 'is-invalid': this.state.violations.content }} placeholder='Enter a log entry' value={this.state.logEntry?.content} onChange={this.handleChange} />
           {this.state.violations.content && <div className='invalid-feedback'>{this.state.violations.content}</div>}
         </Form.Group>
 
-        {this.state.logEntry.measurement &&
+        {this.state.logEntry?.measurement &&
           <>
             <Form.Group controlId='formSensor'>
               <Form.Label>Sensor</Form.Label>
@@ -121,7 +113,7 @@ class LogEntry extends Component {
             </Form.Group>
           </>}
 
-        {this.state.logEntry.loggedAt &&
+        {this.state.logEntry?.loggedAt &&
           <Form.Group controlId='formLoggedAt'>
             <Form.Label>Logged at</Form.Label>
             <Form.Control name='loggedAt' value={this.state.logEntry.loggedAt} readOnly />
@@ -131,7 +123,7 @@ class LogEntry extends Component {
 
     return (
       <>
-        <Modal show={this.showModal()} onHide={this.handleClose}>
+        <Modal show={this.state.logEntry !== null} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Add log entry</Modal.Title>
           </Modal.Header>
@@ -153,9 +145,7 @@ class LogEntry extends Component {
 }
 
 LogEntry.propTypes = {
-  mission: PropTypes.object.isRequired,
   postUrl: PropTypes.string.isRequired,
-  onHandleLogEntryAdded: PropTypes.func.isRequired,
   messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 
