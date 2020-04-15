@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import ChartView from './ChartView'
 import LogView from './LogView'
 import LogEntry from './LogEntry'
+import Messenger from './Messenger'
 
 import '@fortawesome/fontawesome-free/js/all'
 
@@ -18,27 +19,9 @@ require('bootstrap')
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      logEntry: null
-    }
-  }
-
-  handleAddLogEntry = (data) => {
-    const logEntry = {
-      ...{
-        // Required and default values
-        mission: this.props.mission['@id'],
-        loggedAt: (new Date()).toISOString()
-      },
-      ...data
-    }
-    console.log('App.handleAddLogEntry', logEntry)
-    this.setState({ logEntry: logEntry })
-  }
-
-  handleLogEntryAdded = (logEntry) => {
-    console.log('App.handleLogEntryAdded', logEntry)
-    this.setState({ logEntry: null })
+    this.messenger = new Messenger({
+      eventSourceUrl: this.props.eventSourceUrl
+    })
   }
 
   render () {
@@ -47,23 +30,23 @@ class App extends Component {
         <div className='d-flex flex-column justify-content-between'>
           <div className='flex-fill'>
             <ChartView
+              mission={this.props.mission}
               series={this.props.sensors}
               dataUrl={this.props.measurementsUrl}
-              eventSourceUrl={this.props.eventSourceUrl}
-              onHandleAddLogEntry={this.handleAddLogEntry}
+              messenger={this.messenger}
             />
           </div>
           <div className='flex-fill'>
 
             <LogEntry
-              mission={this.props.mission} postUrl={this.props.logEntryPostUrl} logEntry={this.state.logEntry}
-              onHandleLogEntryAdded={this.handleLogEntryAdded}
+              postUrl={this.props.logEntryPostUrl}
+              messenger={this.messenger}
             />
 
             <LogView
+              mission={this.props.mission}
               dataUrl={this.props.logEntriesUrl}
-              eventSourceUrl={this.props.eventSourceUrl}
-              onHandleAddLogEntry={this.handleAddLogEntry}
+              messenger={this.messenger}
             />
           </div>
         </div>

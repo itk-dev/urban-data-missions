@@ -1,14 +1,16 @@
-/* global fetch, EventSource */
+/* global fetch */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import Alert from 'react-bootstrap/Alert'
+import Messenger from './Messenger'
 
 class LogView extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      message: null,
       entries: [],
       filter: {
         // Display order
@@ -34,9 +36,7 @@ class LogView extends Component {
       })
       .then(data => {
         this.setState({ entries: data['hydra:member'] }, () => {
-          const eventSource = new EventSource(this.props.eventSourceUrl)
-          eventSource.onmessage = event => {
-            const data = JSON.parse(event.data)
+          this.props.messenger.on('message', data => {
             if (data.log_entry) {
               const entries = [data.log_entry, ...this.state.entries]
               // Sort by loggedAt desc
@@ -50,16 +50,40 @@ class LogView extends Component {
               })
               this.setState({ entries: entries })
             }
-          }
+          })
         })
       })
+
+    this.props.messenger.on('logEntryCreated', (data) => {
+      const entry = data.result
+      if (entry && !entry.measurement) {
+        this.setState(
+          {
+            message: {
+              content: 'Log entry created: ' + entry.content,
+              type: 'success'
+            }
+          }
+          // , () => {
+          //   setTimeout(() => {
+          //     this.setState({message: null})
+          //   }, 1000)
+          // }
+        )
+      }
+    })
+  }
+
+  showMeasurementLogEntry = (entry) => {
+    this.props.messenger.emit('showMeasurementLogEntry', entry)
   }
 
   handleAddLogEntry = () => {
     const logEntry = {
+      mission: this.props.mission,
       loggedAt: (new Date()).toISOString()
     }
-    this.props.onHandleAddLogEntry && this.props.onHandleAddLogEntry(logEntry)
+    this.props.messenger.emit('addLogEntry', logEntry)
   }
 
   applyFilter = (entry) => {
@@ -103,10 +127,9 @@ class LogView extends Component {
             <h2>Mission log</h2>
           </div>
           <div className='col'>
-            {this.props.onHandleAddLogEntry &&
-              <Button variant='success' className='btn-sm rounded-circle btn-add-log-entry' onClick={this.handleAddLogEntry}>
-                <span className='fas fa-plus' />
-              </Button>}
+            <Button variant='success' className='btn-sm rounded-circle btn-add-log-entry' onClick={this.handleAddLogEntry}>
+              <span className='fas fa-plus' />
+            </Button>
           </div>
 
           <div className='col'>
@@ -117,6 +140,8 @@ class LogView extends Component {
             </div>
           </div>
         </header>
+
+        {this.state.message && <Alert dismissible onClose={() => this.setState({ message: null })} variant={this.state.message.type}>{this.state.message.content}</Alert>}
 
         <div className='log-view-content'>
           {entries.length === 0
@@ -130,7 +155,7 @@ class LogView extends Component {
                 <div className='col'>
                   <p>{entry.content}</p>
                   {/* @TODO: Design */}
-                  {entry.measurement && <div className='sensor' onClick={() => this.showSensorAlert(entry)}>{entry.measurement.sensor.id}: {entry.measurement.value}</div>}
+                  {entry.measurement && <div className='measurement' onClick={() => this.showMeasurementLogEntry(entry)}>{entry.measurement.sensor.id}: {entry.measurement.value}</div>}
                 </div>
               </article>
             ))}
@@ -141,9 +166,9 @@ class LogView extends Component {
 }
 
 LogView.propTypes = {
+  mission: PropTypes.object.isRequired,
   dataUrl: PropTypes.string.isRequired,
-  eventSourceUrl: PropTypes.string.isRequired,
-  onHandleAddLogEntry: PropTypes.func.isRequired
+  messenger: PropTypes.instanceOf(Messenger).isRequired
 }
 
 export default LogView
