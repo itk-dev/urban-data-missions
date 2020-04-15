@@ -23,6 +23,26 @@
   margin: 0;
   padding: 0;
   width: $spacer;
+
+  // @TODO: Design
+  // Marker hidden by non-matching text search
+  &.map-marker-icon-hidden {
+    color: lighten($primary, 25%);
+  }
+}
+
+// @TODO: Design
+// Map lay control
+.leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
+  width: 200px;
+}
+
+// Mission map search text input
+.leaflet-control.mission-search {
+  width: 200px;
+  padding: 6px 10px 6px 6px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
 // @TODO: Hide element when map is shown

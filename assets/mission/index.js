@@ -17,6 +17,7 @@ library.add(faMapMarkerAlt, faBars, faPlus, faTimesCircle)
 dom.watch()
 
 const L = require('leaflet')
+require('./leaflet/custom-controls')
 
 const elMap = document.getElementById('map')
 const mapOptions = JSON.parse(elMap.dataset.options)
@@ -35,12 +36,27 @@ const markerIcon = L.divIcon({
   html: '<i class="fas fa-map-marker-alt"></i>'
 })
 
+const markerHiddenIcon = L.divIcon({
+  className: 'map-marker-icon map-marker-icon-hidden',
+  // iconSize: L.point(24, 24),
+  html: '<i class="fas fa-map-marker-alt"></i>'
+})
+
+const buildSearch = (mission) => {
+  return [
+    mission.title,
+    mission.description
+  ].join(' ').toLowerCase()
+}
+
 // Missions grouped by theme
 const themeMissions = {}
 const bounds = L.latLngBounds()
 for (const mission of missions) {
   const marker = L.marker([mission.latitude, mission.longitude], {
-    icon: markerIcon
+    icon: markerIcon,
+    data: mission,
+    search: buildSearch(mission)
   })
   bounds.extend(marker.getLatLng())
 
@@ -61,5 +77,19 @@ map.fitBounds(bounds)
 
 // @TODO: Add a header to the theme missions selector.
 L.control.layers(null, themeMissions, {
+  position: 'topright',
   collapsed: false
+}).addTo(map)
+
+L.control.markerTextFilter({
+  position: 'topright',
+  layerGroups: themeMissions,
+  icon: markerIcon,
+  hiddenIcon: markerHiddenIcon,
+  placeholder: 'Search for a mission',
+  classNames: ['mission-search'],
+  zoomToMatches: true,
+  matcher: (text, marker) => {
+    return marker.options.search.indexOf(text.toLowerCase()) > -1
+  }
 }).addTo(map)
