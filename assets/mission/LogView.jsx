@@ -14,12 +14,18 @@ class LogView extends Component {
       entries: [],
       filter: {
         // Display order
-        names: ['user', 'alert', 'system'],
+        names: [
+          'alert',
+          'measurement',
+          'system',
+          'user',
+        ],
         // Actual values
         values: {
-          user: true,
+          alert: true,
+          measurement: true,
           system: true,
-          alert: true
+          user: true,
         }
       }
     }
