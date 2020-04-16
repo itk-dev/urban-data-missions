@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Measurement;
 use App\Entity\Mission;
 use App\Entity\MissionSensor;
+use App\Export\MissionExport;
 use App\Form\Type\MissionType;
 use App\Repository\MissionRepository;
 use App\Repository\MissionThemeRepository;
 use App\Repository\SensorRepository;
 use App\Scorpio\SubscriptionManager;
 use App\Traits\LoggerTrait;
+use Box\Spout\Common\Type;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -108,7 +110,37 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
             'mission' => $mission,
             'finish_mission_form' => $finishMissionForm->createView(),
             'app_options' => $appOptions,
+            'export_formats' => [Type::CSV, Type::ODS, Type::XLSX],
+            'export_name' => 'mission-'.$mission->getTitle(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/log.{_format}", name="log", methods={"GET"},
+     *     format="csv",
+     *     requirements={
+     *         "_format": "csv|ods|xlsx",
+     *     }
+     *  )
+     */
+    public function log(Mission $mission, string $_format, MissionExport $export): void
+    {
+        $export->exportLogEntries($mission, $_format);
+        exit;
+    }
+
+    /**
+     * @Route("/{id}/measurements.{_format}", name="measurements", methods={"GET"},
+     *     format="csv",
+     *     requirements={
+     *         "_format": "csv|ods|xlsx",
+     *     }
+     *  )
+     */
+    public function measurements(Mission $mission, string $_format, MissionExport $export): void
+    {
+        $export->exportMeasurements($mission, $_format);
+        exit;
     }
 
     private function getAppOptions(Mission $mission)
