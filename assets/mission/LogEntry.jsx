@@ -31,6 +31,7 @@ class LogEntry extends Component {
   }
 
   handleClose = () => {
+    this.setState(this.getInitialState())
   }
 
   handleChange = (event) => {
