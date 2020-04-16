@@ -45,6 +45,7 @@ class LogEntry extends Component {
       const data = {
         mission: logEntry.mission['@id'],
         content: logEntry.content,
+        type: logEntry.type,
         loggedAt: logEntry.loggedAt
       }
       if (logEntry.measurement) {
