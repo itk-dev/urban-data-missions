@@ -155,7 +155,7 @@ class LogView extends Component {
                 <div className='col'>
                   <p>{entry.content}</p>
                   {/* @TODO: Design */}
-                  {entry.measurement && <div className='measurement' onClick={() => this.showMeasurementLogEntry(entry)}>{entry.measurement.sensor.id}: {entry.measurement.value}</div>}
+                  {entry.measurement && <div className='measurement' title={`Sensor id: ${entry.measurement.sensor.id}`} onClick={() => this.showMeasurementLogEntry(entry)}>{entry.measurement.sensorName}: {entry.measurement.value}</div>}
                 </div>
               </article>
             ))}

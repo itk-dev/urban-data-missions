@@ -106,7 +106,7 @@ class LogEntry extends Component {
             <Form.Group controlId='formSensor'>
               <Form.Label>Sensor</Form.Label>
               {/* @TODO: Use sensor name here */}
-              <Form.Control name='measurement' value={this.state.logEntry.measurement.sensor.id} readOnly />
+              <Form.Control name='measurement' value={this.state.logEntry.measurement.sensorName} readOnly />
             </Form.Group>
             <Form.Group controlId='formValue'>
               <Form.Label>Value</Form.Label>

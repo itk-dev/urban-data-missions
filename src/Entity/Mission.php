@@ -235,6 +235,27 @@ class Mission
         return $this->missionSensors;
     }
 
+    /** @var array Map from sensor id to sensor name */
+    private $sensorNames;
+
+    public function getMissionSensorNames(): array
+    {
+        if (null === $this->sensorNames) {
+            $this->sensorNames = [];
+
+            foreach ($this->getMissionSensors() as $missionSensor) {
+                $this->sensorNames[$missionSensor->getSensor()->getId()] = $missionSensor->getName();
+            }
+        }
+
+        return $this->sensorNames;
+    }
+
+    public function getMissionSensorName(Sensor $sensor): ?string
+    {
+        return $this->getMissionSensorNames()[$sensor->getId()] ?? null;
+    }
+
     public function addMissionSensor(MissionSensor $missionSensor): self
     {
         if (!$this->missionSensors->contains($missionSensor)) {

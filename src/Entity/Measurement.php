@@ -76,6 +76,14 @@ class Measurement
      */
     private $sensorWarnings;
 
+    /**
+     * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
+     */
+    public function getSensorName(): ?string
+    {
+        return $this->getMission()->getMissionSensorName($this->getSensor());
+    }
+
     public function __construct()
     {
         $this->sensorWarnings = new ArrayCollection();
