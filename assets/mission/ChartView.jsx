@@ -47,11 +47,14 @@ Add log entry
       },
       legend: true,
       cursor: true,
-      scrollbars: true,
-      export: true
+      scrollbars: true
     })
 
     this.chart = chart
+
+    if (typeof this.props.registerChartExport === 'function') {
+      this.props.registerChartExport('image', this.chart.exportImage.bind(this.chart))
+    }
 
     fetch(this.props.dataUrl, { headers: { accept: 'application/ld+json' } })
       .then((response) => {
@@ -122,7 +125,8 @@ ChartView.propTypes = {
   mission: PropTypes.object.isRequired,
   series: PropTypes.object.isRequired,
   dataUrl: PropTypes.string.isRequired,
-  messenger: PropTypes.instanceOf(Messenger).isRequired
+  messenger: PropTypes.instanceOf(Messenger).isRequired,
+  registerChartExport: PropTypes.func
 }
 
 export default ChartView

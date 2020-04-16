@@ -17,6 +17,53 @@
 
             <div id="app" data-options="{{ app_options|default(null)|json_encode }}"></div>
 
+            {% if export_formats|default(false) %}
+                <article id="export" class="mission-export mb-3">
+                    {% include "_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false} %}
+                    <div class="row">
+                        {# @TODO: Design #}
+                        <div class="col-auto">
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="export-mission-log-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ 'Export mission log'|trans }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="export-mission-log-button">
+                                    {% for format in export_formats %}
+                                        <a href="{{ path('mission_log', {id: mission.id, _format: format}) }}" class="dropdown-item">{{ format }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="export-mission-log-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ 'Export measurements'|trans }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="export-mission-log-button">
+                                    {% for format in export_formats %}
+                                        <a href="{{ path('mission_measurements', {id: mission.id, _format: format}) }}" class="dropdown-item">{{ format }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="export-mission-log-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ 'Export chart'|trans }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="export-mission-log-button">
+                                    {% for format in ['png', 'jpg', 'pdf'] %}
+                                        <button class="dropdown-item" data-export="chart" data-type="image" data-format="{{ format }}" data-options="{{ {filename: export_name}|json_encode }}">{{ format }}</button>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endif %}
+
             <article class="mission-sources">
                 <div class="row my-3">
                     <div class="col-auto">
@@ -59,18 +106,6 @@
                         {{ 'No sensors added yet'|trans }}
                         <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a></div>
                 {% endfor %}
-            </article>
-
-            <article class="mission-export mb-3">
-                {% include "_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false} %}
-                <div class="row">
-                    <div class="col-auto">
-                        <button type="button" name="export_png" id="" class="btn btn-success" >Export png</button>
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" name="export_png" id="" class="btn btn-success" >Export json</button>
-                    </div>
-                </div>
             </article>
 
             {% if mission.finishedAt %}

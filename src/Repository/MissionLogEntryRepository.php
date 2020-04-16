@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Mission;
 use App\Entity\MissionLogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -11,6 +12,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method MissionLogEntry|null findOneBy(array $criteria, array $orderBy = null)
  * @method MissionLogEntry[]    findAll()
  * @method MissionLogEntry[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MissionLogEntry[]    findByMission(Mission $mission, array $orderBy = null, $limit = null, $offset = null)
  */
 class MissionLogEntryRepository extends ServiceEntityRepository
 {
