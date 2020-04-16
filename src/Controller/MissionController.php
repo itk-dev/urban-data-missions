@@ -123,7 +123,7 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
      *     }
      *  )
      */
-    public function log(Mission $mission, string $_format, MissionExport $export): void
+    public function logEntries(Mission $mission, string $_format, MissionExport $export): void
     {
         $export->exportLogEntries($mission, $_format);
         exit;
