@@ -1,11 +1,16 @@
 # Iot Crawler App
 
+## Installation
+
+Run `./scripts/deploy dev` for development or just `./scripts/deploy` for
+production – or do it manually:
+
 ```sh
 docker-compose up -d
-# @TODO: There must be a better way to do this …
-docker-compose exec phpfpm chown -R daemon /app/var
 docker-compose exec phpfpm composer install
 docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction
+# @TODO: There must be a better way to do this …
+docker-compose exec phpfpm chown -R daemon /app/var
 ```
 
 ## Assets
@@ -30,6 +35,12 @@ This project contains a very simple content management system. Go to
 first published page with no parent.
 
 ## Development
+
+With [Mutagen](https://mutagen.io/):
+
+```sh
+mutagen project start
+```
 
 ### Fixtures
 
