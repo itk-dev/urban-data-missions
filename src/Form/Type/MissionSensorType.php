@@ -14,15 +14,31 @@ class MissionSensorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Sensor $sensor */
+        $sensor = $builder->getData()->getSensor();
         $builder
+            ->add('sensor_id', TextType::class, [
+                'mapped' => false,
+                'disabled' => true,
+                'data' => (string) $sensor,
+            ])
             ->add('sensor', EntityType::class, [
                 'class' => Sensor::class,
-                'placeholder' => 'Pick a sensor',
+                'choices' => [
+                    'xx' => $sensor, // => 'xxx',, //->getId() => 'xxx',
+                ],
+//                'placeholder' => 'Pick a sensor',
+                'data' => $sensor,
+                'attr' => [
+                    'readonly' => 'readony',
+                ],
+//                'disabled' => true,
             ])
             ->add('name', TextType::class, [
                 'required' => false,
-                'help' => 'Give the sensors a name for this mission',
+                'help' => 'Give the sensor a name for this mission',
             ])
+            ->add('enabled')
         ;
     }
 

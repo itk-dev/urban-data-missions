@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ApiResource()
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MissionSensor
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
@@ -34,6 +37,11 @@ class MissionSensor
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = true;
 
     public function getId(): ?string
     {
@@ -82,5 +90,17 @@ class MissionSensor
             $this->getSensor() ? $this->getSensor()->getId() : '',
             $this->getName()
         );
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 }

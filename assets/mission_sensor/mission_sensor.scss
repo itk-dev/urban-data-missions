@@ -1,0 +1,11 @@
+@import '../custom-variables';
+@import '../base';
+@import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/alert';
+
+@import '~select2/src/scss/core.scss';
+
+#mission_sensor_search {
+  width: 20em;
+}

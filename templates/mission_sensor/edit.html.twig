@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit MissionSensor{% endblock %}
+
+{% block body %}
+    <h1>Edit MissionSensor</h1>
+
+    {{ include('mission_sensor/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('mission_sensor_index', {mission: mission_sensor.mission.id}) }}">back to list</a>
+
+    {% if mission_sensor.id %}
+        {{ include('mission_sensor/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}
+
+{#
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission_sensor/edit') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission_sensor/edit') }}
+{% endblock %}
+#}

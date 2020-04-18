@@ -251,6 +251,11 @@ class Mission
         return $this->sensorNames;
     }
 
+    public function getMissionSensorIds(): array
+    {
+        return array_keys($this->getMissionSensorNames());
+    }
+
     public function getMissionSensorName(Sensor $sensor): ?string
     {
         return $this->getMissionSensorNames()[$sensor->getId()] ?? null;
