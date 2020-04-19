@@ -6,7 +6,7 @@ dir=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../ && pwd)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-APP_ENV=${1:-prod}
+export APP_ENV=${1:-prod}
 
 cd "$dir"
 
