@@ -23,7 +23,7 @@ class MissionSensorWarningType extends AbstractType
                 'help' => 'Generate a warning if the sensor value is above this value.',
             ])
             ->add('message', TextareaType::class, [
-                'help' => 'The message to write in the log if the sensor value is outside the bounds.',
+                'help' => 'The message to write in the log if the sensor value is outside the bounds. “%value%” will be replaced with the actual measured value when writing the log message.',
             ])
         ;
     }

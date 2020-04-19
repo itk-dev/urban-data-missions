@@ -75,18 +75,12 @@ class Mission
     private $subscription;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SensorWarning", mappedBy="mission", orphanRemoval=true)
-     */
-    private $sensorWarnings;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\MissionSensor", mappedBy="mission", cascade={"persist"}, orphanRemoval=true)
      */
     private $missionSensors;
 
     public function __construct()
     {
-        $this->sensorWarnings = new ArrayCollection();
         $this->missionSensors = new ArrayCollection();
     }
 
@@ -187,37 +181,6 @@ class Mission
     public function setSubscription(?string $subscription): self
     {
         $this->subscription = $subscription;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SensorWarning[]
-     */
-    public function getSensorWarnings(): Collection
-    {
-        return $this->sensorWarnings;
-    }
-
-    public function addSensorWarning(SensorWarning $sensorWarning): self
-    {
-        if (!$this->sensorWarnings->contains($sensorWarning)) {
-            $this->sensorWarnings[] = $sensorWarning;
-            $sensorWarning->setMission($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSensorWarning(SensorWarning $sensorWarning): self
-    {
-        if ($this->sensorWarnings->contains($sensorWarning)) {
-            $this->sensorWarnings->removeElement($sensorWarning);
-            // set the owning side to null (unless already changed)
-            if ($sensorWarning->getMission() === $this) {
-                $sensorWarning->setMission(null);
-            }
-        }
 
         return $this;
     }
