@@ -1,41 +1,28 @@
 import './mission_sensor.scss'
 
-import 'select2'
-
 const $ = require('jquery')
 
+// @see https://symfony.com/doc/current/form/dynamic_form_modification.html#dynamic-generation-for-submitted-forms
 $(() => {
-  const formatSensor = (sensor) => {
-    if (!sensor.id) {
-      return sensor.text
-    }
+  const buildCollectionTypes = (context) => {
+    // Collection types
+    // @see https://symfony.com/doc/current/reference/forms/types/collection.html#adding-and-removing-items
+    $('[data-collection-add-new-widget-selector]', context).on('click', function () {
+      const $container = $($(this).data('collection-add-new-widget-selector'))
+      let counter = $container.data('widget-counter') || $container.children().length
+      const template = $container.attr('data-prototype').replace(/__name__/g, counter)
+      counter++
+      $container.data('widget-counter', counter)
+      const item = $(template)
+      $container.append(item)
+      buildCollectionTypes(item)
+    })
 
-    const result = $('<div class="sensor-search-result"/>')
-    result.append($('<div class="sensor-id"/>').html('id: ' + sensor.id))
-    if (sensor.type) {
-      result.append($('<div class="sensor-type"/>').html('type: ' + sensor.type))
-    }
-
-    return result
+    $('[data-collection-remove-widget-selector]', context).on('click', function () {
+      const $container = $($(this).data('collection-remove-widget-selector'))
+      $container.remove()
+    })
   }
 
-  const $search = $('#mission_sensor_search')
-  const options = {
-    ajax: {
-      ...$search.data('ajax-options'),
-      ...{
-        processResults: (data) => {
-          // console.log('processResults', data)
-          // Transforms the top-level key of the response object from 'items' to 'results'
-          return {
-            results: data.data
-          }
-        }
-      }
-    },
-    templateResult: formatSensor,
-    templateSelection: formatSensor
-  }
-  console.log(options)
-  $search.select2(options)
+  buildCollectionTypes()
 })

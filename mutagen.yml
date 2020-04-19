@@ -4,6 +4,7 @@ sync:
     ignore:
       paths:
         - var
+        - 'mutagen.yml*'
       vcs: ~
     # @see https://mutagen.io/documentation/synchronization/permissions
     permissions:
@@ -17,8 +18,8 @@ sync:
     mode: 'two-way-safe'
 
   iot-crawler-app-nginx:
-    alpha: '.'
-    beta: 'docker://iot-crawler-app-nginx/app'
+    alpha: 'public'
+    beta: 'docker://iot-crawler-app-nginx/app/public'
     mode: 'one-way-replica'
 
 # @see https://mutagen.io/documentation/projects#setup-and-teardown

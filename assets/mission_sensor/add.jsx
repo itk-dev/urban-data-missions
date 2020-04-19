@@ -60,9 +60,7 @@ function App (props) {
   )
 
   useEffect(() => {
-    if (query) {
-      doSearch(query)
-    }
+    doSearch(query)
 
     return () => {
       abortController.abort()
@@ -70,28 +68,25 @@ function App (props) {
   }, [query])
 
   const renderData = () => {
-    if (!query) {
-      return null
+    if (query && data.length === 0) {
+      return query && <Alert variant='warning'>No sensors matching <code className='sensor-query'>{query}</code> found.</Alert>
     }
 
-    if (data.length === 0) {
-      return query && <Alert variant='warning'>No sensors matching <code>{query}</code> found.</Alert>
-    }
-
+    // @TODO: Design
     return (
       <>
-        <Alert variant='success'>Results matching “{query}”</Alert>
-        <ul>
+        <Alert variant='success'>{query ? <span>Results matching <code className='sensor-query'>{query}</code> ({data.length})</span> : <span>Results ({data.length})</span>}</Alert>
+        <ol className='list-unstyled'>
           {data.map(item => (
             <li key={item.id} className='sensor-search-result'>
-              <div className='sensor-id'>{item.id}</div>
-              <div className='sensor-type'>{item.type}</div>
+              <div className='sensor-id'>id: {item.id}</div>
+              <div className='sensor-type'>type: {item.type}</div>
               {item._metadata.mission_sensor
-                ? <Alert variant='info'>Already included in mission <a className='btn btn-primary' href={getEditSensorUrl(item)}>Edit</a></Alert>
+                ? <Alert variant='info'>Already included in mission <a className='btn btn-primary btn-sm' href={getEditSensorUrl(item)}>Edit</a></Alert>
                 : <a className='btn btn-success' href={getAddSensorUrl(item)}>Add</a>}
             </li>
           ))}
-        </ul>
+        </ol>
       </>
     )
   }
@@ -99,14 +94,14 @@ function App (props) {
   return (
     <div className='mission-sensor-search'>
       <Form.Group controlId='formContent'>
-        <Form.Label>Search</Form.Label>
+        <Form.Label className='sr-only'>Search</Form.Label>
         <Form.Control placeholder='Search for a sensor' value={query} onChange={(event) => setQuery(event.target.value)} />
       </Form.Group>
 
       {error && <Alert variant='danger'>Error: {error}</Alert>}
 
       {isLoading
-        ? <Alert variant='info'>Searching for “{query}” …</Alert>
+        ? <Alert variant='info'>{query ? <span>Searching for <code className='sensor-query'>{query}</code> …</span> : <span>Searching …</span>}</Alert>
         : renderData()}
     </div>
   )

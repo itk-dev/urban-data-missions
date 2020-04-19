@@ -96,7 +96,7 @@ class MissionSensorController extends AbstractController
             $em->persist($missionSensor);
             $em->flush();
 
-            return $this->redirectToRoute('mission_sensor_index', ['mission' => $missionSensor->getMission()->getId()]);
+            return $this->redirectToRoute('mission_show', ['id' => $missionSensor->getMission()->getId()]);
         }
 
         return $this->render('mission_sensor/edit.html.twig', [

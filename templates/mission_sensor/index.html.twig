@@ -23,8 +23,7 @@
                 <td>{{ mission_sensor.enabled ? 'Yes'|trans : 'No'|trans }}</td>
                 <td>{{ mission_sensor.createdAt|date }}</td>
                 <td>
-                    <a href="{{ path('mission_sensor_show', {mission: mission_sensor.mission.id, id: mission_sensor.id}) }}">show</a>
-                    <a href="{{ path('mission_sensor_edit', {mission: mission_sensor.mission.id, id: mission_sensor.id}) }}">edit</a>
+                    <a href="{{ path_with_referer('mission_sensor_edit', {mission: mission_sensor.mission.id, id: mission_sensor.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +34,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('mission_sensor_add', {mission: mission.id}) }}">{{ 'Add mission sensor'|trans }}</a>
+    <a href="{{ path_with_referer('mission_sensor_add', {mission: mission.id}) }}">{{ 'Add mission sensor'|trans }}</a>
 {% endblock %}

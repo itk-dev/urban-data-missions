@@ -6,6 +6,7 @@ use App\Entity\MissionSensor;
 use App\Entity\Sensor;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,28 +18,35 @@ class MissionSensorType extends AbstractType
         /** @var Sensor $sensor */
         $sensor = $builder->getData()->getSensor();
         $builder
-            ->add('sensor_id', TextType::class, [
-                'mapped' => false,
-                'disabled' => true,
-                'data' => (string) $sensor,
-            ])
             ->add('sensor', EntityType::class, [
+                'block_name' => 'sensor_details',
                 'class' => Sensor::class,
                 'choices' => [
-                    'xx' => $sensor, // => 'xxx',, //->getId() => 'xxx',
+                    $sensor->getId() => $sensor,
                 ],
-//                'placeholder' => 'Pick a sensor',
-                'data' => $sensor,
                 'attr' => [
-                    'readonly' => 'readony',
+                    'readonly' => 'readonly',
                 ],
-//                'disabled' => true,
             ])
             ->add('name', TextType::class, [
                 'required' => false,
                 'help' => 'Give the sensor a name for this mission',
             ])
             ->add('enabled')
+            ->add('sensorWarnings', CollectionType::class, [
+                'help' => 'Sensor warning can help you detect invalid data.',
+                'entry_type' => MissionSensorWarningType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'block_prefix' => 'mission_sensor_sensor_warning_item',
+                ],
+                'block_prefix' => 'mission_sensor_warning',
+                'block_name' => 'sensor_warnings',
+                'allow_add' => true,
+                'allow_delete' => true,
+                // Apparently this is needed to set mission_sensor_id correctly, but why?
+                'by_reference' => false,
+            ])
         ;
     }
 
