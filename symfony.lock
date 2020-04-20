@@ -31,6 +31,9 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
+    "box/spout": {
+        "version": "v3.1.0"
+    },
     "composer/semver": {
         "version": "1.5.1"
     },

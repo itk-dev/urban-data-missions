@@ -32,6 +32,8 @@ echo "${bold}Clearing and warming up cache${normal}"
 docker-compose exec -e APP_ENV phpfpm bin/console cache:clear --no-warmup
 docker-compose exec -e APP_ENV phpfpm bin/console cache:warmup
 
+docker-compose exec -e APP_ENV=prod phpfpm chown -R daemon /app/var
+
 echo "${bold}Running migrations${normal}"
 docker-compose exec -e APP_ENV phpfpm bin/console doctrine:migrations:migrate --no-interaction
 

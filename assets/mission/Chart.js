@@ -40,6 +40,20 @@ class Chart {
     }
   }
 
+  // @see https://www.amcharts.com/docs/v4/reference/export/#export_method
+  exportImage (type, options = {}) {
+    const exporting = this.chart.exporting
+    exporting[type === 'pdf' ? 'getPDF' : 'getImage'](type, options)
+      .then((data) => {
+        const image = data
+        if (exporting.downloadSupport()) {
+          exporting.download(image, (options.filename || 'chart') + '.' + type)
+        } else {
+          document.location = image
+        }
+      })
+  }
+
   buildExport (options) {
     this.chart.exporting.menu = new am4core.ExportMenu()
   }

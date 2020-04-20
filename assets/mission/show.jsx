@@ -12,9 +12,28 @@ import Messenger from './Messenger'
 
 import '@fortawesome/fontawesome-free/js/all'
 
-require('jquery')
+const $ = require('jquery')
 require('popper.js')
 require('bootstrap')
+
+const chartExports = {}
+
+const registerChartExport = (type, handler) => {
+  chartExports[type] = handler
+}
+
+const exportChart = (type, format, options) => {
+  if (chartExports[type]) {
+    chartExports[type](format, options)
+  }
+}
+
+$('[data-export="chart"][data-type][data-format]').on('click', function () {
+  let { type, format, options } = this.dataset
+  options = JSON.parse(options || '{}')
+  options.filename = (options.filename || 'mission') + '-' + (new Date().getTime())
+  exportChart(type, format, options)
+})
 
 class App extends Component {
   constructor (props) {
@@ -34,6 +53,7 @@ class App extends Component {
               series={this.props.sensors}
               dataUrl={this.props.measurementsUrl}
               messenger={this.messenger}
+              registerChartExport={this.props.registerChartExport}
             />
           </div>
           <div className='flex-fill'>
@@ -61,12 +81,14 @@ App.propTypes = {
   measurementsUrl: PropTypes.string.isRequired,
   logEntriesUrl: PropTypes.string.isRequired,
   eventSourceUrl: PropTypes.string.isRequired,
-  logEntryPostUrl: PropTypes.string.isRequired
+  logEntryPostUrl: PropTypes.string.isRequired,
+  registerChartExport: PropTypes.func
 }
 
 const el = document.getElementById('app')
 const options = JSON.parse(el.dataset.options || '{}')
 options.mission = JSON.parse(options.mission || '{}')
+options.registerChartExport = registerChartExport
 
 ReactDOM.render(
   <App {...options} />,
