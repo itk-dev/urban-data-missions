@@ -7,7 +7,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -70,11 +69,6 @@ class Measurement
      * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
      */
     private $value;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SensorWarning", mappedBy="measurement", orphanRemoval=true)
-     */
-    private $sensorWarnings;
 
     /**
      * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
@@ -162,37 +156,6 @@ class Measurement
     public function setValue(float $value): self
     {
         $this->value = $value;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SensorWarning[]
-     */
-    public function getSensorWarnings(): Collection
-    {
-        return $this->sensorWarnings;
-    }
-
-    public function addSensorWarning(SensorWarning $sensorWarning): self
-    {
-        if (!$this->sensorWarnings->contains($sensorWarning)) {
-            $this->sensorWarnings[] = $sensorWarning;
-            $sensorWarning->setMeasurement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSensorWarning(SensorWarning $sensorWarning): self
-    {
-        if ($this->sensorWarnings->contains($sensorWarning)) {
-            $this->sensorWarnings->removeElement($sensorWarning);
-            // set the owning side to null (unless already changed)
-            if ($sensorWarning->getMeasurement() === $this) {
-                $sensorWarning->setMeasurement(null);
-            }
-        }
 
         return $this;
     }

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Add mission sensor'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid bg-white">
+        <article class="mission-sensor py-3">
+
+            {# @TODO: Design #}
+            <div class="row">
+                <div class="col">
+                    <h1>{{ 'Add mission sensor'|trans }}</h1>
+                </div>
+                <div class="col text-right">
+                    <a class="btn btn-link" href="{{ path_from_referer('mission_show', {id: mission.id}) }}">{{ 'Cancel'|trans }}</a>
+                </div>
+            </div>
+
+            {% set options = {
+                searchUrl: path('mission_sensor_search', {mission: mission.id}),
+                addSensorUrl: path('mission_sensor_new', {mission: mission.id, sensor: '%sensor%'})|replace({('%'|url_encode): '%'}),
+                editSensorUrl: path('mission_sensor_edit', {mission: mission.id, id: '%sensor%'})|replace({('%'|url_encode): '%'}),
+                } %}
+            <div id="app" data-options="{{ options|json_encode }}">
+                {{ 'Loading app …'|trans }}
+            </div>
+        </article>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('mission_sensor/add') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission_sensor/add') }}
+{% endblock %}

@@ -40,11 +40,6 @@ class Sensor
      */
     private $data = [];
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SensorWarning", mappedBy="sensor", orphanRemoval=true)
-     */
-    private $sensorWarnings;
-
     public function __construct()
     {
         $this->missions = new ArrayCollection();
@@ -122,36 +117,5 @@ class Sensor
     public function __toString()
     {
         return $this->getId() ?? self::class;
-    }
-
-    /**
-     * @return Collection|SensorWarning[]
-     */
-    public function getSensorWarnings(): Collection
-    {
-        return $this->sensorWarnings;
-    }
-
-    public function addSensorWarning(SensorWarning $sensorWarning): self
-    {
-        if (!$this->sensorWarnings->contains($sensorWarning)) {
-            $this->sensorWarnings[] = $sensorWarning;
-            $sensorWarning->setSensor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSensorWarning(SensorWarning $sensorWarning): self
-    {
-        if ($this->sensorWarnings->contains($sensorWarning)) {
-            $this->sensorWarnings->removeElement($sensorWarning);
-            // set the owning side to null (unless already changed)
-            if ($sensorWarning->getSensor() === $this) {
-                $sensorWarning->setSensor(null);
-            }
-        }
-
-        return $this;
     }
 }

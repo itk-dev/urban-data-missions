@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Add mission sensor'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Add mission sensor'|trans }}</h1>
+
+    {{ include('mission_sensor/_form.html.twig') }}
+
+    <a href="{{ path('mission_sensor_index', {mission: mission_sensor.mission.id}) }}">{{ 'Cancel'|trans }}</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mission_sensor/new') }}
+{% endblock %}

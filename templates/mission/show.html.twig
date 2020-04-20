@@ -8,7 +8,11 @@
 
             {% include '_nav_close.html.twig' with {'nav_path': path('mission_index')} %}
 
-            <h1>{{ mission.title }}</h1>
+            <h1>
+                {{ mission.title }}
+                {# @TODO: Design #}
+                <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit mission'|trans }}</a>
+            </h1>
             <p class='text-primary-faded'>
                 {{ mission.theme.title }}<br/>
                 <i class='fas fa-map-marker-alt mr-1'></i>{{ mission.location }}
@@ -20,23 +24,30 @@
             <article class="mission-sources">
                 <div class="row my-3">
                     <div class="col-auto">
-                        <h2>{{ 'Sensors'|trans }}</h2>
+                        <h2>{{ 'Mission sensors'|trans }}</h2>
                     </div>
                     <div class="col">
-                        <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit'|trans }}</a>
+                        {# @TODO: Design #}
+                        {#<a href="{{ path('mission_sensor_index', {mission: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit mission sensors'|trans }}</a>#}
+                        <a href="{{ path_with_referer('mission_sensor_add', {mission: mission.id}) }}" class="btn btn-success btn-sm rounded-circle" title="{{ 'Add mission sensor'|trans }}">
+                            <span class='fas fa-plus'></span>
+                        </a>
                     </div>
                 </div>
 
+                {# @TODO: Make this a React component #}
                 {% for missionSensor in mission.missionSensors %}
 
                     <div class="row mb-3">
                         <div class="col">
                             <div class="row">
-                                {% if missionSensor.name %}
-                                    <div class="col">
-                                        <span>{{ missionSensor.name }}</span>
-                                    </div>
-                                {% endif %}
+                                <div class="col">
+                                    <span>{{ missionSensor.name|default(missionSensor.sensor.id) }}</span>
+                                    {# @TODO: Design #}
+                                    <a href="{{ path_with_referer('mission_sensor_edit', {mission: mission.id, id: missionSensor.id}) }}" class="btn btn-primary btn-sm">
+                                        {{ 'Edit mission sensor'|trans }}
+                                    </a>
+                                </div>
                                 <div class="col bg-light text-right">
                                     <span>{{ missionSensor.sensor.type }}</span>
                                 </div>

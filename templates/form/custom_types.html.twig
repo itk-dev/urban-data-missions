@@ -7,44 +7,47 @@ Templates for custom form types.
 {# App\Form\Type\MissionType #}
 
 {# https://symfony.com/blog/new-in-symfony-4-3-simpler-form-theming #}
-{% block mission_sensor_widget %}
-    <div class="mission-sensor-widget">
+{% block _mission_sensor_sensor_details_widget %}
+    <div class="sensor-details">
+        <div class="sensor-id">{{ data.id }}</div>
+        <div class="sensor-type">{{ data.type }}</div>
+    </div>
+
+    <div style="display: none">
+        {{- block('form_widget') -}}
+    </div>
+{% endblock %}
+
+{% block mission_sensor_warning_widget %}
+    <div class="mission-sensor-warning-widget">
         {{- block('collection_widget') -}}
         <div class="row">
             <div class="col-12 text-center">
                 <button type="button"
             data-collection-add-new-widget-selector="#{{ form.vars.id }}"
-            class="btn btn-outline-primary">{{ 'Add sensor'|trans }}</button>
+            class="btn btn-outline-primary">{{ 'Add sensor warning'|trans }}</button>
             </div>
         </div>
     </div>
 {% endblock %}
 
-{% block mission_sensor_item_row %}
-    <div class="row mission-sensor-item border-bottom pb-3 mb-3" id="{{ id }}">
+{% block mission_sensor_sensor_warning_item_row %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    <div class="row mission-sensor-warning-item border-bottom pb-3 mb-3" id="{{ id }}">
         <div class="col-12">
-
-            {% for child in form.children|filter(child => not child.rendered) %}
-                <div class="form-group row">
-                    <div class="col-sm-2 col-form-label">
-                        {{ form_label(child) }}
-                    </div>
-                    <div class="col-sm-10">
-                        {{ form_widget(child) }}
-                    </div>
-                    <div class="col-sm-10 offset-sm-2">
-                        {{ form_help(child) }}
-                    </div>
-                    <div class="col-sm-10 offset-sm-2">
-                        {{ form_errors(child) }}
-                    </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.min) }}
                 </div>
-            {% endfor %}
-
+                <div class="col">
+                    {{ form_row(form.max) }}
+                </div>
+            </div>
+            {{ form_row(form.message) }}
         </div>
         <div class="col-12">
             <div class="float-right">
-                <button type="button" class="btn text-danger btn-sm ml-0 pl-0" data-collection-remove-widget-selector="#{{ id }}">{{ 'Remove sensor'|trans }}</button>
+                <button type="button" class="btn text-danger btn-sm ml-0 pl-0" data-collection-remove-widget-selector="#{{ id }}">{{ 'Remove sensor warning'|trans }}</button>
             </div>
         </div>
     </div>

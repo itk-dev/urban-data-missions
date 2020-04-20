@@ -27,6 +27,8 @@ Encore
   .addEntry('mission', './assets/mission/index.js')
   .addEntry('mission/show', './assets/mission/show.jsx')
   .addEntry('mission/edit', './assets/mission/edit.js')
+  .addEntry('mission_sensor/add', './assets/mission_sensor/add.jsx')
+  .addEntry('mission_sensor/edit', './assets/mission_sensor/edit.js')
   .addEntry('mission-theme', './assets/mission_theme/index.js')
   .addEntry('onboarding', './assets/onboarding/index.js')
 
