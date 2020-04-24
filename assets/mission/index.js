@@ -12,8 +12,9 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle'
+import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle'
 
-library.add(faMapMarkerAlt, faBars, faPlus, faTimesCircle)
+library.add(faMapMarkerAlt, faBars, faPlus, faTimesCircle, faCircle)
 dom.watch()
 
 const L = require('leaflet')
@@ -33,13 +34,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const markerIcon = L.divIcon({
   className: 'map-marker-icon',
   // iconSize: L.point(24, 24),
-  html: '<i class="fas fa-map-marker-alt"></i>'
+  html: '<i class="fas fa-circle fa-lg"></i>'
 })
 
 const markerHiddenIcon = L.divIcon({
   className: 'map-marker-icon map-marker-icon-hidden',
   // iconSize: L.point(24, 24),
-  html: '<i class="fas fa-map-marker-alt"></i>'
+  html: '<i class="fas fa-circle fa-lg"></i>'
 })
 
 const buildSearch = (mission) => {

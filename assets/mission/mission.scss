@@ -19,16 +19,8 @@
 .map-marker-icon {
   color: $primary;
   box-shadow: $box-shadow-sm;
-  display: inline-block;
-  height: $spacer;
-  margin: 0;
-  padding: 0;
-  width: $spacer;
-
-  // @TODO: Design
-  // Marker hidden by non-matching text search
   &.map-marker-icon-hidden {
-    color: lighten($primary, 25%);
+    opacity: 0.3;
   }
 }
 
