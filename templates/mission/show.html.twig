@@ -114,7 +114,7 @@
             {% endif %}
 
             {% if mission.finishedAt %}
-                <div class="alert alert-dark">
+                <div class="alert alert-dark position-sticky fixed-bottom shadow-sm" style="bottom: 1rem;">
                     {{ 'Mission finished at %finished_at%'|trans({'%finished_at%': mission.finishedAt|date}) }}
                 </div>
             {% elseif finish_mission_form is defined %}
