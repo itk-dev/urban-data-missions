@@ -164,9 +164,9 @@ class LogView extends Component {
                       <span className={`badge badge-pill badge-sm badge-log-entry-type badge-log-entry-type-${entry.type}`}>{entry.type}</span>
                     </div>
                     <div className='col'>
-                      <p>{entry.content}</p>
-                      {/* @TODO: Design */}
-                      {entry.measurement && <div className='measurement' title={`Sensor id: ${entry.measurement.sensor.id}`} onClick={() => this.showMeasurementLogEntry(entry)}>{entry.measurement.sensorName}: {entry.measurement.value}</div>}
+                      <p className='mb-0'>{entry.content}</p>
+                      <p className='text-muted small'>{entry.measurement && <span className='measurement ' title={`Sensor id: ${entry.measurement.sensor.id}`} onClick={() => this.showMeasurementLogEntry(entry)}>{entry.measurement.sensorName}: {entry.measurement.value}</span>}
+                      </p>
                     </div>
                   </article>
                 ))}
