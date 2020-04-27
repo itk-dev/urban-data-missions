@@ -25,6 +25,9 @@
                     <div class="col">
                         <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit'|trans }}</a>
                     </div>
+                    <div class="col-12 mb-3">
+                        {{ 'Sensors connected to your mission'|trans }}
+                    </div>
                 </div>
 
                 {% for missionSensor in mission.missionSensors %}
@@ -54,10 +57,10 @@
                         </div>
                     </div>
                 {% else %}
-                    {# @TODO: Design #}
                     <div class="alert alert-info">
                         {{ 'No sensors added yet'|trans }}
-                        <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a></div>
+                        <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a>
+                    </div>
                 {% endfor %}
             </article>
 
@@ -65,7 +68,9 @@
                 <article id="export" class="mission-export mb-5">
                     {% include "_article_header.html.twig" with {'title': 'Export', 'add_button': false, 'edit_button': false} %}
                     <div class="row">
-                        {# @TODO: Design #}
+                        <div class="col-12 mb-3">
+                            {{ 'Use the buttons below to export your missions log, data and chart'|trans }}
+                        </div>
                         <div class="col-auto">
                             <div class="dropdown">
                                 <button class="btn btn-success dropdown-toggle" type="button" id="export-mission-log-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -73,7 +78,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="export-mission-log-button">
                                     {% for format in export_formats %}
-                                        <a href="{{ path('mission_log', {id: mission.id, _format: format}) }}" class="dropdown-item">{{ format }}</a>
+                                        <a href="{{ path('mission_log', {id: mission.id, _format: format}) }}" class="dropdown-item">{{ 'Messages as'|trans }} .{{ format }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -86,7 +91,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="export-mission-log-button">
                                     {% for format in export_formats %}
-                                        <a href="{{ path('mission_measurements', {id: mission.id, _format: format}) }}" class="dropdown-item">{{ format }}</a>
+                                        <a href="{{ path('mission_measurements', {id: mission.id, _format: format}) }}" class="dropdown-item">{{ 'Data as'|trans }} .{{ format }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -99,7 +104,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="export-mission-log-button">
                                     {% for format in ['png', 'jpg', 'pdf'] %}
-                                        <button class="dropdown-item" data-export="chart" data-type="image" data-format="{{ format }}" data-options="{{ {filename: export_name}|json_encode }}">{{ format }}</button>
+                                        <button class="dropdown-item" data-export="chart" data-type="image" data-format="{{ format }}" data-options="{{ {filename: export_name}|json_encode }}">{{ 'Image as'|trans }} .{{ format }}</button>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -109,8 +114,7 @@
             {% endif %}
 
             {% if mission.finishedAt %}
-                {# @TODO: Design #}
-                <div>
+                <div class="alert alert-dark">
                     {{ 'Mission finished at %finished_at%'|trans({'%finished_at%': mission.finishedAt|date}) }}
                 </div>
             {% elseif finish_mission_form is defined %}
@@ -118,6 +122,9 @@
                     {% include "_article_header.html.twig" with {'title': 'End mission', 'add_button': false, 'edit_button': false} %}
                     {{ form_start(finish_mission_form) }}
                         <div class="row">
+                            <div class="col-12 mb-3">
+                                {{ 'Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.'|trans }}
+                            </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-danger">{{ 'Finish mission'|trans }}</button>
                             </div>
