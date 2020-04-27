@@ -47,7 +47,7 @@ class App extends Component {
     return (
       <>
         <div className='d-flex flex-column justify-content-between'>
-          <div className='flex-fill'>
+          <div className='flex-fill mb-5'>
             <ChartView
               mission={this.props.mission}
               series={this.props.sensors}
@@ -56,7 +56,7 @@ class App extends Component {
               registerChartExport={this.props.registerChartExport}
             />
           </div>
-          <div className='flex-fill'>
+          <div className='flex-fill mb-5'>
 
             <LogEntry
               postUrl={this.props.logEntryPostUrl}

@@ -68,6 +68,16 @@
   overflow-y: scroll;
 }
 
+// Mission log filters
+.mission-log-filter-types {
+  cursor: pointer;
+
+  :not(.active) {
+    @include badge-variant($gray-200);
+    color: $gray-500;
+  }
+}
+
 .badge {
   font-weight: 400;
 }
