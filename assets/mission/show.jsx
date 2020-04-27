@@ -10,7 +10,17 @@ import LogView from './LogView'
 import LogEntry from './LogEntry'
 import Messenger from './Messenger'
 
-import '@fortawesome/fontawesome-free/js/all'
+// import '@fortawesome/fontawesome-free/js/all'
+/* Import FontAwesome icons */
+import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt'
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+
+library.add(faMapMarkerAlt, faPlus, faInfoCircle, faTimesCircle)
+dom.watch()
+
 
 const $ = require('jquery')
 require('popper.js')
