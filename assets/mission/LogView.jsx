@@ -18,14 +18,14 @@ class LogView extends Component {
           'alert',
           'measurement',
           'system',
-          'user',
+          'user'
         ],
         // Actual values
         values: {
           alert: true,
           measurement: true,
           system: true,
-          user: true,
+          user: true
         }
       }
     }

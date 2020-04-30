@@ -47,9 +47,21 @@ App\Entity\MissionSensor:
     mission-sensor-002:
         mission: '@mission-003'
         sensor: '@sensor_001:humidity'
-        name: 'The temperature'
+        name: 'Humidity'
 
     'mission-sensor_{1..64}':
         mission: '@mission_*'
         sensor: '@sensor_*'
         name: '<text(20)>'
+
+App\Entity\MissionSensorWarning:
+    'mission-sensor-warning:001':
+        missionSensor: '@mission-sensor-001'
+        message: 'Humidity %value% outside expected range [%min%, %max%]'
+        min: 20
+        max: 60
+
+    'mission-sensor-warning:002':
+        missionSensor: '@mission-sensor-002'
+        message: 'Temperature measured at %value% outside expected range [%min%, %max%]'
+        min: 20

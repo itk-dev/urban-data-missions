@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Mission sensor'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Mission sensor'|trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ mission_sensor.name }}</td>
+            </tr>
+            <tr>
+                <th>Sensor</th>
+                <td>{{ mission_sensor.sensor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('mission_sensor_index', {mission: mission_sensor.mission.id}) }}">back to list</a>
+
+    <a href="{{ path('mission_sensor_edit', {mission: mission_sensor.mission.id, id: mission_sensor.id}) }}">edit</a>
+
+    {{ include('mission_sensor/_delete_form.html.twig') }}
+{% endblock %}

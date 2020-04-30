@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ApiResource()
@@ -11,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MissionSensor
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
@@ -31,9 +36,24 @@ class MissionSensor
     private $sensor;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MissionSensorWarning", mappedBy="missionSensor", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $sensorWarnings;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = true;
+
+    public function __construct()
+    {
+        $this->sensorWarnings = new ArrayCollection();
+    }
 
     public function getId(): ?string
     {
@@ -72,6 +92,49 @@ class MissionSensor
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MissionSensorWarning[]
+     */
+    public function getSensorWarnings(): Collection
+    {
+        return $this->sensorWarnings;
+    }
+
+    public function addSensorWarning(MissionSensorWarning $sensorWarning): self
+    {
+        if (!$this->sensorWarnings->contains($sensorWarning)) {
+            $this->sensorWarnings[] = $sensorWarning;
+            $sensorWarning->setMissionSensor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSensorWarning(MissionSensorWarning $sensorWarning): self
+    {
+        if ($this->sensorWarnings->contains($sensorWarning)) {
+            $this->sensorWarnings->removeElement($sensorWarning);
+            // set the owning side to null (unless already changed)
+            if ($sensorWarning->getMissionSensor() === $this) {
+                $sensorWarning->setMissionSensor(null);
+            }
+        }
 
         return $this;
     }

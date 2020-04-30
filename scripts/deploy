@@ -6,6 +6,8 @@ dir=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../ && pwd)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
+export APP_ENV=${1:-prod}
+
 cd "$dir"
 
 echo "${bold}Installing asset build tools${normal}"
@@ -18,14 +20,24 @@ echo "${bold}Bringing up Docker compose containers${normal}"
 docker-compose up -d
 
 echo "${bold}Composer installing${normal}"
-docker-compose exec -e APP_ENV=prod phpfpm composer install --no-dev --classmap-authoritative
-docker-compose exec -e APP_ENV=prod phpfpm composer dump-env prod
+if [ "prod" = "$APP_ENV" ]; then
+    docker-compose exec -e APP_ENV phpfpm composer install --no-dev --classmap-authoritative
+    docker-compose exec -e APP_ENV phpfpm composer dump-env prod
+else
+    [ -e .env.local.php ] && rm .env.local.php
+    docker-compose exec -e APP_ENV phpfpm composer install
+fi
 
 echo "${bold}Clearing and warming up cache${normal}"
-docker-compose exec -e APP_ENV=prod phpfpm bin/console cache:clear --no-warmup
-docker-compose exec -e APP_ENV=prod phpfpm bin/console cache:warmup
+docker-compose exec -e APP_ENV phpfpm bin/console cache:clear --no-warmup
+docker-compose exec -e APP_ENV phpfpm bin/console cache:warmup
+
+docker-compose exec -e APP_ENV=prod phpfpm chown -R daemon /app/var
 
 docker-compose exec -e APP_ENV=prod phpfpm chown -R daemon /app/var
 
 echo "${bold}Running migrations${normal}"
-docker-compose exec -e APP_ENV=prod phpfpm bin/console doctrine:migrations:migrate --no-interaction
+docker-compose exec -e APP_ENV phpfpm bin/console doctrine:migrations:migrate --no-interaction
+
+# @TODO: There must be a better way to do this …
+docker-compose exec -e APP_ENV phpfpm chown -R daemon /app/var

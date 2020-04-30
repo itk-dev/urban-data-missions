@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Mission sensors'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Mission sensors'|trans }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Sensor'|trans }}</th>
+                <th>{{ 'Enabled'|trans }}</th>
+                <th>{{ 'Added at'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mission_sensor in mission_sensors %}
+            <tr>
+                <td>{{ mission_sensor.name }}</td>
+                <td>{{ mission_sensor.sensor }}</td>
+                <td>{{ mission_sensor.enabled ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ mission_sensor.createdAt|date }}</td>
+                <td>
+                    <a href="{{ path_with_referer('mission_sensor_edit', {mission: mission_sensor.mission.id, id: mission_sensor.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path_with_referer('mission_sensor_add', {mission: mission.id}) }}">{{ 'Add mission sensor'|trans }}</a>
+{% endblock %}

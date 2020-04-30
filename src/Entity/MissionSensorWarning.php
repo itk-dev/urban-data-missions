@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SensorWarningRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\MissionSensorWarningRepository")
  */
-class SensorWarning
+class MissionSensorWarning
 {
     /**
      * @ORM\Id()
@@ -17,15 +17,10 @@ class SensorWarning
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sensor", inversedBy="sensorWarnings")
+     * @ORM\ManyToOne(targetEntity="App\Entity\MissionSensor", inversedBy="sensorWarnings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $sensor;
-
-    /**
-     * @ORM\Column(type="string", length=1024)
-     */
-    private $message;
+    private $missionSensor;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -38,36 +33,23 @@ class SensorWarning
     private $max;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Mission", inversedBy="sensorWarnings")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=1024)
      */
-    private $mission;
+    private $message;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSensor(): ?Sensor
+    public function getMissionSensor(): ?MissionSensor
     {
-        return $this->sensor;
+        return $this->missionSensor;
     }
 
-    public function setSensor(?Sensor $sensor): self
+    public function setMissionSensor(MissionSensor $missionSensor): self
     {
-        $this->sensor = $sensor;
-
-        return $this;
-    }
-
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    public function setMessage(string $message): self
-    {
-        $this->message = $message;
+        $this->missionSensor = $missionSensor;
 
         return $this;
     }
@@ -96,14 +78,14 @@ class SensorWarning
         return $this;
     }
 
-    public function getMission(): ?Mission
+    public function getMessage(): ?string
     {
-        return $this->mission;
+        return $this->message;
     }
 
-    public function setMission(?Mission $mission): self
+    public function setMessage(string $message): self
     {
-        $this->mission = $mission;
+        $this->message = $message;
 
         return $this;
     }
