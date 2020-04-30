@@ -10,7 +10,17 @@ import LogView from './LogView'
 import LogEntry from './LogEntry'
 import Messenger from './Messenger'
 
-import '@fortawesome/fontawesome-free/js/all'
+// import '@fortawesome/fontawesome-free/js/all'
+/* Import FontAwesome icons */
+import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt'
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+
+library.add(faMapMarkerAlt, faPlus, faInfoCircle, faTimesCircle)
+dom.watch()
+
 
 const $ = require('jquery')
 require('popper.js')
@@ -47,7 +57,7 @@ class App extends Component {
     return (
       <>
         <div className='d-flex flex-column justify-content-between'>
-          <div className='flex-fill'>
+          <div className='flex-fill mb-5'>
             <ChartView
               mission={this.props.mission}
               series={this.props.sensors}
@@ -56,7 +66,7 @@ class App extends Component {
               registerChartExport={this.props.registerChartExport}
             />
           </div>
-          <div className='flex-fill'>
+          <div className='flex-fill mb-5'>
 
             <LogEntry
               postUrl={this.props.logEntryPostUrl}

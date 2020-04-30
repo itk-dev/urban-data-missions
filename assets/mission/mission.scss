@@ -12,38 +12,60 @@
 @import '~leaflet/dist/leaflet';
 
 .map {
-  height: calc(100vh - 56px);
+  height: 100vh;
   width: 100vw;
 }
 
 .map-marker-icon {
-  color: $primary;
   box-shadow: $box-shadow-sm;
-  display: inline-block;
-  height: $spacer;
-  margin: 0;
-  padding: 0;
-  width: $spacer;
+  color: $primary;
 
-  // @TODO: Design
-  // Marker hidden by non-matching text search
   &.map-marker-icon-hidden {
-    color: lighten($primary, 25%);
+    opacity: 0.3;
   }
 }
 
-// @TODO: Design
-// Map lay control
-.leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
-  width: 200px;
+.leaflet-control-layers {
+  background-color: $white;
+  box-shadow: $box-shadow;
+
+  &.leaflet-control-layers-expanded {
+    width: 50vw;
+  }
+}
+
+.leaflet-control-layers-toggle {
+  background-image: none;
+  height: $sizer * 2.5;
+  width: $sizer * 3;
+
+  &::before {
+    color: $dark;
+    content: '\2015 \A \2015 \A \2015';
+    display: inline-block;
+    font-size: $font-size-base * 1.75;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 900;
+    line-height: 0.25;
+    padding-bottom: $sizer * 0.45;
+    padding-left: $sizer * 0.6;
+    padding-right: $sizer * 0.6;
+    padding-top: $sizer * 0.45;
+    text-rendering: auto;
+  }
 }
 
 // Mission map search text input
 .leaflet-control.mission-search {
-  width: 200px;
-  padding: 6px 10px 6px 6px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  background-color: $white;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: $box-shadow;
+  height: $sizer * 2.5;
+  padding-left: $sizer;
+  width: calc(40vw - #{$sizer});
 }
 
 // @TODO: Hide element when map is shown
@@ -51,13 +73,11 @@
   display: none;
 }
 
-// @TODO: Design
 .mission-location-map {
   height: 300px;
   width: 100%;
 }
 
-// @TODO: Design
 .badge-log-entry-type {
   @include badge-variant($primary-300);
 }
@@ -70,9 +90,23 @@
   @include badge-variant($primary-200);
 }
 
+.badge-log-entry-type-alert {
+  @include badge-variant($primary);
+}
+
 .log-view-content {
   max-height: 500px;
   overflow-y: scroll;
+}
+
+// Mission log filters
+.mission-log-filter-types {
+  cursor: pointer;
+
+  :not(.active) {
+    @include badge-variant($gray-200);
+    color: $gray-500;
+  }
 }
 
 .badge {

@@ -5,9 +5,11 @@ import 'select2'
 
 /* Import FontAwesome icons */
 import { library, dom } from '@fortawesome/fontawesome-svg-core'
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt'
+import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle'
+import { faLocationArrow } from '@fortawesome/free-solid-svg-icons/faLocationArrow'
 
-library.add(faMapMarkerAlt)
+
+library.add(faCircle, faLocationArrow)
 dom.watch()
 
 const $ = require('jquery')
@@ -65,7 +67,7 @@ $(() => {
     const markerIcon = L.divIcon({
       className: 'map-marker-icon',
       // iconSize: L.point(24, 24),
-      html: '<i class="fas fa-map-marker-alt"></i>'
+      html: '<i class="fas fa-circle fa-lg"></i>'
     })
 
     const center = L.marker(map.getCenter(), {
@@ -92,5 +94,7 @@ $(() => {
     L.control.locate({
       // @TODO Set title (https://github.com/domoritz/leaflet-locatecontrol/blob/gh-pages/src/L.Control.Locate.js#L300)
     }).addTo(map)
+
+    // TODO: Change get location button icon to fas fa-location-arrow
   }
 })

@@ -10,28 +10,6 @@
         show_url_template: path('mission_show', {'id': '%id%'})|replace({('%'|url_encode): '%'})
     } %}
 
-	<nav class="navbar navbar-light bg-light">
-		<a class="navbar-brand" href="#">Navbar</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavId">
-			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-				{% for mission in missions %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('mission_show', {'id': mission.id}) }}">{{ mission.title }}</a>
-					</li>
-
-
-				{% else %}
-					<li class="nav-item disabled">
-						<span>{{ "No records found"|trans }}</span>
-					</li>
-				{% endfor %}
-			</ul>
-		</div>
-	</nav>
-
 	<div id="map" class="map" data-options="{{ map_options|json_encode }}"></div>
 
 	<a href="{{ path('theme_index') }}" class="btn btn-lg btn-success rounded-circle btn-add-new-mission shadow">

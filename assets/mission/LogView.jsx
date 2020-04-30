@@ -117,7 +117,7 @@ class LogView extends Component {
       return (
         <Badge
           key={`filter-${name}`} pill
-          className={`filter-${name} ${active ? 'active' : ''} badge-log-entry-type badge-log-entry-type-${name}`}
+          className={`filter-${name} ${active ? 'active' : ''} badge-log-entry-type badge-log-entry-type-${name} mr-1`}
           onClick={() => this.toggleFilter(name)}
         >{name}
         </Badge>
@@ -128,7 +128,7 @@ class LogView extends Component {
 
     return (
       <section className='log-view'>
-        <header className='row my-3'>
+        <header className='row mt-3'>
           <div className='col-auto'>
             <h2>Mission log</h2>
           </div>
@@ -137,34 +137,41 @@ class LogView extends Component {
               <span className='fas fa-plus' />
             </Button>
           </div>
+        </header>
 
+        <div className="row mb-3">
+          <div className="col-auto">
+            <span className="text-muted">Filter log types:</span>
+          </div>
           <div className='col'>
-            {/* @TODO: Design */}
-            Filter types
-            <div className='btn-group btn-group-toggle'>
+            <div className='mission-log-filter-types btn-group btn-group-toggle'>
               {this.state.filter.names.map(renderFilter)}
             </div>
           </div>
-        </header>
+        </div>
 
         {this.state.message && <Alert dismissible onClose={() => this.setState({ message: null })} variant={this.state.message.type}>{this.state.message.content}</Alert>}
 
-        <div className='log-view-content'>
-          {entries.length === 0
-            ? <Alert variant='warning'>No log entries</Alert>
-            : entries.map((entry, index) => (
-              <article className={`row mb-3 log-entry log-entry-${entry.type}`} key={'log-entry-' + index}>
-                <div className='col-auto'>
-                  <p className='small mb-0 text-primary-faded pt-1'>{entry.loggedAt}</p>
-                  <span className={`badge badge-pill badge-sm badge-log-entry-type badge-log-entry-type-${entry.type}`}>{entry.type}</span>
-                </div>
-                <div className='col'>
-                  <p>{entry.content}</p>
-                  {/* @TODO: Design */}
-                  {entry.measurement && <div className='measurement' title={`Sensor id: ${entry.measurement.sensor.id}`} onClick={() => this.showMeasurementLogEntry(entry)}>{entry.measurement.sensorName}: {entry.measurement.value}</div>}
-                </div>
-              </article>
-            ))}
+        <div className="row">
+          <div className="col">
+            <div className='log-view-content'>
+              {entries.length === 0
+                ? <Alert variant='warning'>No log entries</Alert>
+                : entries.map((entry, index) => (
+                  <article className={`row mb-3 log-entry log-entry-${entry.type}`} key={'log-entry-' + index}>
+                    <div className='col-auto'>
+                      <p className='small mb-0 text-primary-faded pt-1'>{entry.loggedAt}</p>
+                      <span className={`badge badge-pill badge-sm badge-log-entry-type badge-log-entry-type-${entry.type}`}>{entry.type}</span>
+                    </div>
+                    <div className='col'>
+                      <p className='mb-0'>{entry.content}</p>
+                      <p className='text-muted small'>{entry.measurement && <span className='measurement ' title={`Sensor id: ${entry.measurement.sensor.id}`} onClick={() => this.showMeasurementLogEntry(entry)}>{entry.measurement.sensorName}: {entry.measurement.value}</span>}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+            </div>
+          </div>
         </div>
       </section>
     )

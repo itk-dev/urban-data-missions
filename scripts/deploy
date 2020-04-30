@@ -34,6 +34,8 @@ docker-compose exec -e APP_ENV phpfpm bin/console cache:warmup
 
 docker-compose exec -e APP_ENV=prod phpfpm chown -R daemon /app/var
 
+docker-compose exec -e APP_ENV=prod phpfpm chown -R daemon /app/var
+
 echo "${bold}Running migrations${normal}"
 docker-compose exec -e APP_ENV phpfpm bin/console doctrine:migrations:migrate --no-interaction
 
