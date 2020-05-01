@@ -24,7 +24,7 @@
                 {% endif %}
                 <a class="btn btn-link btn-block" href="{{ path('theme_index') }}">{{ 'Skip introduction'|trans }}</a>
             {% elseif current == total %}
-                <a class="btn btn-primary btn-block" href="{{ path('mission_index') }}">{{ 'Explore the data missions'|trans }}</a>
+                <a class="btn btn-primary btn-block complete-onboarding" href="{{ path('mission_index') }}">{{ 'Explore the data missions'|trans }}</a>
                 {% set first_intro_page = preceding_siblings|length > 1 ? preceding_siblings[1] %}
                 {% if first_intro_page %}
                     <a class="btn btn-link btn-block" href="{{ _self.page_url(first_intro_page) }}">{{ 'Restart introduction'|trans }}</a>

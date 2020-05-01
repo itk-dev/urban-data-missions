@@ -6,9 +6,15 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 /* Require roboto typeface */
 require('typeface-roboto')
-require('jquery')
+const $ = require('jquery')
 require('popper.js')
 require('bootstrap')
 
 library.add(faArrowLeft, faArrowRight)
 dom.watch()
+
+$(() => {
+  $('.complete-onboarding').on('click', () => {
+    document.cookie = 'onboarding-completed=1;path=/'
+  })
+})
