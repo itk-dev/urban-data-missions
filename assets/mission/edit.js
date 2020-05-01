@@ -8,7 +8,6 @@ import { library, dom } from '@fortawesome/fontawesome-svg-core'
 import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle'
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons/faLocationArrow'
 
-
 library.add(faCircle, faLocationArrow)
 dom.watch()
 

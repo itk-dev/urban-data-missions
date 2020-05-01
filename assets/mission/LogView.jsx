@@ -139,9 +139,9 @@ class LogView extends Component {
           </div>
         </header>
 
-        <div className="row mb-3">
-          <div className="col-auto">
-            <span className="text-muted">Filter log types:</span>
+        <div className='row mb-3'>
+          <div className='col-auto'>
+            <span className='text-muted'>Filter log types:</span>
           </div>
           <div className='col'>
             <div className='mission-log-filter-types btn-group btn-group-toggle'>
@@ -152,8 +152,8 @@ class LogView extends Component {
 
         {this.state.message && <Alert dismissible onClose={() => this.setState({ message: null })} variant={this.state.message.type}>{this.state.message.content}</Alert>}
 
-        <div className="row">
-          <div className="col">
+        <div className='row'>
+          <div className='col'>
             <div className='log-view-content'>
               {entries.length === 0
                 ? <Alert variant='warning'>No log entries</Alert>

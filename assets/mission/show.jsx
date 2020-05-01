@@ -21,7 +21,6 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 library.add(faMapMarkerAlt, faPlus, faInfoCircle, faTimesCircle)
 dom.watch()
 
-
 const $ = require('jquery')
 require('popper.js')
 require('bootstrap')
