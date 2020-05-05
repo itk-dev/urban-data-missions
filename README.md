@@ -20,6 +20,13 @@ docker run --volume ${PWD}:/app --workdir /app node:latest yarn install
 docker run --volume ${PWD}:/app --workdir /app node:latest yarn build
 ```
 
+## Translation
+
+```sh
+# Remember to set the DEFAULT_LOCALE environment variable so the XLF-files will have the correct source-language
+docker-compose exec -e DEFAULT_LOCALE=en phpfpm bin/console translation:update --force da
+```
+
 During development:
 
 ```sh
