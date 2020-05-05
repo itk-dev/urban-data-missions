@@ -10,14 +10,19 @@
 
             <h1>
                 {{ mission.title }}
-                {# @TODO: Design #}
-                <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit mission'|trans }}</a>
             </h1>
-            <p class='text-primary-faded'>
-                {{ mission.theme.title }}<br/>
-                <i class='fas fa-map-marker-alt mr-1'></i>{{ mission.location }}
-            </p>
-            <p>{{ mission.description }}</p>
+            <div class="row">
+                <div class="col">
+                    <p class='text-primary-faded'>
+                        {{ mission.theme.title }}<br/>
+                        <i class='fas fa-map-marker-alt mr-1'></i>{{ mission.location }}
+                    </p>
+                    <p>{{ mission.description }}</p>
+                </div>
+                <div class="col-auto">
+                    <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit mission'|trans }}</a>
+                </div>
+            </div>
 
             <div id="app" data-options="{{ app_options|default(null)|json_encode }}"></div>
 

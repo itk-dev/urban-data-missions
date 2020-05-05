@@ -69,7 +69,8 @@ table {
 
 .close {
   position: fixed;
-  right: $sizer;
-  top: $sizer;
+  right: 0;
+  top: 0;
+  z-index: 1050;
 }
 
