@@ -1,0 +1,9 @@
+#@see https://github.com/willdurand/BazingaJsTranslationBundle/blob/master/Resources/doc/index.md#more-configuration
+bazinga_js_translation:
+    locale_fallback: en
+    active_locales:
+        - en
+        - da
+
+    active_domains:
+        - messages

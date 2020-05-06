@@ -13,18 +13,21 @@ docker-compose exec phpfpm bin/console doctrine:migrations:migrate --no-interact
 docker-compose exec phpfpm chown -R daemon /app/var
 ```
 
-## Assets
-
-```sh
-docker run --volume ${PWD}:/app --workdir /app node:latest yarn install
-docker run --volume ${PWD}:/app --workdir /app node:latest yarn build
-```
-
-## Translation
+## Translations
 
 ```sh
 # Remember to set the DEFAULT_LOCALE environment variable so the XLF-files will have the correct source-language
 docker-compose exec -e DEFAULT_LOCALE=en phpfpm bin/console translation:update --force da
+# Dump JavaScript translations
+docker-compose exec phpfpm bin/console bazinga:js-translation:dump assets/ --format=json
+```
+
+## Assets
+
+
+```sh
+docker run --volume ${PWD}:/app --workdir /app node:latest yarn install
+docker run --volume ${PWD}:/app --workdir /app node:latest yarn build
 ```
 
 During development:

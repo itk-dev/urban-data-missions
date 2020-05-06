@@ -13,6 +13,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle'
 import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle'
+import Translator from '../translations'
 
 library.add(faMapMarkerAlt, faBars, faPlus, faTimesCircle, faCircle)
 dom.watch()
@@ -62,7 +63,7 @@ for (const mission of missions) {
   bounds.extend(marker.getLatLng())
 
   const showUrl = mapOptions.show_url_template.replace('%id%', mission.id)
-  marker.bindPopup(`<p class="mb-0 h4">${mission.title}</p><p class="text-primary"><i class="fas fa-map-marker-alt mr-1"></i>${mission.location}</p><p>${mission.description}</p><a href="${showUrl}" class="btn btn-primary btn-sm btn-block">Show mission</a>`)
+  marker.bindPopup(`<p class="mb-0 h4">${mission.title}</p><p class="text-primary"><i class="fas fa-map-marker-alt mr-1"></i>${mission.location}</p><p>${mission.description}</p><a href="${showUrl}" class="btn btn-primary btn-sm btn-block">${Translator.trans('Show mission')}</a>`)
 
   let layerGroup = themeMissions[mission.theme.title]
   if (!layerGroup) {
@@ -86,7 +87,7 @@ L.control.markerTextFilter({
   layerGroups: themeMissions,
   icon: markerIcon,
   hiddenIcon: markerHiddenIcon,
-  placeholder: 'Search for a mission',
+  placeholder: Translator.trans('Search for a mission'),
   classNames: ['mission-search'],
   zoomToMatches: true,
   matcher: (text, marker) => {

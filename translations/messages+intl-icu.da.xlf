@@ -201,6 +201,90 @@
         <source>Edit</source>
         <target>__Edit</target>
       </trans-unit>
+      <trans-unit id="rqDsWdb" resname="Search for a mission">
+        <source>Search for a mission</source>
+        <target>Søg efter en mission</target>
+      </trans-unit>
+      <trans-unit id="QOwJv70" resname="No log entries">
+        <source>No log entries</source>
+        <target>__No log entries</target>
+      </trans-unit>
+      <trans-unit id="sdzIm2x" resname="Mission log">
+        <source>Mission log</source>
+        <target>__Mission log</target>
+      </trans-unit>
+      <trans-unit id="Z5E0FCJ" resname="Add log entry">
+        <source>Add log entry</source>
+        <target>__Add log entry</target>
+      </trans-unit>
+      <trans-unit id="R70pB1_" resname="Content">
+        <source>Content</source>
+        <target>__Content</target>
+      </trans-unit>
+      <trans-unit id="hix822E" resname="Show mission">
+        <source>Show mission</source>
+        <target>__Show mission</target>
+      </trans-unit>
+      <trans-unit id="ScJmuqq" resname="Search">
+        <source>Search</source>
+        <target>__Search</target>
+      </trans-unit>
+      <trans-unit id="IKaZcbf" resname="Search for a sensor">
+        <source>Search for a sensor</source>
+        <target>__Search for a sensor</target>
+      </trans-unit>
+      <trans-unit id="CcUEzkM" resname="Error: %error%">
+        <source>Error: %error%</source>
+        <target>__Error: %error%</target>
+      </trans-unit>
+      <trans-unit id="E2tHmQr" resname="Searching for &lt;code class=&quot;sensor-query&quot;&gt;%query%&lt;/code&gt; …">
+        <source>Searching for &lt;code class="sensor-query"&gt;%query%&lt;/code&gt; …</source>
+        <target><![CDATA[__Searching for <code class="sensor-query">%query%</code> …]]></target>
+      </trans-unit>
+      <trans-unit id="eZ7el7Q" resname="Searching …">
+        <source>Searching …</source>
+        <target>Søger …</target>
+      </trans-unit>
+      <trans-unit id="B9X6pco" resname="Results matching &lt;code class=&quot;sensor-query&quot;&gt;%query%&lt;/code&gt; (%count%)">
+        <source>Results matching &lt;code class="sensor-query"&gt;%query%&lt;/code&gt; (%count%)</source>
+        <target><![CDATA[__Results matching <code class="sensor-query">%query%</code> (%count%)]]></target>
+      </trans-unit>
+      <trans-unit id="PHhimgv" resname="Results (%count%)">
+        <source>Results (%count%)</source>
+        <target>__Results (%count%)</target>
+      </trans-unit>
+      <trans-unit id="FjDbizz" resname="Already included in mission">
+        <source>Already included in mission</source>
+        <target>__Already included in mission</target>
+      </trans-unit>
+      <trans-unit id="n9coxmy" resname="Add">
+        <source>Add</source>
+        <target>__Add</target>
+      </trans-unit>
+      <trans-unit id="Ub_M73A" resname="Searching for %query% …">
+        <source>Searching for %query% …</source>
+        <target>__Searching for %query% …</target>
+      </trans-unit>
+      <trans-unit id="jjeVPSP" resname="Value">
+        <source>Value</source>
+        <target>__Value</target>
+      </trans-unit>
+      <trans-unit id="MF0zYKu" resname="Logged at">
+        <source>Logged at</source>
+        <target>__Logged at</target>
+      </trans-unit>
+      <trans-unit id="F6X5YOO" resname="Filter log types">
+        <source>Filter log types</source>
+        <target>__Filter log types</target>
+      </trans-unit>
+      <trans-unit id="UXlIkU5" resname="{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%">
+        <source>{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%</source>
+        <target>{0}Intet matcher %query%|{1}Et resultat matcher %query%|]1,Inf]%count% resultater matcher %query%</target>
+      </trans-unit>
+      <trans-unit id="cX8n7Xm" resname="{0}No results|{1}One result|]1,Inf]%count% results">
+        <source>{0}No results|{1}One result|]1,Inf]%count% results</source>
+        <target>{0}Ingen resultater|{1}Et resultat|]1,Inf]%count% resultater</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

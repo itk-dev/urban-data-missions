@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "014cb1aa31c85cdd44d2801aee52a4e2",
+    "content-hash": "4702007fd2472fb47a7226b8a07a8830",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -1931,6 +1931,51 @@
                 "yaml"
             ],
             "time": "2019-09-17T15:30:40+00:00"
+        },
+        {
+            "name": "mck89/peast",
+            "version": "v1.10.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mck89/peast.git",
+                "reference": "6d1100f39f684c9e004f808b27f6c824b083d8d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/6d1100f39f684c9e004f808b27f6c824b083d8d8",
+                "reference": "6d1100f39f684c9e004f808b27f6c824b083d8d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.10.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Peast\\": "lib/Peast/",
+                    "Peast\\test\\": "test/Peast/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Marchiò",
+                    "email": "marco.mm89@gmail.com"
+                }
+            ],
+            "description": "Peast is PHP library that generates AST for JavaScript code",
+            "time": "2020-04-03T09:06:20+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6893,6 +6938,72 @@
             "time": "2020-02-14T12:15:55+00:00"
         },
         {
+            "name": "willdurand/js-translation-bundle",
+            "version": "dev-extractor-js",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rimi-itk/BazingaJsTranslationBundle.git",
+                "reference": "354960a6b67ba4594e3d51e8490daccb1e2a4475"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rimi-itk/BazingaJsTranslationBundle/zipball/354960a6b67ba4594e3d51e8490daccb1e2a4475",
+                "reference": "354960a6b67ba4594e3d51e8490daccb1e2a4475",
+                "shasum": ""
+            },
+            "require": {
+                "mck89/peast": "^1.10",
+                "php": "^7.1",
+                "symfony/console": "~3.4|~4.0|~5.0",
+                "symfony/finder": "~3.4|~4.0|~5.0",
+                "symfony/framework-bundle": "~3.4|~4.0|~5.0",
+                "symfony/intl": "~3.4|~4.0|~5.0",
+                "symfony/translation": "~3.4|~4.0|~5.0",
+                "symfony/twig-bundle": "~3.4|~4.0|~5.0"
+            },
+            "replace": {
+                "willdurand/expose-translation-bundle": "2.5.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|~5.7|~6.5",
+                "symfony/asset": "~3.4|~4.0|~5.0",
+                "symfony/browser-kit": "~3.4|~4.0|~5.0",
+                "symfony/phpunit-bridge": "^5.0",
+                "symfony/twig-bundle": "~3.4|~4.0|~5.0",
+                "symfony/yaml": "~3.4|~4.0|~5.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bazinga\\Bundle\\JsTranslationBundle\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "will+git@drnd.me"
+                }
+            ],
+            "description": "A pretty nice way to expose your translation messages to your JavaScript.",
+            "keywords": [
+                "javascript",
+                "symfony",
+                "translation"
+            ],
+            "support": {
+                "source": "https://github.com/rimi-itk/BazingaJsTranslationBundle/tree/extractor-js"
+            },
+            "time": "2020-05-06T07:19:38+00:00"
+        },
+        {
             "name": "willdurand/negotiation",
             "version": "v2.3.1",
             "source": {
@@ -8310,7 +8421,9 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": [],
+    "stability-flags": {
+        "willdurand/js-translation-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

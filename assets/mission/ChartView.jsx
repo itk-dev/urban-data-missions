@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Chart from './Chart'
 import Messenger from './Messenger'
 import Alert from 'react-bootstrap/Alert'
+import Translator from '../translations'
 
 class ChartView extends Component {
   constructor (props) {
@@ -29,7 +30,7 @@ class ChartView extends Component {
           popup.title = ''
           popup.content = `<button class="btn btn-success btn-sm btn-add-log-entry">
  <span className='fas fa-plus'></span>
-Add log entry
+${Translator.trans('Add log entry')}
 </button>
 `
           const button = popup.elements.content.querySelector('button')
@@ -75,7 +76,7 @@ Add log entry
       if (entry && entry.measurement) {
         this.setState({
           message: {
-            content: 'Log entry created: ' + entry.content,
+            content: Translator.trans('Log entry created: %content%', {'%content%': entry.content}),
             type: 'success'
           }
         })
