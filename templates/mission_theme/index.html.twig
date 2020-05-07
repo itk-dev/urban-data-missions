@@ -13,6 +13,7 @@
 {% block content %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
+            {% include '_nav_close.html.twig' with {'nav_path': path('mission_index')} %}
             <h1>{{ 'Mission theme'|trans }}</h1>
             <p>{{ 'Before you can create a datamission you need to select a mission theme'|trans }}</p>
 
