@@ -41,8 +41,7 @@
 // @import '~bootstrap/scss/print';
 
 body > .container-fluid {
-  box-shadow: $dropdown-box-shadow;
-  min-height: calc(100vh - #{$sizer});
+  min-height: 100vh;
 }
 
 table {

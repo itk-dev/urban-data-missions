@@ -15,8 +15,8 @@
 
     {{ parent() }}
 
-    <div class="row mt-5">
-        <div class="col">
+    <div class="row d-flex justify-content-center">
+        <div class="col-auto">
             {% if current == 0 %}
                 {% set next_sibling = following_siblings|first|default(null) %}
                 {% if next_sibling %}
