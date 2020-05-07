@@ -71,7 +71,7 @@
                 {% else %}
                     <div class="alert alert-info">
                         {{ 'No sensors added yet'|trans }}
-                        <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a>
+                        <a href="{{ path_with_referer('mission_sensor_add', {mission: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a>
                     </div>
                 {% endfor %}
             </article>
