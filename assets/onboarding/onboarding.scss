@@ -2,6 +2,9 @@
 @import '../custom-variables';
 @import '../base';
 
+@import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/progress';
+
 .onboarding {
   h1 {
     margin-left: $sizer * 2;

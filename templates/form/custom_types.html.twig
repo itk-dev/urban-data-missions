@@ -21,11 +21,11 @@ Templates for custom form types.
 {% block mission_sensor_warning_widget %}
     <div class="mission-sensor-warning-widget">
         {{- block('collection_widget') -}}
-        <div class="row">
-            <div class="col-12 text-center">
+        <div class="row justify-content-center">
+            <div class="col-auto">
                 <button type="button"
             data-collection-add-new-widget-selector="#{{ form.vars.id }}"
-            class="btn btn-outline-primary">{{ 'Add sensor warning'|trans }}</button>
+            class="btn btn-outline-primary mb-1">{{ 'Add sensor warning'|trans }}</button>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@ Templates for custom form types.
 
 {% block mission_sensor_sensor_warning_item_row %}
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
-    <div class="row mission-sensor-warning-item border-bottom pb-3 mb-3" id="{{ id }}">
+    <div class="row mission-sensor-warning-item mb-3 py-3 bg-light" id="{{ id }}">
         <div class="col-12">
             <div class="row">
                 <div class="col">

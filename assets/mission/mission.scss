@@ -34,11 +34,17 @@
   }
 }
 
-.leaflet-control-layers-toggle {
-  background-image: none;
-  height: $sizer * 2.5;
-  width: $sizer * 3;
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar,
+.leaflet-control-layers {
+  .leaflet-control-layers-toggle {
+    background-image: none;
+    height: $sizer * 2.5;
+    width: $sizer * 3;
+  }
+}
 
+.leaflet-control-layers-toggle {
   &::before {
     color: $dark;
     content: '\2015 \A \2015 \A \2015';

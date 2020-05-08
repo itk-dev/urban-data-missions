@@ -2,5 +2,10 @@
 
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button type="submit" class="btn btn-success btn-block">{{ button_label|default('Save') }}</button>
+    <div class="row mt-3 d-flex justify-content-end">
+        <div class="col-auto">
+            <a class="btn btn-dark mr-3" href="{{ path_from_referer('mission_show', {id: mission.id}) }}">{{ 'Cancel'|trans }}</a>
+            <button type="submit" class="btn btn-success px-md-5">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
 {{ form_end(form) }}

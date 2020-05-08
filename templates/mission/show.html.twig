@@ -10,14 +10,19 @@
 
             <h1>
                 {{ mission.title }}
-                {# @TODO: Design #}
-                <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit mission'|trans }}</a>
             </h1>
-            <p class='text-primary-faded'>
-                {{ mission.theme.title }}<br/>
-                <i class='fas fa-map-marker-alt mr-1'></i>{{ mission.location }}
-            </p>
-            <p>{{ mission.description }}</p>
+            <div class="row">
+                <div class="col">
+                    <p class='text-primary-faded'>
+                        {{ mission.theme.title }}<br/>
+                        <i class='fas fa-map-marker-alt mr-1'></i>{{ mission.location }}
+                    </p>
+                    <p>{{ mission.description }}</p>
+                </div>
+                <div class="col-auto">
+                    <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit mission'|trans }}</a>
+                </div>
+            </div>
 
             <div id="app" data-options="{{ app_options|default(null)|json_encode }}"></div>
 
@@ -27,8 +32,6 @@
                         <h2>{{ 'Mission sensors'|trans }}</h2>
                     </div>
                     <div class="col">
-                        {# @TODO: Design #}
-                        {#<a href="{{ path('mission_sensor_index', {mission: mission.id}) }}" class="btn btn-primary btn-sm">{{ 'Edit mission sensors'|trans }}</a>#}
                         <a href="{{ path_with_referer('mission_sensor_add', {mission: mission.id}) }}" class="btn btn-success btn-sm rounded-circle" title="{{ 'Add mission sensor'|trans }}">
                             <span class='fas fa-plus'></span>
                         </a>
@@ -45,14 +48,12 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <span class="text-primary-faded">{{ missionSensor.name|default(missionSensor.sensor.id) }}</span>
-                                    {# @TODO: Design #}
-                                    <a href="{{ path_with_referer('mission_sensor_edit', {mission: mission.id, id: missionSensor.id}) }}" class="btn btn-primary btn-sm">
-                                        {{ 'Edit mission sensor'|trans }}
+                                    <span class="text-primary-faded">{{ missionSensor.name|default(missionSensor.sensor.id) }}</span><a href="{{ path_with_referer('mission_sensor_edit', {mission: mission.id, id: missionSensor.id}) }}" class="btn btn-sm d-inline">
+                                        <i class="fas fa-edit text-primary"></i><span class="sr-only">{{ 'Edit mission sensor'|trans }}</span>
                                     </a>
                                 </div>
                                 <div class="col bg-light text-right">
-                                    <span>{{ missionSensor.sensor.type }}</span>
+                                    <span>{{ missionSensor.sensor.id }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <span data-toggle="popover" title="{{ missionSensor.sensor.type }}" data-content="<p>{{ missionSensor.sensor.type }}</p><a href='#' class='btn btn-primary btn-sm btn-block'>Læs mere</a>">
@@ -60,9 +61,9 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-1 mb-3">
                                 <div class="col">
-                                    <p>{{ missionSensor.sensor.id }}</p>
+                                    <p class="d-inline small">{{ missionSensor.sensor.type }}</p>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +71,7 @@
                 {% else %}
                     <div class="alert alert-info">
                         {{ 'No sensors added yet'|trans }}
-                        <a href="{{ path('mission_edit', {id: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a>
+                        <a href="{{ path_with_referer('mission_sensor_add', {mission: mission.id}) }}" class="btn btn-link">{{ 'Add a sensor'|trans }}</a>
                     </div>
                 {% endfor %}
             </article>

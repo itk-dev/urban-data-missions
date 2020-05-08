@@ -85,9 +85,9 @@
                 </div>
 
                 {% if page.image %}
-                    <div class="row page-image mb-3">
-                        <div class="col">
-                            <img class="img-fluid" src="{{ cms_images_base_url ~ '/' ~ page.image }}"/>
+                    <div class="row page-image d-flex justify-content-center mb-3">
+                        <div class="col-auto">
+                            <img class="w-100" src="{{ cms_images_base_url ~ '/' ~ page.image }}"/>
                         </div>
                     </div>
                 {% endif %}

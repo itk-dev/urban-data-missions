@@ -17,8 +17,9 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit'
 
-library.add(faMapMarkerAlt, faPlus, faInfoCircle, faTimesCircle)
+library.add(faMapMarkerAlt, faPlus, faInfoCircle, faTimesCircle, faEdit)
 dom.watch()
 
 const $ = require('jquery')
