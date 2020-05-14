@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import Alert from 'react-bootstrap/Alert'
 import Messenger from './Messenger'
+import Translator from '../translations'
 
 class LogView extends Component {
   constructor (props) {
@@ -130,7 +131,7 @@ class LogView extends Component {
       <section className='log-view'>
         <header className='row mt-3'>
           <div className='col-auto'>
-            <h2>Mission log</h2>
+            <h2>{Translator.trans('Mission log')}</h2>
           </div>
           <div className='col'>
             <Button variant='success' className='btn-sm rounded-circle btn-add-log-entry' onClick={this.handleAddLogEntry}>
@@ -141,7 +142,7 @@ class LogView extends Component {
 
         <div className='row mb-3'>
           <div className='col-auto'>
-            <span className='text-muted'>Filter log types:</span>
+            <span className='text-muted'>{Translator.trans('Filter log types')}</span>
           </div>
           <div className='col'>
             <div className='mission-log-filter-types btn-group btn-group-toggle'>
@@ -156,7 +157,7 @@ class LogView extends Component {
           <div className='col'>
             <div className='log-view-content'>
               {entries.length === 0
-                ? <Alert variant='warning'>No log entries</Alert>
+                ? <Alert variant='warning'>{Translator.trans('No log entries')}</Alert>
                 : entries.map((entry, index) => (
                   <article className={`row mb-3 log-entry log-entry-${entry.type}`} key={'log-entry-' + index}>
                     <div className='col-auto'>

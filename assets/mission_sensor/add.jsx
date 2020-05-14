@@ -9,6 +9,7 @@ import debounce from 'debounce'
 import '@fortawesome/fontawesome-free/js/all'
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
+import Translator from '../translations'
 
 // @see https://www.robinwieruch.de/react-hooks-fetch-data
 function App (props) {
@@ -75,15 +76,18 @@ function App (props) {
     // @TODO: Design
     return (
       <>
-        <Alert variant='success'>{query ? <span>Results matching <code className='sensor-query'>{query}</code> ({data.length})</span> : <span>Results ({data.length})</span>}</Alert>
+        <Alert variant='success'>{query
+                                  ? <span>{Translator.transChoice('{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%', data.length, {'%query%': query})}</span>
+                                  : <span>{Translator.transChoice('{0}No results|{1}One result|]1,Inf]%count% results', data.length)}</span>}
+        </Alert>
         <ol className='list-unstyled'>
           {data.map(item => (
             <li key={item.id} className='sensor-search-result'>
               <div className='sensor-id'>id: {item.id}</div>
               <div className='sensor-type'>type: {item.type}</div>
               {item._metadata.mission_sensor
-                ? <Alert variant='info'>Already included in mission <a className='btn btn-primary btn-sm' href={getEditSensorUrl(item)}>Edit</a></Alert>
-                : <a className='btn btn-success' href={getAddSensorUrl(item)}>Add</a>}
+                ? <Alert variant='info'>{Translator.trans('Already included in mission')} <a className='btn btn-primary btn-sm' href={getEditSensorUrl(item)}>{Translator.trans('Edit')}</a></Alert>
+                : <a className='btn btn-success' href={getAddSensorUrl(item)}>{Translator.trans('Add')}</a>}
             </li>
           ))}
         </ol>
@@ -94,14 +98,14 @@ function App (props) {
   return (
     <div className='mission-sensor-search'>
       <Form.Group controlId='formContent'>
-        <Form.Label className='sr-only'>Search</Form.Label>
-        <Form.Control placeholder='Search for a sensor' value={query} onChange={(event) => setQuery(event.target.value)} />
+        <Form.Label className='sr-only'>{Translator.trans('Search')}</Form.Label>
+        <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} />
       </Form.Group>
 
-      {error && <Alert variant='danger'>Error: {error}</Alert>}
+      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', {'%error%': error})}</Alert>}
 
       {isLoading
-        ? <Alert variant='info'>{query ? <span>Searching for <code className='sensor-query'>{query}</code> …</span> : <span>Searching …</span>}</Alert>
+        ? <Alert variant='info'>{query ? <span>{Translator.trans('Searching for %query% …', {'%query%': query})}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
         : renderData()}
     </div>
   )

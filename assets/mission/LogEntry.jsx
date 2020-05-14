@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
 import Messenger from './Messenger'
+import Translator from '../translations'
 
 class LogEntry extends Component {
   constructor (props) {
@@ -97,7 +98,7 @@ class LogEntry extends Component {
       <Form onSubmit={this.handleSubmit}>
         {this.state.message && <Alert variant={this.state.messageType}>{this.state.message}</Alert>}
         <Form.Group controlId='formContent'>
-          <Form.Label>Content</Form.Label>
+          <Form.Label>{Translator.trans('Content')}</Form.Label>
           <Form.Control as='textarea' name='content' className={{ 'is-invalid': this.state.violations.content }} placeholder='Enter a log entry' value={this.state.logEntry?.content} onChange={this.handleChange} />
           {this.state.violations.content && <div className='invalid-feedback'>{this.state.violations.content}</div>}
         </Form.Group>
@@ -105,19 +106,19 @@ class LogEntry extends Component {
         {this.state.logEntry?.measurement &&
           <>
             <Form.Group controlId='formSensor'>
-              <Form.Label>Sensor</Form.Label>
+              <Form.Label>{Translator.trans('Sensor')}</Form.Label>
               {/* @TODO: Use sensor name here */}
               <Form.Control name='measurement' value={this.state.logEntry.measurement.sensorName} readOnly />
             </Form.Group>
             <Form.Group controlId='formValue'>
-              <Form.Label>Value</Form.Label>
+              <Form.Label>{Translator.trans('Value')}</Form.Label>
               <Form.Control name='measurement' value={this.state.logEntry.measurement.value} readOnly />
             </Form.Group>
           </>}
 
         {this.state.logEntry?.loggedAt &&
           <Form.Group controlId='formLoggedAt'>
-            <Form.Label>Logged at</Form.Label>
+            <Form.Label>{Translator.trans('Logged at')}</Form.Label>
             <Form.Control name='loggedAt' value={this.state.logEntry.loggedAt} readOnly />
           </Form.Group>}
       </Form>
@@ -127,7 +128,7 @@ class LogEntry extends Component {
       <>
         <Modal show={this.state.logEntry !== null} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Add log entry</Modal.Title>
+            <Modal.Title>{Translator.trans('Add log entry')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {form}

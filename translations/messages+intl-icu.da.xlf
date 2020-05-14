@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="da" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="gnVC.4Q" resname="Add sensor warning">
+        <source>Add sensor warning</source>
+        <target state="needs-l10n">__Add sensor warning</target>
+      </trans-unit>
+      <trans-unit id="4RU36q_" resname="Remove sensor warning">
+        <source>Remove sensor warning</source>
+        <target state="needs-l10n">__Remove sensor warning</target>
+      </trans-unit>
+      <trans-unit id="nXFseKX" resname="Edit mission sensor">
+        <source>Edit mission sensor</source>
+        <target state="needs-l10n">__Edit mission sensor</target>
+      </trans-unit>
+      <trans-unit id="GXZu1sy" resname="Cancel">
+        <source>Cancel</source>
+        <target state="needs-l10n">__Cancel</target>
+      </trans-unit>
+      <trans-unit id="wcEAnT8" resname="Update">
+        <source>Update</source>
+        <target state="needs-l10n">__Update</target>
+      </trans-unit>
+      <trans-unit id="R1lJisK" resname="Create">
+        <source>Create</source>
+        <target state="needs-l10n">__Create</target>
+      </trans-unit>
+      <trans-unit id="WqN_oMU" resname="Add mission sensor">
+        <source>Add mission sensor</source>
+        <target state="needs-l10n">__Add mission sensor</target>
+      </trans-unit>
+      <trans-unit id="76GQe.f" resname="Mission sensors">
+        <source>Mission sensors</source>
+        <target state="needs-l10n">__Mission sensors</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target state="needs-l10n">__Name</target>
+      </trans-unit>
+      <trans-unit id="FizGTKH" resname="Sensor">
+        <source>Sensor</source>
+        <target state="needs-l10n">__Sensor</target>
+      </trans-unit>
+      <trans-unit id="ksHN.fT" resname="Enabled">
+        <source>Enabled</source>
+        <target state="needs-l10n">__Enabled</target>
+      </trans-unit>
+      <trans-unit id="qVXY6Bz" resname="Added at">
+        <source>Added at</source>
+        <target state="needs-l10n">__Added at</target>
+      </trans-unit>
+      <trans-unit id="haOas0X" resname="Yes">
+        <source>Yes</source>
+        <target state="needs-l10n">__Yes</target>
+      </trans-unit>
+      <trans-unit id="HqRCoTS" resname="No">
+        <source>No</source>
+        <target state="needs-l10n">__No</target>
+      </trans-unit>
+      <trans-unit id="emAP6pr" resname="Mission sensor">
+        <source>Mission sensor</source>
+        <target state="needs-l10n">__Mission sensor</target>
+      </trans-unit>
+      <trans-unit id="kOcWEWg" resname="Loading app …">
+        <source>Loading app …</source>
+        <target state="needs-l10n">__Loading app …</target>
+      </trans-unit>
+      <trans-unit id="Q64yZbm" resname="Themes">
+        <source>Themes</source>
+        <target state="needs-l10n">__Themes</target>
+      </trans-unit>
+      <trans-unit id="5rhb_.V" resname="Mission">
+        <source>Mission</source>
+        <target state="needs-l10n">__Mission</target>
+      </trans-unit>
+      <trans-unit id="Ws.UiVW" resname="Mock-up">
+        <source>Mock-up</source>
+        <target state="needs-l10n">__Mock-up</target>
+      </trans-unit>
+      <trans-unit id="TrvFcKG" resname="New Mission">
+        <source>New Mission</source>
+        <target state="needs-l10n">__New Mission</target>
+      </trans-unit>
+      <trans-unit id="jVuP4Gf" resname="Create mission">
+        <source>Create mission</source>
+        <target state="needs-l10n">__Create mission</target>
+      </trans-unit>
+      <trans-unit id="92tCMCZ" resname="Create new mission">
+        <source>Create new mission</source>
+        <target state="needs-l10n">__Create new mission</target>
+      </trans-unit>
+      <trans-unit id="MieWEKv" resname="Data mission: %title%">
+        <source>Data mission: %title%</source>
+        <target state="needs-l10n">__Data mission: %title%</target>
+      </trans-unit>
+      <trans-unit id="J2YZv.5" resname="Edit mission">
+        <source>Edit mission</source>
+        <target state="needs-l10n">__Edit mission</target>
+      </trans-unit>
+      <trans-unit id="4Jat2V1" resname="Sensors connected to your mission">
+        <source>Sensors connected to your mission</source>
+        <target state="needs-l10n">__Sensors connected to your mission</target>
+      </trans-unit>
+      <trans-unit id="EegZI1Z" resname="No sensors added yet">
+        <source>No sensors added yet</source>
+        <target state="needs-l10n">__No sensors added yet</target>
+      </trans-unit>
+      <trans-unit id="w3GXV9C" resname="Add a sensor">
+        <source>Add a sensor</source>
+        <target state="needs-l10n">__Add a sensor</target>
+      </trans-unit>
+      <trans-unit id="1fDpKnB" resname="Use the buttons below to export your missions log, data and chart">
+        <source>Use the buttons below to export your missions log, data and chart</source>
+        <target state="needs-l10n">__Use the buttons below to export your missions log, data and chart</target>
+      </trans-unit>
+      <trans-unit id="6tKKXld" resname="Export mission log">
+        <source>Export mission log</source>
+        <target state="needs-l10n">__Export mission log</target>
+      </trans-unit>
+      <trans-unit id="IGP3HKm" resname="Messages as">
+        <source>Messages as</source>
+        <target state="needs-l10n">__Messages as</target>
+      </trans-unit>
+      <trans-unit id="5aN7Kiy" resname="Export measurements">
+        <source>Export measurements</source>
+        <target state="needs-l10n">__Export measurements</target>
+      </trans-unit>
+      <trans-unit id="2ZZORHn" resname="Data as">
+        <source>Data as</source>
+        <target state="needs-l10n">__Data as</target>
+      </trans-unit>
+      <trans-unit id="CIgVt8o" resname="Export chart">
+        <source>Export chart</source>
+        <target state="needs-l10n">__Export chart</target>
+      </trans-unit>
+      <trans-unit id="pngBxm." resname="Image as">
+        <source>Image as</source>
+        <target state="needs-l10n">__Image as</target>
+      </trans-unit>
+      <trans-unit id="d_M26zu" resname="Mission finished at %finished_at%">
+        <source>Mission finished at %finished_at%</source>
+        <target state="needs-l10n">__Mission finished at %finished_at%</target>
+      </trans-unit>
+      <trans-unit id="QxPBuWS" resname="Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.">
+        <source>Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.</source>
+        <target state="needs-l10n">__Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.</target>
+      </trans-unit>
+      <trans-unit id="iVITu0g" resname="Finish mission">
+        <source>Finish mission</source>
+        <target state="needs-l10n">__Finish mission</target>
+      </trans-unit>
+      <trans-unit id="AkFI1gm" resname="Page navigation">
+        <source>Page navigation</source>
+        <target state="needs-l10n">__Page navigation</target>
+      </trans-unit>
+      <trans-unit id="pXsIpIC" resname="Previous">
+        <source>Previous</source>
+        <target state="needs-l10n">__Previous</target>
+      </trans-unit>
+      <trans-unit id="H.V6Kdf" resname="Next">
+        <source>Next</source>
+        <target state="needs-l10n">__Next</target>
+      </trans-unit>
+      <trans-unit id="NYOjWKW" resname="Children">
+        <source>Children</source>
+        <target state="needs-l10n">__Children</target>
+      </trans-unit>
+      <trans-unit id="u_0x63Z" resname="Onboarding step">
+        <source>Onboarding step</source>
+        <target state="needs-l10n">__Onboarding step</target>
+      </trans-unit>
+      <trans-unit id="Yy4Tm2." resname="Start introduction">
+        <source>Start introduction</source>
+        <target state="needs-l10n">__Start introduction</target>
+      </trans-unit>
+      <trans-unit id="qGbeaBf" resname="Skip introduction">
+        <source>Skip introduction</source>
+        <target state="needs-l10n">__Skip introduction</target>
+      </trans-unit>
+      <trans-unit id="h7QSAT5" resname="Explore the data missions">
+        <source>Explore the data missions</source>
+        <target state="needs-l10n">__Explore the data missions</target>
+      </trans-unit>
+      <trans-unit id="CzFas_R" resname="Restart introduction">
+        <source>Restart introduction</source>
+        <target state="needs-l10n">__Restart introduction</target>
+      </trans-unit>
+      <trans-unit id="RJPP1G8" resname="Mission theme">
+        <source>Mission theme</source>
+        <target state="needs-l10n">__Mission theme</target>
+      </trans-unit>
+      <trans-unit id="nS2U4mr" resname="Before you can create a datamission you need to select a mission theme">
+        <source>Before you can create a datamission you need to select a mission theme</source>
+        <target state="needs-l10n">__Before you can create a datamission you need to select a mission theme</target>
+      </trans-unit>
+      <trans-unit id="RkxP.QG" resname="Edit">
+        <source>Edit</source>
+        <target state="needs-l10n">__Edit</target>
+      </trans-unit>
+      <trans-unit id="rqDsWdb" resname="Search for a mission">
+        <source>Search for a mission</source>
+        <target>Søg efter en mission</target>
+      </trans-unit>
+      <trans-unit id="QOwJv70" resname="No log entries">
+        <source>No log entries</source>
+        <target state="needs-l10n">__No log entries</target>
+      </trans-unit>
+      <trans-unit id="sdzIm2x" resname="Mission log">
+        <source>Mission log</source>
+        <target state="needs-l10n">__Mission log</target>
+      </trans-unit>
+      <trans-unit id="Z5E0FCJ" resname="Add log entry">
+        <source>Add log entry</source>
+        <target state="needs-l10n">__Add log entry</target>
+      </trans-unit>
+      <trans-unit id="R70pB1_" resname="Content">
+        <source>Content</source>
+        <target state="needs-l10n">__Content</target>
+      </trans-unit>
+      <trans-unit id="hix822E" resname="Show mission">
+        <source>Show mission</source>
+        <target state="needs-l10n">__Show mission</target>
+      </trans-unit>
+      <trans-unit id="ScJmuqq" resname="Search">
+        <source>Search</source>
+        <target state="needs-l10n">__Search</target>
+      </trans-unit>
+      <trans-unit id="IKaZcbf" resname="Search for a sensor">
+        <source>Search for a sensor</source>
+        <target state="needs-l10n">__Search for a sensor</target>
+      </trans-unit>
+      <trans-unit id="CcUEzkM" resname="Error: %error%">
+        <source>Error: %error%</source>
+        <target state="needs-l10n">__Error: %error%</target>
+      </trans-unit>
+      <trans-unit id="E2tHmQr" resname="Searching for &lt;code class=&quot;sensor-query&quot;>%query%&lt;/code> …">
+        <source>Searching for &lt;code class="sensor-query"&gt;%query%&lt;/code&gt; …</source>
+        <target><![CDATA[__Searching for <code class="sensor-query">%query%</code> …]]></target>
+      </trans-unit>
+      <trans-unit id="eZ7el7Q" resname="Searching …">
+        <source>Searching …</source>
+        <target>Søger …</target>
+      </trans-unit>
+      <trans-unit id="B9X6pco" resname="Results matching &lt;code class=&quot;sensor-query&quot;>%query%&lt;/code> (%count%)">
+        <source>Results matching &lt;code class="sensor-query"&gt;%query%&lt;/code&gt; (%count%)</source>
+        <target><![CDATA[__Results matching <code class="sensor-query">%query%</code> (%count%)]]></target>
+      </trans-unit>
+      <trans-unit id="PHhimgv" resname="Results (%count%)">
+        <source>Results (%count%)</source>
+        <target state="needs-l10n">__Results (%count%)</target>
+      </trans-unit>
+      <trans-unit id="FjDbizz" resname="Already included in mission">
+        <source>Already included in mission</source>
+        <target state="needs-l10n">__Already included in mission</target>
+      </trans-unit>
+      <trans-unit id="n9coxmy" resname="Add">
+        <source>Add</source>
+        <target state="needs-l10n">__Add</target>
+      </trans-unit>
+      <trans-unit id="Ub_M73A" resname="Searching for %query% …">
+        <source>Searching for %query% …</source>
+        <target state="needs-l10n">__Searching for %query% …</target>
+      </trans-unit>
+      <trans-unit id="jjeVPSP" resname="Value">
+        <source>Value</source>
+        <target state="needs-l10n">__Value</target>
+      </trans-unit>
+      <trans-unit id="MF0zYKu" resname="Logged at">
+        <source>Logged at</source>
+        <target state="needs-l10n">__Logged at</target>
+      </trans-unit>
+      <trans-unit id="F6X5YOO" resname="Filter log types">
+        <source>Filter log types</source>
+        <target state="needs-l10n">__Filter log types</target>
+      </trans-unit>
+      <trans-unit id="UXlIkU5" resname="{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%">
+        <source>{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%</source>
+        <target>{0}Intet matcher %query%|{1}Et resultat matcher %query%|]1,Inf]%count% resultater matcher %query%</target>
+      </trans-unit>
+      <trans-unit id="cX8n7Xm" resname="{0}No results|{1}One result|]1,Inf]%count% results">
+        <source>{0}No results|{1}One result|]1,Inf]%count% results</source>
+        <target>{0}Ingen resultater|{1}Et resultat|]1,Inf]%count% resultater</target>
+      </trans-unit>
+      <trans-unit id="mjmXKCy" resname="Remove sensor from mission">
+        <source>Remove sensor from mission</source>
+        <target state="needs-l10n">__Remove sensor from mission</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
