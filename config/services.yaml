@@ -14,7 +14,7 @@ parameters:
     router.request_context.base_url: '%env(ROUTER_REQUEST_CONTEXT_BASE_URL)%'
     asset.request_context.base_path: '%router.request_context.base_url%'
 
-    '%env(DEFAULT_LOCALE)%': 'en'
+    'env(DEFAULT_LOCALE)': 'en'
     default_locale: '%env(DEFAULT_LOCALE)%'
 
     env(SENSOR_TYPES): '["https://uri.fiware.org/ns/data-models#humidity","https://uri.fiware.org/ns/data-models#temperature"]'
