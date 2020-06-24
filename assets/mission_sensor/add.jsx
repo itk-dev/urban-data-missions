@@ -71,7 +71,7 @@ function App (props) {
 
   const renderData = () => {
     if (query && data.length === 0) {
-      return query && <Alert variant='warning'>No sensors matching <code className='sensor-query'>{query}</code> found.</Alert>
+      return query && <Alert variant='warning' className='py-1'>No sensors matching <code className='sensor-query'>{query}</code> found.</Alert>
     }
 
     // @TODO: Design
