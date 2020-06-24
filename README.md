@@ -66,7 +66,7 @@ Load a single fixture group:
 
 ```sh
 docker-compose exec phpfpm bin/console hautelook:fixtures:load --group=experiment
-``
+```
 
 ### Generating sensor values
 
@@ -102,3 +102,9 @@ yarn coding-standards-check
 composer coding-standards-apply
 yarn coding-standards-apply
 ```
+
+
+## Mercure
+
+https://github.com/dunglas/mercure
+https://github.com/dunglas/mercure/releases

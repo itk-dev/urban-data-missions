@@ -1,0 +1,3 @@
+{
+    "translations": {"en":{"messages":{"action.new":"Add %entity_label%","action.show":"Show","action.edit":"Edit","action.search":"Search","action.delete":"Delete","action.save":"Save changes","action.continue":"Continue","action.cancel":"Cancel","action.list":"Back to listing","action.deselect":"Deselect","label.form.empty_value":"None","__name__label__":"__name__label__"}}}
+}

@@ -1,7 +1,7 @@
 const Translator = require('bazinga-translator')
 
 const config = require('./translations/config')
-for (let [key, value] of Object.entries(config)) {
+for (const [key, value] of Object.entries(config)) {
   Translator[key] = value
 }
 const da = require('./translations/messages/da.json')

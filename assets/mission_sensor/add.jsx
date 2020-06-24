@@ -9,6 +9,7 @@ import debounce from 'debounce'
 import '@fortawesome/fontawesome-free/js/all'
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
+import ListGroup from 'react-bootstrap/ListGroup'
 import Translator from '../translations'
 
 // @see https://www.robinwieruch.de/react-hooks-fetch-data
@@ -70,42 +71,84 @@ function App (props) {
 
   const renderData = () => {
     if (query && data.length === 0) {
-      return query && <Alert variant='warning'>No sensors matching <code className='sensor-query'>{query}</code> found.</Alert>
+      return query && <Alert variant='warning' className='py-1'>No sensors matching <code className='sensor-query'>{query}</code> found.</Alert>
     }
 
-    // @TODO: Design
     return (
       <>
-        <Alert variant='success'>{query
-                                  ? <span>{Translator.transChoice('{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%', data.length, {'%query%': query})}</span>
-                                  : <span>{Translator.transChoice('{0}No results|{1}One result|]1,Inf]%count% results', data.length)}</span>}
+        <Alert variant='success' className='py-1'>
+          {query ? (
+            <span>
+              {Translator.transChoice(
+                '{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%',
+                data.length,
+                { query: query }
+              )}
+            </span>
+          ) : (
+            <span>
+              {Translator.transChoice(
+                '{0}No results|{1}One result|]1,Inf]%count% results',
+                data.length
+              )}
+            </span>
+          )}
         </Alert>
-        <ol className='list-unstyled'>
-          {data.map(item => (
-            <li key={item.id} className='sensor-search-result'>
-              <div className='sensor-id'>id: {item.id}</div>
-              <div className='sensor-type'>type: {item.type}</div>
-              {item._metadata.mission_sensor
-                ? <Alert variant='info'>{Translator.trans('Already included in mission')} <a className='btn btn-primary btn-sm' href={getEditSensorUrl(item)}>{Translator.trans('Edit')}</a></Alert>
-                : <a className='btn btn-success' href={getAddSensorUrl(item)}>{Translator.trans('Add')}</a>}
-            </li>
+
+        <ListGroup variant='flush'>
+          {data.map((item) => (
+            <ListGroup.Item
+              key={item.id}
+              className='sensor-search-result pb-3'
+            >
+              <div className='d-flex w-100 justify-content-between'>
+                <h2 className='h4 mb-1'>{item.id}</h2>
+                <small />
+              </div>
+              <p className='mb-1'>
+                {item.type}
+              </p>
+
+              {item._metadata.mission_sensor ? (
+                <p className='text-primary'>
+
+                  {Translator.trans(
+                    'Already included in mission'
+                  )}{' '}
+                  <a
+                    className='btn btn-primary btn-sm ml-3'
+                    href={getEditSensorUrl(item)}
+                  >
+                    {Translator.trans('Edit')}
+                  </a>
+                </p>
+
+              ) : (
+                <a
+                  className='btn btn-success btn-sm'
+                  href={getAddSensorUrl(item)}
+                >
+                  <i className='fas fa-plus-circle mr-1' />{Translator.trans('Add')}
+                </a>
+              )}
+            </ListGroup.Item>
           ))}
-        </ol>
+        </ListGroup>
       </>
     )
   }
 
   return (
-    <div className='mission-sensor-search'>
+    <div className='mission-sensor-search mt-3'>
       <Form.Group controlId='formContent'>
         <Form.Label className='sr-only'>{Translator.trans('Search')}</Form.Label>
-        <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} />
+        <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} size='lg' />
       </Form.Group>
 
-      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', {'%error%': error})}</Alert>}
+      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', { error: error })}</Alert>}
 
       {isLoading
-        ? <Alert variant='info'>{query ? <span>{Translator.trans('Searching for %query% …', {'%query%': query})}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
+        ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', { query: query })}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
         : renderData()}
     </div>
   )
