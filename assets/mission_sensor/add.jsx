@@ -76,80 +76,80 @@ function App (props) {
 
     // @TODO: Design
     return (
-        <>
-            <Alert variant='success' className='py-1'>
-                {query ? (
-                    <span>
-                        {Translator.transChoice(
-                            "{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%",
-                            data.length,
-                            { query: query }
-                        )}
-                    </span>
-                ) : (
-                    <span>
-                        {Translator.transChoice(
-                            "{0}No results|{1}One result|]1,Inf]%count% results",
-                            data.length
-                        )}
-                    </span>
-                )}
-            </Alert>
+      <>
+        <Alert variant='success' className='py-1'>
+          {query ? (
+            <span>
+              {Translator.transChoice(
+                '{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%',
+                data.length,
+                { query: query }
+              )}
+            </span>
+          ) : (
+            <span>
+              {Translator.transChoice(
+                '{0}No results|{1}One result|]1,Inf]%count% results',
+                data.length
+              )}
+            </span>
+          )}
+        </Alert>
 
-            <ListGroup variant="flush">
-                {data.map((item) => (
-                    <ListGroup.Item
-                        key={item.id}
-                        className="sensor-search-result pb-3"
-                    >
-                        <div className="d-flex w-100 justify-content-between">
-                            <h2 className="h4 mb-1">{item.id}</h2>
-                            <small></small>
-                        </div>
-                        <p className="mb-1">
-                            {item.type}
-                        </p>
+        <ListGroup variant='flush'>
+          {data.map((item) => (
+            <ListGroup.Item
+              key={item.id}
+              className='sensor-search-result pb-3'
+            >
+              <div className='d-flex w-100 justify-content-between'>
+                <h2 className='h4 mb-1'>{item.id}</h2>
+                <small />
+              </div>
+              <p className='mb-1'>
+                {item.type}
+              </p>
 
-                        {item._metadata.mission_sensor ? (
-                            <p className='text-primary'>
+              {item._metadata.mission_sensor ? (
+                <p className='text-primary'>
 
-                                {Translator.trans(
-                                    "Already included in mission"
-                                )}{" "}
-                                <a
-                                    className="btn btn-primary btn-sm ml-3"
-                                    href={getEditSensorUrl(item)}
-                                >
-                                    {Translator.trans("Edit")}
-                                </a>
-                            </p>
+                  {Translator.trans(
+                    'Already included in mission'
+                  )}{' '}
+                  <a
+                    className='btn btn-primary btn-sm ml-3'
+                    href={getEditSensorUrl(item)}
+                  >
+                    {Translator.trans('Edit')}
+                  </a>
+                </p>
 
-                        ) : (
-                            <a
-                                className="btn btn-success btn-sm"
-                                href={getAddSensorUrl(item)}
-                            >
-                                <i className="fas fa-plus-circle mr-1"></i>{Translator.trans("Add")}
-                            </a>
-                        )}
-                    </ListGroup.Item>
-                ))}
-            </ListGroup>
-        </>
-    );
+              ) : (
+                <a
+                  className='btn btn-success btn-sm'
+                  href={getAddSensorUrl(item)}
+                >
+                  <i className='fas fa-plus-circle mr-1' />{Translator.trans('Add')}
+                </a>
+              )}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </>
+    )
   }
 
   return (
     <div className='mission-sensor-search mt-3'>
       <Form.Group controlId='formContent'>
         <Form.Label className='sr-only'>{Translator.trans('Search')}</Form.Label>
-        <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} size="lg"/>
+        <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} size='lg' />
       </Form.Group>
 
-      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', {error: error})}</Alert>}
+      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', { error: error })}</Alert>}
 
       {isLoading
-        ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', {query: query})}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
+        ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', { query: query })}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
         : renderData()}
     </div>
   )

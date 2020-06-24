@@ -76,7 +76,7 @@ ${Translator.trans('Add log entry')}
       if (entry && entry.measurement) {
         this.setState({
           message: {
-            content: Translator.trans('Log entry created: %content%', {'%content%': entry.content}),
+            content: Translator.trans('Log entry created: %content%', { content: entry.content }),
             type: 'success'
           }
         })
