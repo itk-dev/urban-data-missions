@@ -3,15 +3,17 @@
 namespace App\Controller;
 
 use App\Scorpio\Client;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/ngsi-ld/v1", name="ngsi_ld_")
  */
-class NgsiLdController
+class NgsiLdController extends AbstractController
 {
     /** @var Client */
     private $client;
@@ -22,30 +24,22 @@ class NgsiLdController
     }
 
     /**
-     * @Route("/entities/{id}", methods={"GET"}, name="entities")
-     */
-    public function entities(Request $request, string $id)
-    {
-        return $this->get($request, 'entities/'.$id);
-    }
-
-    /**
      * @Route("/{path}", requirements={"path"=".*"}, methods={"GET"}, name="index")
      */
     public function index(Request $request, string $path)
     {
-        return $this->get($request, $path, ['query' => $request->query->all()]);
-    }
-
-    private function get(Request $request, string $path, array $options = [])
-    {
         try {
-            $options += [
-                'query' => $request->query->all(),
-            ];
+            $options = ['query' => $request->query->all()];
             $response = $this->client->get('/ngsi-ld/v1/'.$path, $options);
+            $data = $response->toArray();
 
-            return new JsonResponse($response->toArray(), $response->getStatusCode());
+            array_walk_recursive($data, function (&$value) {
+                if (is_string($value) && 0 === strpos($value, 'urn:ngsi-ld:')) {
+                    $value = $this->generateUrl('ngsi_ld_index', ['path' => 'entities/'.$value], UrlGeneratorInterface::ABSOLUTE_URL);
+                }
+            });
+
+            return new JsonResponse($data, $response->getStatusCode());
         } catch (ClientException $exception) {
             return new JsonResponse([
                 'type' => $exception->getCode(),
