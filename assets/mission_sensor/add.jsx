@@ -83,7 +83,7 @@ function App (props) {
                         {Translator.transChoice(
                             "{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%",
                             data.length,
-                            { "%query%": query }
+                            { "query": query }
                         )}
                     </span>
                 ) : (
@@ -149,7 +149,7 @@ function App (props) {
       {error && <Alert variant='danger'>{Translator.trans('Error: %error%', {'%error%': error})}</Alert>}
 
       {isLoading
-        ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', {'%query%': query})}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
+        ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', {'query': query})}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
         : renderData()}
     </div>
   )
