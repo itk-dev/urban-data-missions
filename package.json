@@ -40,8 +40,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress",
-        "coding-standards-check": "standard",
-        "coding-standards-apply": "standard --fix"
+        "coding-standards-check": "cd assets && standard",
+        "coding-standards-apply": "cd assets && standard --fix"
     },
     "eslintConfig": {
         "env": {
