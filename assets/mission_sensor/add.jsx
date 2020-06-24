@@ -74,7 +74,6 @@ function App (props) {
       return query && <Alert variant='warning' className='py-1'>No sensors matching <code className='sensor-query'>{query}</code> found.</Alert>
     }
 
-    // @TODO: Design
     return (
       <>
         <Alert variant='success' className='py-1'>
