@@ -66,7 +66,7 @@ Load a single fixture group:
 
 ```sh
 docker-compose exec phpfpm bin/console hautelook:fixtures:load --group=experiment
-``
+```
 
 ### Generating sensor values
 
