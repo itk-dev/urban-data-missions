@@ -95,8 +95,10 @@ L.control.markerTextFilter({
   }
 }).addTo(map)
 
+const $ = require('jquery')
+
 // @TODO: Translate theme missions label.
-$(".leaflet-control-layers-overlays").prepend("<label><strong>Mission themes</strong></label>");
+$('.leaflet-control-layers-overlays').prepend('<label><strong>Mission themes</strong></label>')
 
 // @TODO: Translate link text.
-$(".leaflet-control-layers-overlays").append("<a href='/cms' class='mt-3 d-block text-primary'>Show guide</a>");
+$('.leaflet-control-layers-overlays').append("<a href='/cms' class='mt-3 d-block text-primary'>Show guide</a>")
