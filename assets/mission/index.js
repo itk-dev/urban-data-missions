@@ -39,6 +39,11 @@ const markerIcon = L.divIcon({
   html: '<i class="fas fa-circle fa-lg"></i>'
 })
 
+const markerFinishedIcon = L.divIcon({
+  className: 'map-marker-icon mission-finished',
+  html: '<i class="fas fa-circle fa-lg"></i>'
+})
+
 const markerHiddenIcon = L.divIcon({
   className: 'map-marker-icon map-marker-icon-hidden',
   html: '<i class="fas fa-circle fa-lg"></i>'
@@ -56,7 +61,7 @@ const themeMissions = {}
 const bounds = L.latLngBounds()
 for (const mission of missions) {
   const marker = L.marker([mission.latitude, mission.longitude], {
-    icon: markerIcon,
+    icon: mission.finishedAt ? markerFinishedIcon : markerIcon,
     data: mission,
     search: buildSearch(mission)
   })

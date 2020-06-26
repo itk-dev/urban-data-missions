@@ -66,6 +66,7 @@ class Mission
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"mission_read"})
      */
     private $finishedAt;
 
