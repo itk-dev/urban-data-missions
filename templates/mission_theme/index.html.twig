@@ -38,7 +38,7 @@
 
                             <p>
                                 <a class="btn btn-sm mission-theme-toggle" data-toggle="collapse" href="#themeDescription" aria-expanded="false" aria-controls="contentId">
-                                    Show <span class="more">more</span><span class="less">less</span>
+                                    {{ "Show"|trans }} <span class="more">{{ "more"|trans }}</span><span class="less">{{ "less"|trans }}</span>
                                 </a>
                             </p>
                             <a href="{{ path_with_referer('mission_new', {theme: theme.id}) }}" class="btn btn-success">{{ "Create new mission"|trans }}</a>
