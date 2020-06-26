@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MissionTheme{% endblock %}
+{% block title %}{{ 'Mission theme: %title%'|trans({'%title%': theme.title}) }}{% endblock %}
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('mission-theme') }}
