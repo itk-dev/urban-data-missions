@@ -6,7 +6,7 @@
     <div class="container-fluid bg-white">
         <article class="mission-sensor py-3">
 
-            {% include '_nav_close.html.twig' with {'nav_path': path_from_referer('mission_show', {id: mission.id}) } %}
+            {% include '_nav_close.html.twig' with {'nav_path': path_from_referer('mission_show', {id: mission.id})} %}
             <h1>{{ 'Add mission sensor'|trans }}</h1>
 
             {% set options = {
