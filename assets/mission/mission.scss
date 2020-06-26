@@ -74,6 +74,11 @@
   width: calc(40vw - #{$sizer});
 }
 
+// Fade icon when mission is finished
+.mission-finished {
+  opacity: 0.3;
+}
+
 // @TODO: Hide element when map is shown
 .map-shown {
   display: none;
