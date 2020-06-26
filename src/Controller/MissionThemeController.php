@@ -24,7 +24,7 @@ class MissionThemeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="mission_theme_show", methods={"GET"})
+     * @Route("/{id}", name="show", methods={"GET"})
      */
     public function show(MissionTheme $missionTheme): Response
     {
