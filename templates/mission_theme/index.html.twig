@@ -33,7 +33,7 @@
                             </span>
 
                             <p class="description">{{ theme.description|raw }}</p>
-                            <a href="{{ path('mission_new', {theme: theme.id}) }}" class="btn btn-success">{{ "Create new mission"|trans }}</a>
+                            <a href="{{ path_with_referer('mission_new', {theme: theme.id}) }}" class="btn btn-success">{{ "Create new mission"|trans }}</a>
                         </div>
                     {% endfor %}
                 </div>
