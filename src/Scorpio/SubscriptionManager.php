@@ -6,10 +6,10 @@ use App\Entity\Mission;
 use App\Entity\MissionSensor;
 use App\Traits\LoggerTrait;
 use Psr\Log\LoggerAwareInterface;
-use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 
 class SubscriptionManager implements LoggerAwareInterface
 {
@@ -46,7 +46,7 @@ class SubscriptionManager implements LoggerAwareInterface
             $response = $this->client->get('/ngsi-ld/v1/subscriptions/'.$this->getSubscriptionId($mission));
 
             return $response->toArray();
-        } catch (ClientException $exception) {
+        } catch (ExceptionInterface $exception) {
             $this->debug(sprintf('Client exception: %s', $exception->getMessage()));
         }
 
