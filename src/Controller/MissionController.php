@@ -8,8 +8,10 @@ use App\Entity\MissionSensor;
 use App\Export\MissionExport;
 use App\Form\Type\MissionType;
 use App\Repository\MissionRepository;
+use App\Repository\MissionSensorRepository;
 use App\Repository\MissionThemeRepository;
 use App\Repository\SensorRepository;
+use App\Scorpio\Client;
 use App\Scorpio\SubscriptionManager;
 use App\Traits\LoggerTrait;
 use Box\Spout\Common\Type;
@@ -18,6 +20,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -172,6 +175,7 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
                     'id' => $sensor->getId(),
                     'type' => $sensor->getType(),
                     'name' => $missionSensor->getName() ?: $sensor->getId(),
+                    'enabled' => $missionSensor->getEnabled(),
                 ];
             })->toArray(),
             null,
@@ -232,7 +236,7 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
     /**
      * @Route("/{id}/subscription/notify", name="subscription_notify", methods={"POST"})
      */
-    public function subscriptionNotity(Request $request, Mission $mission, EntityManagerInterface $entityManager, SensorRepository $sensorRepository): Response
+    public function subscriptionNotity(Request $request, Mission $mission, EntityManagerInterface $entityManager, SensorRepository $sensorRepository, MissionSensorRepository $missionSensorRepository): Response
     {
         $payload = json_decode($request->getContent(), true);
 
@@ -244,43 +248,77 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
 
         foreach ($payload['data'] as $data) {
             try {
-                $measuredAt = isset($data['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'])
-                    ? new DateTimeImmutable($data['https://uri.fiware.org/ns/data-models#dateObserved']['value']['@value'])
-                    : null;
+                $measuredAt = null;
+                if (isset($data[Client::ENTITY_ATTRIBUTE_RESULT_TIME]['value'])) {
+                    try {
+                        $measuredAt = new DateTimeImmutable($data[Client::ENTITY_ATTRIBUTE_RESULT_TIME]['value']);
+                    } catch (\Exception $exception) {
+                    }
+                }
 
                 if (null === $measuredAt) {
                     $this->debug('Cannot get time of measurement');
 
-                    return new BadRequestHttpException('Cannot get time of measurement');
+                    throw new BadRequestHttpException('Cannot get time of measurement');
                 }
 
-                $sensorId = $data['id'];
-                $sensor = $sensorRepository->find($sensorId);
+                $streamId = $data[Client::ENTITY_ATTRIBUTE_BELONGS_TO]['object'] ?? null;
+                if (null === $streamId) {
+                    throw new BadRequestHttpException('Missing stream id');
+                }
+                $sensor = $sensorRepository->findOneBy(['streamId' => $streamId]);
                 if (null === $sensor) {
-                    $this->debug(sprintf('Cannot find sensor with id: %s', $sensorId));
+                    $this->debug(sprintf('Cannot find sensor with stream id: %s', $streamId));
 
-                    return new BadRequestHttpException(sprintf('Invalid sensor: %s', $sensorId));
+                    throw new BadRequestHttpException(sprintf('Invalid stream id: %s', $streamId));
                 }
 
-                $measuredValue = 0;
-                foreach ($data as $key => $value) {
-                    if (isset($value['value'])
-                        && 'https://uri.fiware.org/ns/data-models#dateObserved' !== $key
-                        && 0 === strpos($key, 'https://uri.fiware.org/ns/data-models#')) {
-                        $measuredValue = (float) $value['value'];
+                $missionSensor = $missionSensorRepository->findOneBy([
+                   'sensor' => $sensor,
+                   'mission' => $mission,
+                ]);
+
+                if (null === $missionSensor) {
+                    $this->debug(sprintf(
+                        'Cannot find mission sensor for mission %s and sensor %s',
+                        $mission->getId(),
+                        $sensor->getId(),
+                    ));
+
+                    throw new BadRequestHttpException('Invalid mission sensor');
+                }
+
+                if (!$missionSensor->getEnabled()) {
+                    $this->debug(sprintf('Mission sensor %s not enabled', $missionSensor->getId()));
+                } else {
+                    $value = $data[Client::ENTITY_ATTRIBUTE_HAS_SIMPLE_RESULT]['value'] ?? null;
+                    if (null === $value) {
+                        throw new BadRequestHttpException('Missing value');
                     }
+
+                    try {
+                        $value = Client::getTypedValue($value);
+                    } catch (\Exception $exception) {
+                        throw new BadRequestException('Cannot get value: %s', $value);
+                    }
+
+                    $measurement = (new Measurement())
+                        ->setMeasuredAt($measuredAt)
+                        ->setSensor($sensor)
+                        ->setValue($value)
+                        ->setData($data)
+                        ->setPayload($payload)
+                        ->setMission($mission);
+                    $entityManager->persist($measurement);
+                    $entityManager->flush();
                 }
-                $measurement = (new Measurement())
-                    ->setMeasuredAt($measuredAt)
-                    ->setSensor($sensor)
-                    ->setValue($measuredValue)
-                    ->setData($data)
-                    ->setPayload($payload)
-                    ->setMission($mission);
-                $entityManager->persist($measurement);
-                $entityManager->flush();
             } catch (\Exception $exception) {
                 $this->error($exception->getMessage(), ['exception' => $exception]);
+
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => $exception->getMessage(),
+                ], Response::HTTP_BAD_REQUEST);
             }
         }
 
