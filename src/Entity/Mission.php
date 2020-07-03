@@ -66,11 +66,12 @@ class Mission
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"mission_read"})
      */
     private $finishedAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      */
     private $subscription;
 
@@ -173,12 +174,12 @@ class Mission
         return $this;
     }
 
-    public function getSubscription(): ?string
+    public function getSubscription(): ?array
     {
         return $this->subscription;
     }
 
-    public function setSubscription(?string $subscription): self
+    public function setSubscription(array $subscription): self
     {
         $this->subscription = $subscription;
 

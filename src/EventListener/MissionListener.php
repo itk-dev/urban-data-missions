@@ -4,6 +4,7 @@ namespace App\EventListener;
 
 use App\Entity\Mission;
 use App\Entity\MissionLogEntry;
+use App\Entity\MissionSensor;
 use App\Scorpio\SubscriptionManager;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -43,13 +44,24 @@ class MissionListener implements LoggerAwareInterface
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
 
-        $newMissions = array_filter($uow->getScheduledEntityInsertions(), static function ($entity) {
+        $entities = array_merge(
+            $uow->getScheduledEntityInsertions(),
+            $uow->getScheduledEntityUpdates()
+        );
+
+        $missions = array_filter($entities, static function ($entity) {
             return $entity instanceof Mission;
         });
-        $updatedMissions = array_filter($uow->getScheduledEntityUpdates(), static function ($entity) {
-            return $entity instanceof Mission;
-        });
-        $allMissions = array_merge($newMissions, $updatedMissions);
+        $affectedMissions = array_map(
+            static function (MissionSensor $missionSensor) {
+                return $missionSensor->getMission();
+            },
+            array_filter($entities, static function ($entity) {
+                return $entity instanceof MissionSensor;
+            })
+        );
+
+        $allMissions = array_unique(array_merge($missions, $affectedMissions));
 
         foreach ($allMissions as $mission) {
             $this->ensureSubscription($mission);
@@ -66,6 +78,8 @@ class MissionListener implements LoggerAwareInterface
             // @TODO: Handle creating subscription on new mission (before persisting)?
             return;
         }
-        $this->subscriptionManager->ensureSubscription($mission);
+        $subscription = $this->subscriptionManager->ensureSubscription($mission);
+
+        $mission->setSubscription($subscription);
     }
 }

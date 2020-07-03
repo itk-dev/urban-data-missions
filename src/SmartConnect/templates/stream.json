@@ -1,0 +1,15 @@
+{
+    "id": null,
+    "type": "http://purl.org/iot/ontology/iot-stream#IotStream",
+    "http://purl.org/iot/ontology/iot-stream#generatedBy": {
+        "type": "Relationship",
+        "object": null
+    },
+    "http://www.agtinternational.com/ontologies/RichIoTStream/property": {
+        "type": "Relationship",
+        "object": null
+    },
+    "@context": [
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+    ]
+}

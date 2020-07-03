@@ -1,0 +1,11 @@
+{
+    "id" : null,
+    "type" : "http://www.w3.org/ns/sosa/Platform",
+    "http://empty-ns/devices/name" : {
+        "type" : "Property",
+        "value" : null
+    },
+    "@context" : [
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+    ]
+}

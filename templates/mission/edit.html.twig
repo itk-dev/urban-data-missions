@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Mission{% endblock %}
+{% block title %}{{ 'Edit data mission: %title%'|trans({'%title%': mission.title}) }}{% endblock %}
 
 {% block body %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
 
 
-            <h1>Edit Mission</h1>
+            <h1>{{ 'Edit data mission'|trans }}</h1>
 
             {{ include('mission/_form.html.twig', {'button_label': 'Update'}) }}
 

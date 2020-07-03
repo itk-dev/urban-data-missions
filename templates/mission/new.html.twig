@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'New Mission'|trans %}
+{% block title 'New data mission'|trans %}
 
 {% block content %}
     <div class="container-fluid bg-white">
         <article class="mission py-3">
             {% include '_nav_close.html.twig' with {'nav_path': path('mission_index')} %}
 
-            <h1>{{ 'Create mission'|trans }}</h1>
+            <h1>{{ 'Create data mission'|trans }}</h1>
 
             {# TODO: Get the real mission theme #}
             <p class="text-primary-faded text-uppercase small">{{ mission.theme.title }}

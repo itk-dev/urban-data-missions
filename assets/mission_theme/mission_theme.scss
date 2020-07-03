@@ -2,6 +2,7 @@
 @import '../base';
 @import '~bootstrap/scss/carousel';
 @import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/transitions';
 
 .carousel-indicators {
   position: static;
@@ -11,5 +12,35 @@
     border-radius: 50%;
     height: $spacer * 0.75;
     width: $spacer * 0.75;
+  }
+}
+
+.mission-theme-collapse.collapse {
+  display: block;
+  height: $font-size-base * 1.5;
+  overflow: hidden;
+
+  &.show {
+    height: 100%;
+  }
+}
+
+.mission-theme-toggle[aria-expanded='true'] {
+  .less {
+    display: inline;
+  }
+
+  .more {
+    display: none;
+  }
+}
+
+.mission-theme-toggle[aria-expanded='false'] {
+  .less {
+    display: none;
+  }
+
+  .more {
+    display: inline;
   }
 }

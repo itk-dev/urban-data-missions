@@ -1,0 +1,19 @@
+{
+    "id": null,
+    "type": "http://purl.org/iot/ontology/iot-stream#StreamObservation",
+    "http://purl.org/iot/ontology/iot-stream#belongsTo": {
+        "type": "Relationship",
+        "object": null
+    },
+    "http://www.w3.org/ns/sosa/hasSimpleResult": {
+        "type": "Property",
+        "value": null
+    },
+    "http://www.w3.org/ns/sosa/resultTime": {
+        "type": "Property",
+        "value": null
+    },
+    "@context": [
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+    ]
+}

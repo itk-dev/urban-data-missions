@@ -1,58 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MissionTheme{% endblock %}
+{% block title %}{{ 'Mission theme: %title%'|trans({'%title%': theme.title}) }}{% endblock %}
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('mission-theme') }}
 {% endblock %}
 
 {% block body %}
-    <h1>MissionTheme</h1>
+    <div class="container-fluid bg-white">
+        <article class="missing py-3">
+            <div class="bg-success-300 p-3 text-center">
+                <h1>{{ theme.title }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ mission_theme.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ mission_theme.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ mission_theme.description }}</td>
-            </tr>
-            <tr>
-                <th>Icon</th>
-                <td>{{ mission_theme.icon }}</td>
-            </tr>
-            <tr>
-                <th>CreatedBy</th>
-                <td>{{ mission_theme.createdBy }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedBy</th>
-                <td>{{ mission_theme.updatedBy }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ mission_theme.createdAt ? mission_theme.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ mission_theme.updatedAt ? mission_theme.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <span class="fa-8x">
+                    <span class="fa-layers fa-fw">
+                        <i class="fas fa-circle text-white"></i>
+                        <i class="fas fa-invers fa-{{ theme.icon }}" data-fa-transform="shrink-6"></i>
+                    </span>
+                </span>
 
-    <a href="{{ path('mission_theme_index') }}">back to list</a>
+                <p class="description">{{ theme.description|raw }}</p>
 
-    <a href="{{ path('mission_theme_edit', {'id': mission_theme.id}) }}">edit</a>
-
-    {{ include('mission_theme/_delete_form.html.twig') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('mission-theme') }}
+                <a class="btn btn-dark" href="{{ path_from_referer('theme_index') }}">{{ 'Back'|trans }}</a>
+            </div>
+        </article>
+    </div>
 {% endblock %}
