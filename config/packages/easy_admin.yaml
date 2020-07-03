@@ -4,11 +4,24 @@ easy_admin:
             - "@EasyAdmin/form/bootstrap_4.html.twig"
             - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
 
+        menu:
+            - Theme
+            - Page
+            - { label: 'Missions' }
+            - Mission
+            - Sensor
+
     entities:
         Theme:
             class: App\Entity\MissionTheme
 
             list:
+                actions:
+                    view:
+                        label: View
+                        type: route
+                        name: theme_show
+
                 fields:
                     - property: title
                     - property: icon
@@ -22,21 +35,6 @@ easy_admin:
                       type: fos_ckeditor
                       # type_options: { 'config': { 'toolbar': [ { name: 'styles', items: ['Bold', 'Italic', 'BulletedList', 'Link'] } ] } } }
                     - property: icon
-
-        Mission:
-            class: App\Entity\Mission
-
-            list:
-                actions:
-                    view:
-                        label: View
-                        type: route
-                        name: mission_show
-
-                fields:
-                    - property: title
-                    - property: createdAt
-                    - property: finishedAt
 
         Page:
             class: App\Entity\CmsPage
@@ -96,3 +94,61 @@ easy_admin:
                       type: vich_image
                     - property: parent
                     - property: position
+
+        Mission:
+            class: App\Entity\Mission
+            disabled_actions: ['new', 'edit', 'delete']
+
+            list:
+                actions:
+                    show:
+                        name: Show
+                    view:
+                        label: View
+                        type: route
+                        name: mission_show
+
+                fields:
+                    - property: title
+                    - property: createdAt
+                    - property: finishedAt
+                    - property: missionSensors
+
+        Sensor:
+            class: App\Entity\Sensor
+            disabled_actions: ['new', 'edit', 'delete']
+
+            list:
+                actions: ['show']
+
+                fields:
+                    - property: id
+                    - property: createdAt
+                    - property: missionSensors
+
+            show:
+                fields:
+                    - property: id
+                    - property: createdAt
+                    - property: data
+                    - property: missionSensors
+
+        MissionSensor:
+            class: App\Entity\MissionSensor
+            disabled_actions: ['new', 'edit', 'delete']
+
+            list:
+                actions: ['show']
+
+                fields:
+                    - property: id
+                    - property: createdAt
+                    - property: mission
+                    - property: sensor
+
+            show:
+                fields:
+                    - property: id
+                    - property: createdAt
+                    - property: mission
+                    - property: sensor

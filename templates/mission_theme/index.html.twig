@@ -12,7 +12,7 @@
 
 {% block content %}
     <div class="container-fluid bg-white">
-        <article class="mission py-3">
+        <article class="mission-theme py-3">
             {% include '_nav_close.html.twig' with {'nav_path': path('mission_index')} %}
             <h1>{{ 'Mission theme'|trans }}</h1>
             <p>{{ 'Before you can create a datamission you need to select a mission theme'|trans }}</p>
@@ -32,8 +32,16 @@
                                 </span>
                             </span>
 
-                            <p class="description">{{ theme.description|raw }}</p>
-                            <a href="{{ path('mission_new', {theme: theme.id}) }}" class="btn btn-success">{{ "Create new mission"|trans }}</a>
+                            <div class="mission-theme-collapse collapse" id="themeDescription">
+                                {{ theme.description|raw }}
+                            </div>
+
+                            <p>
+                                <a class="btn btn-sm mission-theme-toggle" data-toggle="collapse" href="#themeDescription" aria-expanded="false" aria-controls="contentId">
+                                    {{ "Show"|trans }} <span class="more">{{ "more"|trans }}</span><span class="less">{{ "less"|trans }}</span>
+                                </a>
+                            </p>
+                            <a href="{{ path_with_referer('mission_new', {theme: theme.id}) }}" class="btn btn-success">{{ "Create new mission"|trans }}</a>
                         </div>
                     {% endfor %}
                 </div>

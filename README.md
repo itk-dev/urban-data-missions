@@ -91,6 +91,29 @@ while true; do
 done
 EOF
 ```
+
+#### SmartConnect
+
+Generate a stream observation:
+
+```sh
+docker-compose exec phpfpm bin/console app:smart-connect:observation-create device87 temperature -- -20 30 1
+
+
+NGSI_LD_BROKER_URL='http://0.0.0.0:9090' symfony console app:smart-connect:observation-create device87 temperature -- -20 30 1
+```
+
+```sh
+docker-compose exec phpfpm bash -s <<<EOF
+while true; do
+  bin/console app:smart-connect:observation-create device87 humidity 0 100 10
+  bin/console app:smart-connect:observation-create device87 temperature -- -20 30 1
+  sleep 1 # second
+done
+EOF
+```
+
+
 ### Coding standards
 
 ```sh

@@ -61,7 +61,7 @@ class UpdatePublisher implements LoggerAwareInterface
 
     private function publish(Update $update)
     {
-        $this->debug(sprintf('Update: %s -> %s', json_encode($update->getTargets()), $update->getData()));
+        $this->debug(sprintf('Update: %s -> %s', json_encode($update->getTopics()), $update->getData()));
 
         return $this->publisher->__invoke($update);
     }

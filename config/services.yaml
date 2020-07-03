@@ -17,9 +17,6 @@ parameters:
     'env(DEFAULT_LOCALE)': 'en'
     default_locale: '%env(DEFAULT_LOCALE)%'
 
-    env(SENSOR_TYPES): '["https://uri.fiware.org/ns/data-models#humidity","https://uri.fiware.org/ns/data-models#temperature"]'
-    sensorTypes: '%env(json:SENSOR_TYPES)%'
-
     app.path.images: /uploads/images
     app.path.cms_images: /uploads/cms/images
     app.cms.page.type.choices:
@@ -38,8 +35,7 @@ services:
                 mercure:
                     event_source_url: '%env(MERCURE_EVENT_SOURCE_URL)%'
 
-            $sensorManagerOptions:
-                types: '%sensorTypes%'
+            $sensorManagerOptions: []
 
             $subscriptionManagerOptions:
                 router:

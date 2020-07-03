@@ -24,10 +24,7 @@ class Sensor
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"sensor", "measurement_read", "mission_log_entry_read"})
-     */
+    /** @var string|null */
     private $type;
 
     /**
@@ -40,10 +37,34 @@ class Sensor
      */
     private $data = [];
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $metadata;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $stream;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $streamId;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $streamObservation;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $streamObservationId;
+
     public function __construct()
     {
         $this->missions = new ArrayCollection();
-        $this->sensorWarnings = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -60,14 +81,11 @@ class Sensor
 
     public function getType(): ?string
     {
+        if (null === $this->type && null !== $this->metadata) {
+            $this->type = $this->metadata['type'] ?? null;
+        }
+
         return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     /**
@@ -107,11 +125,59 @@ class Sensor
     {
         $this->data = $data;
 
-        if (isset($data['type'])) {
-            $this->setType($data['type']);
-        }
+        return $this;
+    }
+
+    public function getMetadata(): ?array
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @return Sensor
+     */
+    public function setMetadata(array $metadata): self
+    {
+        $this->metadata = $metadata;
 
         return $this;
+    }
+
+    public function getStream(): ?array
+    {
+        return $this->stream;
+    }
+
+    /**
+     * @return Sensor
+     */
+    public function setStream(array $stream): self
+    {
+        $this->stream = $stream;
+        $this->streamId = $stream['id'] ?? null;
+
+        return $this;
+    }
+
+    public function getStreamObservation(): ?array
+    {
+        return $this->streamObservation;
+    }
+
+    /**
+     * @return Sensor
+     */
+    public function setStreamObservation(array $streamObservation): self
+    {
+        $this->streamObservation = $streamObservation;
+        $this->streamObservationId = $streamObservation['id'] ?? null;
+
+        return $this;
+    }
+
+    public function getStreamObservationId(): ?string
+    {
+        return $this->streamObservationId;
     }
 
     public function __toString()
