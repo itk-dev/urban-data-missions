@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MissionRepository")
@@ -30,18 +31,21 @@ class Mission
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"mission_read", "log_entry"})
+     * @Assert\NotBlank()
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"mission_read", "log_entry"})
+     * @Assert\NotBlank()
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"mission_read", "log_entry"})
+     * @Assert\NotBlank()
      */
     private $location;
 
