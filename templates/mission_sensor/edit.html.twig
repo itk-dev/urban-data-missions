@@ -3,21 +3,25 @@
 {% block title %}{{ 'Edit mission sensor'|trans }}{% endblock %}
 
 {% block content %}
+    {% set is_new_sensor = mission_sensor.id is null %}
+
     <div class="container-fluid bg-white">
         <article class="mission-sensor py-3">
-            <h1>{{ 'Edit mission sensor'|trans }}</h1>
+            <h1>{{ is_new_sensor ? 'Create mission sensor'|trans : 'Edit mission sensor'|trans }}</h1>
 
             {{ form_start(form) }}
                 {{ form_widget(form) }}
 
                 <div class="row border-top pt-3">
                     <div class="col">
-                        {# TODO: Make this button do what it says. #}
-                        <button type="button" class="btn btn-danger">{{ 'Remove sensor from mission'|trans }}</button>
+                        {% if not is_new_sensor %}
+                            {# TODO: Make this button do what it says. #}
+                            {# <button type="button" class="btn btn-danger">{{ 'Remove sensor from mission'|trans }}</button> #}
+                        {% endif %}
                     </div>
                     <div class="col-auto ml-auto">
                         <a class="btn btn-dark mr-3" href="{{ path_from_referer('mission_show', {id: mission_sensor.mission.id}) }}">{{ 'Cancel'|trans }}</a>
-                        <button class="btn btn-success px-md-5">{{ mission_sensor.id ? 'Update'|trans : 'Create'|trans }}</button>
+                        <button class="btn btn-success px-md-5">{{ is_new_sensor ? 'Create'|trans : 'Update'|trans }}</button>
                     </div>
                 </div>
             {{ form_end(form) }}
