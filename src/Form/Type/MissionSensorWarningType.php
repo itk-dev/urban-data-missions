@@ -3,7 +3,6 @@
 namespace App\Form\Type;
 
 use App\Entity\MissionSensorWarning;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,15 +14,21 @@ class MissionSensorWarningType extends AbstractType
     {
         $builder
             ->add('min', IntegerType::class, [
+                'label' => $this->trans('Minimum value'),
+                'translation_domain' => false,
                 'required' => false,
-                'help' => 'Generate a warning if the sensor value is below this value.',
+                'help' => $this->trans('Generate a warning if the sensor value is below this value.'),
             ])
             ->add('max', IntegerType::class, [
+                'label' => $this->trans('Maximum value'),
+                'translation_domain' => false,
                 'required' => false,
-                'help' => 'Generate a warning if the sensor value is above this value.',
+                'help' => $this->trans('Generate a warning if the sensor value is above this value.'),
             ])
             ->add('message', TextareaType::class, [
-                'help' => 'The message to write in the log if the sensor value is outside the bounds. “%value%” will be replaced with the actual measured value when writing the log message.',
+                'label' => $this->trans('Message'),
+                'translation_domain' => false,
+                'help' => $this->trans('The message to write in the log if the sensor value is outside the bounds. “%value%” will be replaced with the actual measured value when writing the log message.'),
             ])
         ;
     }

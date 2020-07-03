@@ -5,7 +5,7 @@ namespace App\Form\Type;
 use App\Entity\MissionSensor;
 use App\Entity\Sensor;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +19,8 @@ class MissionSensorType extends AbstractType
         $sensor = $builder->getData()->getSensor();
         $builder
             ->add('sensor', EntityType::class, [
+                'label' => $this->trans('Sensor'),
+                'translation_domain' => false,
                 'block_name' => 'sensor_details',
                 'class' => Sensor::class,
                 'choices' => [
@@ -29,12 +31,19 @@ class MissionSensorType extends AbstractType
                 ],
             ])
             ->add('name', TextType::class, [
+                'label' => $this->trans('Name'),
+                'translation_domain' => false,
                 'required' => false,
-                'help' => 'Give the sensor a name for this mission',
+                'help' => $this->trans('Give the sensor a name for this mission'),
             ])
-            ->add('enabled')
+            ->add('enabled', CheckboxType::class, [
+                'label' => $this->trans('Enabled'),
+                'translation_domain' => false,
+            ])
             ->add('sensorWarnings', CollectionType::class, [
-                'help' => 'Sensor warning can help you detect invalid data.',
+                'label' => $this->trans('Sensor warnings'),
+                'translation_domain' => false,
+                'help' => $this->trans('Sensor warning can help you detect invalid data.'),
                 'entry_type' => MissionSensorWarningType::class,
                 'entry_options' => [
                     'label' => false,

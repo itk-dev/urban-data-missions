@@ -3,7 +3,6 @@
 namespace App\Form\Type;
 
 use App\Entity\Mission;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,16 +14,22 @@ class MissionType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'help' => 'Give your mission an easy recognisable title',
+                'label' => $this->trans('Title'),
+                'translation_domain' => false,
+                'help' => $this->trans('Give your mission an easy recognisable title'),
             ])
             ->add('description', TextareaType::class, [
-                'help' => 'Give a short description of what you want to achieve',
+                'label' => $this->trans('Description'),
+                'translation_domain' => false,
+                'help' => $this->trans('Give a short description of what you want to achieve'),
                 'attr' => [
                     'rows' => 3,
                 ],
             ])
             ->add('location', TextType::class, [
-                'help' => 'Write the address or primary location of your mission',
+                'label' => $this->trans('Location'),
+                'translation_domain' => false,
+                'help' => $this->trans('Write the address or primary location of your mission'),
             ])
             ->add('latitude', TextType::class)
             ->add('longitude', TextType::class)

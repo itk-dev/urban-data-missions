@@ -24,6 +24,17 @@ sed -i '' 's/\<target\>__/\<target state="needs-l10n"\>__/' translations/*.xlf
 docker-compose exec phpfpm bin/console bazinga:js-translation:dump assets/ --format=json
 ```
 
+Alternatively, using [`symfony` binary](https://symfony.com/download):
+
+```sh
+# Remember to set the DEFAULT_LOCALE environment variable so the XLF-files will have the correct source-language
+DEFAULT_LOCALE=en symfony console translation:update --force da
+# Mark default translations as “Needs work”.
+sed -i '' 's/\<target\>__/\<target state="needs-l10n"\>__/' translations/*.xlf
+# Dump JavaScript translations
+symfony console bazinga:js-translation:dump assets/ --format=json
+```
+
 ## Assets
 
 
