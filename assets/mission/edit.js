@@ -53,10 +53,15 @@ $(() => {
     latitude.parentNode.classList.add('map-shown')
     longitude.parentNode.classList.add('map-shown')
 
+    let [lat, lng] = [parseFloat(latitude.value), parseFloat(longitude.value)]
+    if (isNaN(lat) || isNaN(lng)) {
+      [lat, lng] = [56.1525791, 10.2008397] // Aarhus City Hall
+    }
+
     const map = L.map(el, {
       // @TODO Prevent zooming when scrolling past map.
       scrollWheelZoom: false
-    }).setView([parseFloat(latitude.value), parseFloat(longitude.value)], 13)
+    }).setView([lat, lng], 13)
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
