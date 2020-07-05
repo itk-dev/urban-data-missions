@@ -16,10 +16,10 @@ class LogView extends Component {
       filter: {
         // Display order
         names: [
-          'alert',
-          'measurement',
-          'system',
-          'user'
+          Translator.trans('alert'),
+          Translator.trans('measurement'),
+          Translator.trans('system'),
+          Translator.trans('user')
         ],
         // Actual values
         values: {

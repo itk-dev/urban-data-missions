@@ -80,7 +80,7 @@ function App (props) {
           {query ? (
             <span>
               {Translator.transChoice(
-                '{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%',
+                '{0}No results match {query}|{1}One result matching {query}|]1,Inf]{count} results matching {query}',
                 data.length,
                 { query: query }
               )}
@@ -88,7 +88,7 @@ function App (props) {
           ) : (
             <span>
               {Translator.transChoice(
-                '{0}No results|{1}One result|]1,Inf]%count% results',
+                '{0}No results|{1}One result|]1,Inf]{count} results',
                 data.length
               )}
             </span>
@@ -145,10 +145,10 @@ function App (props) {
         <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} size='lg' />
       </Form.Group>
 
-      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', { error: error })}</Alert>}
+      {error && <Alert variant='danger'>{Translator.trans('Error: {error}', { error: error })}</Alert>}
 
       {isLoading
-        ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', { query: query })}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
+        ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for {query} …', { query: query })}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>
         : renderData()}
     </div>
   )

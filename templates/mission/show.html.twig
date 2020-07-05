@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Data mission: %title%'|trans({'%title%': mission.title}) }}{% endblock %}
+{% block title %}{{ 'Data mission: {title}'|trans({'{title}': mission.title}) }}{% endblock %}
 
 {% block content %}
     <div class="container-fluid bg-white">
@@ -127,7 +127,7 @@
 
             {% if mission.finishedAt %}
                 <div class="alert alert-dark position-sticky fixed-bottom shadow-sm" style="bottom: 1rem;">
-                    {{ 'Mission finished at %finished_at%'|trans({'%finished_at%': mission.finishedAt|date}) }}
+                    {{ 'Mission finished at {finished_at}'|trans({'{finished_at}': mission.finishedAt|date}) }}
                 </div>
             {% elseif finish_mission_form is defined %}
                 <article class="mission-finish mb-3">
@@ -154,4 +154,13 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('mission/show') }}
+{% endblock %}
+
+{% block _translation %}
+    {# Help the translation extractor #}
+
+    {{ 'alert'|trans }}
+    {{ 'measurement'|trans }}
+    {{ 'system'|trans }}
+    {{ 'user'|trans }}
 {% endblock %}
