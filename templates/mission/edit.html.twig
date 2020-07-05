@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Edit data mission: %title%'|trans({'%title%': mission.title}) }}{% endblock %}
+{% block title %}{{ 'Edit data mission: {title}'|trans({'{title}': mission.title}) }}{% endblock %}
 
 {% block body %}
     <div class="container-fluid bg-white">

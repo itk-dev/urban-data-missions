@@ -93,9 +93,9 @@
         <source>Create new mission</source>
         <target>Opret ny mission</target>
       </trans-unit>
-      <trans-unit id="MieWEKv" resname="Data mission: %title%">
-        <source>Data mission: %title%</source>
-        <target>Datamission: %title%</target>
+      <trans-unit id="MieWEKv" resname="Data mission: {title}">
+        <source>Data mission: {title}</source>
+        <target>Datamission: {title}</target>
       </trans-unit>
       <trans-unit id="J2YZv.5" resname="Edit mission">
         <source>Edit mission</source>
@@ -141,9 +141,9 @@
         <source>Image as</source>
         <target>Billede som</target>
       </trans-unit>
-      <trans-unit id="d_M26zu" resname="Mission finished at %finished_at%">
-        <source>Mission finished at %finished_at%</source>
-        <target>Mission afsluttet %finished_at%</target>
+      <trans-unit id="d_M26zu" resname="Mission finished at {finished_at}">
+        <source>Mission finished at {finished_at}</source>
+        <target>Mission afsluttet {finished_at}</target>
       </trans-unit>
       <trans-unit id="QxPBuWS" resname="Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.">
         <source>Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.</source>
@@ -233,25 +233,25 @@
         <source>Search for a sensor</source>
         <target>Søg efter en sensor</target>
       </trans-unit>
-      <trans-unit id="CcUEzkM" resname="Error: %error%">
-        <source>Error: %error%</source>
-        <target>Fejl: %error%</target>
+      <trans-unit id="CcUEzkM" resname="Error: {error}">
+        <source>Error: {error}</source>
+        <target>Fejl: {error}</target>
       </trans-unit>
-      <trans-unit id="E2tHmQr" resname="Searching for &lt;code class=&quot;sensor-query&quot;>%query%&lt;/code> …">
-        <source>Searching for &lt;code class="sensor-query"&gt;%query%&lt;/code&gt; …</source>
-        <target><![CDATA[Søger efter <code class="sensor-query">%query%</code> …]]></target>
+      <trans-unit id="E2tHmQr" resname="Searching for &lt;code class=&quot;sensor-query&quot;>{query}&lt;/code> …">
+        <source>Searching for &lt;code class="sensor-query"&gt;{query}&lt;/code&gt; …</source>
+        <target><![CDATA[Søger efter <code class="sensor-query">{query}</code> …]]></target>
       </trans-unit>
       <trans-unit id="eZ7el7Q" resname="Searching …">
         <source>Searching …</source>
         <target>Søger …</target>
       </trans-unit>
-      <trans-unit id="B9X6pco" resname="Results matching &lt;code class=&quot;sensor-query&quot;>%query%&lt;/code> (%count%)">
-        <source>Results matching &lt;code class="sensor-query"&gt;%query%&lt;/code&gt; (%count%)</source>
-        <target><![CDATA[Resultater for <code class="sensor-query">%query%</code> (%count%)]]></target>
+      <trans-unit id="B9X6pco" resname="Results matching &lt;code class=&quot;sensor-query&quot;>{query}&lt;/code> ({count})">
+        <source>Results matching &lt;code class="sensor-query"&gt;{query}&lt;/code&gt; ({count})</source>
+        <target><![CDATA[Resultater for <code class="sensor-query">{query}</code> ({count})]]></target>
       </trans-unit>
-      <trans-unit id="PHhimgv" resname="Results (%count%)">
-        <source>Results (%count%)</source>
-        <target>Resultater (%count%)</target>
+      <trans-unit id="PHhimgv" resname="Results ({count})">
+        <source>Results ({count})</source>
+        <target>Resultater ({count})</target>
       </trans-unit>
       <trans-unit id="FjDbizz" resname="Already included in mission">
         <source>Already included in mission</source>
@@ -261,9 +261,9 @@
         <source>Add</source>
         <target>Tilføj</target>
       </trans-unit>
-      <trans-unit id="Ub_M73A" resname="Searching for %query% …">
-        <source>Searching for %query% …</source>
-        <target>Søger efter %query% …</target>
+      <trans-unit id="Ub_M73A" resname="Searching for {query} …">
+        <source>Searching for {query} …</source>
+        <target>Søger efter {query} …</target>
       </trans-unit>
       <trans-unit id="jjeVPSP" resname="Value">
         <source>Value</source>
@@ -277,13 +277,13 @@
         <source>Filter log types</source>
         <target>Filtrer beskedtyper</target>
       </trans-unit>
-      <trans-unit id="UXlIkU5" resname="{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%">
-        <source>{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%</source>
-        <target>{0}Intet matcher %query%|{1}Et resultat matcher %query%|]1,Inf]%count% resultater matcher %query%</target>
+      <trans-unit id="UXlIkU5" resname="{0}No results match {query}|{1}One result matching {query}|]1,Inf]{count} results matching {query}">
+        <source>{0}No results match {query}|{1}One result matching {query}|]1,Inf]{count} results matching {query}</source>
+        <target>{0}Intet matcher {query}|{1}Et resultat matcher {query}|]1,Inf]{count} resultater matcher {query}</target>
       </trans-unit>
-      <trans-unit id="cX8n7Xm" resname="{0}No results|{1}One result|]1,Inf]%count% results">
-        <source>{0}No results|{1}One result|]1,Inf]%count% results</source>
-        <target>{0}Ingen resultater|{1}Et resultat|]1,Inf]%count% resultater</target>
+      <trans-unit id="cX8n7Xm" resname="{0}No results|{1}One result|]1,Inf]{count} results">
+        <source>{0}No results|{1}One result|]1,Inf]{count} results</source>
+        <target>{0}Ingen resultater|{1}Et resultat|]1,Inf]{count} resultater</target>
       </trans-unit>
       <trans-unit id="mjmXKCy" resname="Remove sensor from mission">
         <source>Remove sensor from mission</source>
@@ -293,9 +293,9 @@
         <source>Urban data missions</source>
         <target>Urban data missions</target>
       </trans-unit>
-      <trans-unit id="tEsNrrY" resname="Edit data mission: %title%">
-        <source>Edit data mission: %title%</source>
-        <target>Rediger datamission: %title%</target>
+      <trans-unit id="tEsNrrY" resname="Edit data mission: {title}">
+        <source>Edit data mission: {title}</source>
+        <target>Rediger datamission: {title}</target>
       </trans-unit>
       <trans-unit id="tVtnKk_" resname="Edit data mission">
         <source>Edit data mission</source>
@@ -325,9 +325,9 @@
         <source>less</source>
         <target>mindre</target>
       </trans-unit>
-      <trans-unit id="59gqqYv" resname="Mission theme: %title%">
-        <source>Mission theme: %title%</source>
-        <target>Missionstema: %title%</target>
+      <trans-unit id="59gqqYv" resname="Mission theme: {title}">
+        <source>Mission theme: {title}</source>
+        <target>Missionstema: {title}</target>
       </trans-unit>
       <trans-unit id="dpAPG.0" resname="Back">
         <source>Back</source>
