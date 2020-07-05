@@ -237,17 +237,9 @@
         <source>Error: {error}</source>
         <target>Fejl: {error}</target>
       </trans-unit>
-      <trans-unit id="XG1_3Uo" resname="Searching for &lt;code class=&quot;sensor-query&quot;>{query}&lt;/code> …">
-        <source>Searching for &lt;code class="sensor-query"&gt;{query}&lt;/code&gt; …</source>
-        <target><![CDATA[Søger efter <code class="sensor-query">{query}</code> …]]></target>
-      </trans-unit>
       <trans-unit id="eZ7el7Q" resname="Searching …">
         <source>Searching …</source>
         <target>Søger …</target>
-      </trans-unit>
-      <trans-unit id="WW3Dhn_" resname="Results matching &lt;code class=&quot;sensor-query&quot;>{query}&lt;/code> ({count})">
-        <source>Results matching &lt;code class="sensor-query"&gt;{query}&lt;/code&gt; ({count})</source>
-        <target><![CDATA[Resultater for <code class="sensor-query">{query}</code> ({count})]]></target>
       </trans-unit>
       <trans-unit id="MQnIK0e" resname="Results ({count})">
         <source>Results ({count})</source>
@@ -415,7 +407,23 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">bruger</target>
+        <target>bruger</target>
+      </trans-unit>
+      <trans-unit id="0MIrdDz" resname="No sensors matching %query% found.">
+        <source>No sensors matching %query% found.</source>
+        <target>Ingen sensorer matcher %query%.</target>
+      </trans-unit>
+      <trans-unit id="UXlIkU5" resname="{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%">
+        <source>{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%</source>
+        <target>{0}Ingen resultater matcher %query%|{1}Et resultat matcher %query%|]1,Inf]%count% resulter matcher %query%</target>
+      </trans-unit>
+      <trans-unit id="cX8n7Xm" resname="{0}No results|{1}One result|]1,Inf]%count% results">
+        <source>{0}No results|{1}One result|]1,Inf]%count% results</source>
+        <target>{0}Ingen resulter|{1}Et resultat|]1,Inf]%count% resultater</target>
+      </trans-unit>
+      <trans-unit id="Ub_M73A" resname="Searching for %query% …">
+        <source>Searching for %query% …</source>
+        <target>Søger efter %query% …</target>
       </trans-unit>
     </body>
   </file>
