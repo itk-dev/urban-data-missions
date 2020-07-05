@@ -35,9 +35,19 @@ class SubscriptionManager implements LoggerAwareInterface
      */
     public function ensureSubscription(Mission $mission): ?array
     {
-        $payload = $this->buildSubscriptionPayload($mission);
+        $enabledMissionSensors = $mission->getMissionSensors()->filter(static function (MissionSensor $missionSensor) {
+            return $missionSensor->getEnabled();
+        });
 
-        return $this->client->ensureSubscription($payload);
+        if ($enabledMissionSensors->isEmpty()) {
+            $this->deleteSubscription($mission);
+
+            return null;
+        } else {
+            $payload = $this->buildSubscriptionPayload($mission);
+
+            return $this->client->ensureSubscription($payload);
+        }
     }
 
     public function deleteSubscription(Mission $mission)
@@ -87,7 +97,7 @@ class SubscriptionManager implements LoggerAwareInterface
                     return $missionSensor->getEnabled();
                 })
                 ->map(static function (MissionSensor $missionSensor) {
-                    return            [
+                    return [
                         'type' => Client::ENTITY_TYPE_STREAM_OBSERVATION,
                         'id' => $missionSensor->getSensor()->getStreamObservationId(),
                     ];

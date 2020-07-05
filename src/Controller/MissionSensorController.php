@@ -46,8 +46,8 @@ class MissionSensorController extends AbstractController
     {
         $sensor = $sensorManager->getSensor($request->query->get('sensor') ?? '');
         $missionSensor = (new MissionSensor())
-            ->setMission($mission)
             ->setSensor($sensor);
+        $mission->addMissionSensor($missionSensor);
 
         return $this->edit($request, $missionSensor);
     }

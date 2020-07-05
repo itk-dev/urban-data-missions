@@ -39,6 +39,7 @@ class MissionSensorType extends AbstractType
             ->add('enabled', CheckboxType::class, [
                 'label' => $this->trans('Enabled'),
                 'translation_domain' => false,
+                'required' => false,
             ])
             ->add('sensorWarnings', CollectionType::class, [
                 'label' => $this->trans('Sensor warnings'),

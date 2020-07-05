@@ -183,7 +183,7 @@ class Mission
         return $this->subscription;
     }
 
-    public function setSubscription(array $subscription): self
+    public function setSubscription(?array $subscription): self
     {
         $this->subscription = $subscription;
 
