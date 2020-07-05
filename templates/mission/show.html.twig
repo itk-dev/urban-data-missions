@@ -155,3 +155,12 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('mission/show') }}
 {% endblock %}
+
+{% block _translation %}
+    {# Help the translation extractor #}
+
+    {{ 'alert'|trans }}
+    {{ 'measurement'|trans }}
+    {{ 'system'|trans }}
+    {{ 'user'|trans }}
+{% endblock %}

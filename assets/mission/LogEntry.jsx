@@ -99,7 +99,7 @@ class LogEntry extends Component {
         {this.state.message && <Alert variant={this.state.messageType}>{this.state.message}</Alert>}
         <Form.Group controlId='formContent'>
           <Form.Label>{Translator.trans('Content')}</Form.Label>
-          <Form.Control as='textarea' name='content' className={{ 'is-invalid': this.state.violations.content }} placeholder='Enter a log entry' value={this.state.logEntry?.content} onChange={this.handleChange} />
+          <Form.Control as='textarea' name='content' className={{ 'is-invalid': this.state.violations.content }} placeholder={Translator.trans('Enter a log entry')} value={this.state.logEntry?.content} onChange={this.handleChange} />
           {this.state.violations.content && <div className='invalid-feedback'>{this.state.violations.content}</div>}
         </Form.Group>
 
