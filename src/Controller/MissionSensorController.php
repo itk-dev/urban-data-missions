@@ -7,11 +7,13 @@ use App\Entity\MissionSensor;
 use App\Form\Type\MissionSensorType;
 use App\Repository\MissionSensorRepository;
 use App\Scorpio\SensorManager;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/mission/{mission}/sensor", name="mission_sensor_")
@@ -42,14 +44,24 @@ class MissionSensorController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request, Mission $mission, SensorManager $sensorManager): Response
+    public function new(Request $request, Mission $mission, SensorManager $sensorManager, TranslatorInterface $translation): Response
     {
-        $sensor = $sensorManager->getSensor($request->query->get('sensor') ?? '');
-        $missionSensor = (new MissionSensor())
-            ->setSensor($sensor);
-        $mission->addMissionSensor($missionSensor);
+        $sensorId = $request->query->get('sensor') ?? '';
+        try {
+            $sensor = $sensorManager->getSensor($sensorId);
+            $missionSensor = (new MissionSensor())
+                ->setSensor($sensor);
+            $mission->addMissionSensor($missionSensor);
 
-        return $this->edit($request, $missionSensor);
+            return $this->edit($request, $missionSensor);
+        } catch (Exception $exception) {
+            $this->addFlash('danger', $translation->trans('Error adding sensor %sensor% (Message: “%message%”)', [
+                '%sensor%' => $sensorId,
+                '%message%' => $exception->getMessage(),
+            ]));
+
+            return $this->redirectToRoute('mission_sensor_add', ['mission' => $mission->getId()]);
+        }
     }
 
     /**
