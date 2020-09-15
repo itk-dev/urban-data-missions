@@ -262,7 +262,9 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
                     throw new BadRequestHttpException('Cannot get time of measurement');
                 }
 
-                $streamId = $data[Client::ENTITY_ATTRIBUTE_BELONGS_TO]['object'] ?? null;
+                $streamId = $data[Client::ENTITY_ATTRIBUTE_BELONGS_TO]['object']
+                    ?? $data[Client::ENTITY_ATTRIBUTE_BELONGS_TO_SHORT]['object']
+                    ?? null;
                 if (null === $streamId) {
                     throw new BadRequestHttpException('Missing stream id');
                 }
