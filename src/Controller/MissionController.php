@@ -287,7 +287,7 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
                         $sensor->getId(),
                     ));
 
-                    throw new BadRequestHttpException('Invalid mission sensor');
+                    throw new BadRequestHttpException(sprintf('Invalid mission sensor %s in mission %s', $sensor->getId(), $mission->getId()));
                 }
 
                 if (!$missionSensor->getEnabled()) {
