@@ -14,6 +14,8 @@ parameters:
     router.request_context.base_url: '%env(ROUTER_REQUEST_CONTEXT_BASE_URL)%'
     asset.request_context.base_path: '%router.request_context.base_url%'
 
+    'env(NGSI_LD_BROKER_NO_VERIFY)': false
+
     'env(DEFAULT_LOCALE)': 'en'
     default_locale: '%env(DEFAULT_LOCALE)%'
 
@@ -30,6 +32,8 @@ services:
 
         bind:
             $ngsiLdBrokerUrl: '%env(NGSI_LD_BROKER_URL)%'
+            $ngsiLdBrokerOptions:
+                no_verify: '%env(bool:NGSI_LD_BROKER_NO_VERIFY)%'
 
             $missionOptions:
                 mercure:

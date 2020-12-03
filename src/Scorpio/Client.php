@@ -54,10 +54,14 @@ class Client implements LoggerAwareInterface
     /** @var string */
     private $ngsiLdBrokerUrl;
 
-    public function __construct(HttpClientInterface $httpClient, string $ngsiLdBrokerUrl)
+    /** @var array */
+    private $ngsiLdBrokerOptions;
+
+    public function __construct(HttpClientInterface $httpClient, string $ngsiLdBrokerUrl, array $ngsiLdBrokerOptions)
     {
         $this->httpClient = $httpClient;
         $this->ngsiLdBrokerUrl = $ngsiLdBrokerUrl;
+        $this->ngsiLdBrokerOptions = $ngsiLdBrokerOptions;
     }
 
     public function ensureEntity(array $data): array
@@ -152,6 +156,13 @@ class Client implements LoggerAwareInterface
             if (!isset($options['headers']['content-type'])) {
                 $options['headers']['content-type'] = 'application/ld+json';
             }
+        }
+
+        if ($this->ngsiLdBrokerOptions['no_verify'] ?? false) {
+            $options += [
+                'verify_peer' => false,
+                'verify_host' => false,
+            ];
         }
 
         return $this->httpClient->request($method, $path, $options + [
