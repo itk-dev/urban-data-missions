@@ -10,9 +10,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SubscriptionUpdateCommand extends Command
+class SubscriptionDeleteCommand extends Command
 {
-    protected static $defaultName = 'app:mission:subscription:update';
+    protected static $defaultName = 'app:mission:subscription:delete';
 
     /** @var MissionRepository */
     private $repository;
@@ -30,7 +30,7 @@ class SubscriptionUpdateCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Update subscription for all or select missions')
+            ->setDescription('Delete subscription for all or select missions')
             ->addArgument('mission', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'Mission(s) to update');
     }
 
@@ -44,7 +44,7 @@ class SubscriptionUpdateCommand extends Command
         $missions = empty($ids) ? $this->repository->findAll() : $this->repository->findBy(['id' => $ids]);
 
         foreach ($missions as $mission) {
-            $this->subscriptionManager->ensureSubscription($mission);
+            $this->subscriptionManager->deleteSubscription($mission);
         }
 
         return 0;
