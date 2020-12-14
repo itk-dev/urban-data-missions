@@ -102,11 +102,12 @@ function App (props) {
               className='sensor-search-result pb-3'
             >
               <div className='d-flex w-100 justify-content-between'>
-                <h2 className='h4 mb-1'>{item.id}</h2>
-                <small />
+                {item._metadata.name
+                  ? <><h2 className='h4 mb-1'>{item._metadata.name}</h2><small>{item.id}</small></>
+                  : <h2 className='h4 mb-1'>{item.id}</h2>}
               </div>
               <p className='mb-1'>
-                {item.type}
+                {item._metadata.type ?? item.type}
               </p>
 
               {item._metadata.mission_sensor ? (
@@ -145,7 +146,7 @@ function App (props) {
         <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} size='lg' />
       </Form.Group>
 
-      {error && <Alert variant='danger'>{Translator.trans('Error: {error}', { error: error })}</Alert>}
+      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', { error: error })}</Alert>}
 
       {isLoading
         ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', { query: query })}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>

@@ -21,11 +21,10 @@ class SensorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $query
-     *
      * @return Sensor[]
      */
-    public function search(string $query) {
+    public function search(string $query)
+    {
         $ids = $this->getEntityManager()->getRepository(Index::class)
             ->search($query, $this->_entityName);
 

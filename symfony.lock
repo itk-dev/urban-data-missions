@@ -40,6 +40,9 @@
     "composer/xdebug-handler": {
         "version": "1.4.0"
     },
+    "cweagans/composer-patches": {
+        "version": "1.7.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

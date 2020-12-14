@@ -1,0 +1,13 @@
+diff --git a/Entity/Index.php b/Entity/Index.php
+index 5d31515..96f191b 100644
+--- a/Entity/Index.php
++++ b/Entity/Index.php
+@@ -63,7 +63,7 @@ class Index
+     /**
+      * @var int
+      *
+-     * @ORM\Column(name="foreign_id", type="integer", nullable=false)
++     * @ORM\Column(name="foreign_id", type="string", nullable=false)
+      */
+     protected $foreignId;
+ 

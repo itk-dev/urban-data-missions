@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,6 +20,7 @@ class Sensor
      * @ORM\Id()
      * @ORM\Column(type="string")
      * @Groups({"sensor", "measurement_read", "mission_log_entry_read"})
+     * @Index()
      */
     private $id;
 
@@ -30,11 +29,6 @@ class Sensor
      * @Index()
      */
     private $type;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Mission", mappedBy="sensors")
-     */
-    private $missions;
 
     /**
      * @ORM\Column(type="json")
@@ -72,11 +66,6 @@ class Sensor
      */
     private $name;
 
-    public function __construct()
-    {
-        $this->missions = new ArrayCollection();
-    }
-
     public function getId(): ?string
     {
         return $this->id;
@@ -101,34 +90,6 @@ class Sensor
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Mission[]
-     */
-    public function getMissions(): Collection
-    {
-        return $this->missions;
-    }
-
-    public function addMission(Mission $mission): self
-    {
-        if (!$this->missions->contains($mission)) {
-            $this->missions[] = $mission;
-            $mission->addSensor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMission(Mission $mission): self
-    {
-        if ($this->missions->contains($mission)) {
-            $this->missions->removeElement($mission);
-            $mission->removeSensor($this);
-        }
 
         return $this;
     }
@@ -197,11 +158,6 @@ class Sensor
         return $this->streamObservationId;
     }
 
-    public function __toString()
-    {
-        return $this->getId() ?? self::class;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -212,5 +168,10 @@ class Sensor
         $this->name = $name;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getId() ?? self::class;
     }
 }
