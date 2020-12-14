@@ -16,6 +16,10 @@ parameters:
 
     'env(NGSI_LD_BROKER_NO_VERIFY)': false
 
+    'env(MEASUREMENTS_PAGE_SIZE)': '1000'
+    'env(MAX_NUMBER_OF_MEASUREMENTS_TO_LOAD)': '500'
+    'env(INITIAL_DATA_WINDOW_SIZE)': '14400' # 4 * 60 * 60 seconds = 4 hours
+
     'env(DEFAULT_LOCALE)': 'en'
     default_locale: '%env(DEFAULT_LOCALE)%'
 
@@ -36,6 +40,10 @@ services:
                 no_verify: '%env(bool:NGSI_LD_BROKER_NO_VERIFY)%'
 
             $missionOptions:
+                measurements_page_size: '%env(int:MEASUREMENTS_PAGE_SIZE)%'
+                max_number_of_measurements_to_load: '%env(int:MAX_NUMBER_OF_MEASUREMENTS_TO_LOAD)%'
+                initial_data_window_size: '%env(int:INITIAL_DATA_WINDOW_SIZE)%'
+
                 mercure:
                     event_source_url: '%env(MERCURE_EVENT_SOURCE_URL)%'
 

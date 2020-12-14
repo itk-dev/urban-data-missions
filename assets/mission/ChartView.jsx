@@ -49,6 +49,9 @@ class ChartView extends Component {
       }
     })
 
+    const maxNumberOfMeasurementsToLoad = this.props.options.maxNumberOfMeasurementsToLoad ?? 3000
+    const initialDataWindowSize = this.props.options.initialDataWindowSize ?? 4 * 60 * 60
+
     let loadedData = []
     const loadData = (url) => {
       this.setState({
@@ -62,7 +65,7 @@ class ChartView extends Component {
           loadedData = loadedData.concat(data['hydra:member'])
 
           const nextUrl = data['hydra:view']['hydra:next']
-          if (nextUrl && loadedData.length <= 3000) {
+          if (nextUrl && loadedData.length <= maxNumberOfMeasurementsToLoad) {
             loadData(nextUrl)
           } else {
             this.setState({
@@ -72,7 +75,7 @@ class ChartView extends Component {
             this.chart.getChart().events.once('validated', () => {
               // Zoom to last 4 hours.
               const now = (new Date()).getTime()
-              const start = now - 4 * 60 * 60 * 1000
+              const start = now - 1000 * initialDataWindowSize
               const end = now
 
               this.chart.zoomToValues(

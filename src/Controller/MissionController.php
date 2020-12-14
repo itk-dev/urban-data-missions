@@ -53,6 +53,12 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefaults([
+            'measurements_page_size' => 100,
+            'max_number_of_measurements_to_load' => 500,
+            'initial_data_window_size' => 4 * 60 * 60, // 4 hours
+        ]);
+
         $resolver->setDefault('mercure', static function (OptionsResolver $mercureResolver) {
             $mercureResolver->setRequired('event_source_url');
         });
@@ -153,10 +159,13 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
                 'topic' => 'mission:'.$mission->getId(),
             ]);
 
+        $measurementsPageSize = $this->options['measurements_page_size'];
+        $maxNumberOfMeasurementsToLoad = $this->options['max_number_of_measurements_to_load'] ?? 3 * $measurementsPageSize;
+
         $appOptions['measurementsUrl'] = $this->generateUrl('api_measurements_get_collection', [
             'mission.id' => $mission->getId(),
             'order' => ['measuredAt' => 'desc'],
-            'itemsPerPage' => 1000,
+            'itemsPerPage' => $measurementsPageSize,
         ]);
         $appOptions['logEntriesUrl'] = $this->generateUrl('api_mission_log_entries_GET_collection', [
             'mission.id' => $mission->getId(),
@@ -181,6 +190,11 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
             null,
             'id'
         );
+
+        $appOptions['options'] = [
+            'maxNumberOfMeasurementsToLoad' => $maxNumberOfMeasurementsToLoad,
+            'initialDataWindowSize' => $this->options['initial_data_window_size'],
+        ];
 
         return $appOptions;
     }

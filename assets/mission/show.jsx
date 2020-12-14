@@ -64,6 +64,7 @@ class App extends Component {
               dataUrl={this.props.measurementsUrl}
               messenger={this.messenger}
               registerChartExport={this.props.registerChartExport}
+              options={this.props.options}
             />
           </div>
           <div className='flex-fill mb-5'>
