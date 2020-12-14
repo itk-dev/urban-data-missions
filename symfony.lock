@@ -671,6 +671,12 @@
     "webmozart/assert": {
         "version": "1.7.0"
     },
+    "whatwedo/core-bundle": {
+        "version": "v0.4.0"
+    },
+    "whatwedo/search-bundle": {
+        "version": "v2.1.0"
+    },
     "willdurand/js-translation-bundle": {
         "version": "2.0",
         "recipe": {

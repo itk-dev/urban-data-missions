@@ -116,7 +116,7 @@ easy_admin:
 
         Sensor:
             class: App\Entity\Sensor
-            disabled_actions: ['new', 'edit', 'delete']
+            disabled_actions: ['new', 'delete']
 
             list:
                 actions: ['show']
@@ -124,14 +124,21 @@ easy_admin:
                 fields:
                     - property: id
                     - property: createdAt
-                    - property: missionSensors
+                    - property: name
+                    - property: type
 
             show:
                 fields:
                     - property: id
                     - property: createdAt
                     - property: data
-                    - property: missionSensors
+                    - property: name
+                    - property: type
+
+            edit:
+                fields:
+                    - property: name
+                    - property: type
 
         MissionSensor:
             class: App\Entity\MissionSensor

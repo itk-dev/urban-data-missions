@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use whatwedo\SearchBundle\Annotation\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SensorRepository")
@@ -24,7 +25,10 @@ class Sensor
      */
     private $id;
 
-    /** @var string|null */
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Index()
+     */
     private $type;
 
     /**
@@ -62,6 +66,12 @@ class Sensor
      */
     private $streamObservationId;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Index()
+     */
+    private $name;
+
     public function __construct()
     {
         $this->missions = new ArrayCollection();
@@ -86,6 +96,13 @@ class Sensor
         }
 
         return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -183,5 +200,17 @@ class Sensor
     public function __toString()
     {
         return $this->getId() ?? self::class;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }

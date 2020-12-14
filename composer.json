@@ -29,6 +29,7 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "5.2.*",
         "vich/uploader-bundle": "^1.13",
+        "whatwedo/search-bundle": "^2.1",
         "willdurand/js-translation-bundle": "dev-extractor-js"
     },
     "require-dev": {
