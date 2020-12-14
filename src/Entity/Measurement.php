@@ -13,10 +13,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MeasurementRepository")
  * @ApiResource(
- *     paginationClientEnabled=true,
- *     paginationClientItemsPerPage=true,
- *     collectionOperations={"GET"},
- *     itemOperations={"GET"},
+ *     attributes={
+ *       "pagination_client_items_per_page"=true
+ *     },
+ *     collectionOperations={
+ *       "get"={"maximum_items_per_page"=100}
+ *     },
+ *     itemOperations={"get"},
  *     normalizationContext={"groups"={"measurement_read"}},
  *     denormalizationContext={"groups"={"measurement_write"}}
  * )
