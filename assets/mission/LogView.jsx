@@ -67,15 +67,10 @@ class LogView extends Component {
         this.setState(
           {
             message: {
-              content: 'Log entry created: ' + entry.content,
+              content: Translator.trans('Log entry created: %content%', {content: entry.content}),
               type: 'success'
             }
           }
-          // , () => {
-          //   setTimeout(() => {
-          //     this.setState({message: null})
-          //   }, 1000)
-          // }
         )
       }
     })
