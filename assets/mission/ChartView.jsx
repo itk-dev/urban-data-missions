@@ -83,6 +83,18 @@ ${Translator.trans('Add log entry')}
             this.setState({
               loadingDataMessage: null
             })
+
+            this.chart.getChart().events.once('validated', () => {
+              // Zoom to last 4 hours.
+              const now = (new Date()).getTime()
+              const start = now - 4 * 60 * 60 * 1000
+              const end = now
+
+              this.chart.zoomToValues(
+                start, end
+              )
+            })
+
             this.addMeasurements(loadedData)
           }
         })
@@ -150,7 +162,7 @@ ${Translator.trans('Add log entry')}
           <div><h2>Chart</h2></div>
           <div>
             {this.state.message && <Alert dismissible onClose={() => this.setState({ message: null })} variant={this.state.message.type}>{this.state.message.content}</Alert>}
-            {this.state.loadingDataMessage && <Alert variant="info">{this.state.loadingDataMessage}</Alert>}
+            {this.state.loadingDataMessage && <Alert variant='info'>{this.state.loadingDataMessage}</Alert>}
           </div>
         </header>
 

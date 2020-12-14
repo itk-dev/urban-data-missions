@@ -71,7 +71,7 @@ function App (props) {
 
   const renderData = () => {
     if (query && data.length === 0) {
-      return query && <Alert variant='warning' className='py-1'>{Translator.trans('No sensors matching %query% found.', {query: query})}</Alert>
+      return query && <Alert variant='warning' className='py-1'>{Translator.trans('No sensors matching %query% found.', { query: query })}</Alert>
     }
 
     return (

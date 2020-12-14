@@ -149,6 +149,10 @@ class Chart {
   getChart () {
     return this.chart
   }
+
+  zoomToValues () {
+    this.dateAxis.zoomToValues.apply(this.dateAxis, arguments)
+  }
 }
 
 export default Chart
