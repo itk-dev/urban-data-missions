@@ -10,7 +10,8 @@ class ChartView extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      message: null
+      message: null,
+      loadingDataMessage: null
     }
   }
 
@@ -57,19 +58,36 @@ ${Translator.trans('Add log entry')}
       this.props.registerChartExport('image', this.chart.exportImage.bind(this.chart))
     }
 
-    fetch(this.props.dataUrl, { headers: { accept: 'application/ld+json' } })
-      .then((response) => {
-        return response.json()
-      })
-      .then(data => {
-        data['hydra:member'].forEach(this.addMeasurement)
+    this.props.messenger.on('message', data => {
+      if (data.measurement) {
+        this.addMeasurement(data.measurement)
+      }
+    })
 
-        this.props.messenger.on('message', data => {
-          if (data.measurement) {
-            this.addMeasurement(data.measurement)
+    let loadedData = []
+    const loadData = (url) => {
+      this.setState({
+        loadingDataMessage: `Loading measurements (${loadedData.length} loaded)`
+      })
+      fetch(url, { headers: { accept: 'application/ld+json' } })
+        .then((response) => {
+          return response.json()
+        })
+        .then(data => {
+          loadedData = loadedData.concat(data['hydra:member'])
+
+          const nextUrl = data['hydra:view']['hydra:next']
+          if (nextUrl && loadedData.length <= 3000) {
+            loadData(nextUrl)
+          } else {
+            this.setState({
+              loadingDataMessage: null
+            })
+            this.addMeasurements(loadedData)
           }
         })
-      })
+    }
+    loadData(this.props.dataUrl)
 
     this.props.messenger.on('logEntryCreated', (data) => {
       const entry = data.result
@@ -100,6 +118,27 @@ ${Translator.trans('Add log entry')}
     }
   }
 
+  /**
+   * Add measurements to chart
+   *
+   * Sorts data on chart.
+   */
+  addMeasurements = (measurements) => {
+    const data = this.chart.getData()
+    measurements.forEach(measurement => {
+      const series = measurement.sensor.id
+      if (series !== null && series in this.props.series) {
+        data.push({
+          date: new Date(measurement.measuredAt),
+          [series]: measurement.value,
+          measurement: measurement
+        })
+      }
+    })
+    data.sort((a, b) => a.date - b.date)
+    this.chart.setData(data)
+  }
+
   getChart () {
     return this.chart.getChart()
   }
@@ -111,6 +150,7 @@ ${Translator.trans('Add log entry')}
           <div><h2>Chart</h2></div>
           <div>
             {this.state.message && <Alert dismissible onClose={() => this.setState({ message: null })} variant={this.state.message.type}>{this.state.message.content}</Alert>}
+            {this.state.loadingDataMessage && <Alert variant="info">{this.state.loadingDataMessage}</Alert>}
           </div>
         </header>
 

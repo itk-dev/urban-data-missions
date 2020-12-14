@@ -68,9 +68,6 @@ class Chart {
     this.dateAxis.periodChangeDateFormats.setKey('hour', 'HH:mm:ss\nYYYY-MM-dd')
 
     this.valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis()) // eslint-disable-line
-
-    // // dateAxis.start = 0.79;
-    // dateAxis.keepSelection = true
   }
 
   buildCursor (options) {
@@ -94,8 +91,7 @@ class Chart {
     this.chart.scrollbarY.toBack()
 
     // Create a horizontal scrollbar with previe and place it underneath the date axis
-    this.chart.scrollbarX = new am4charts.XYChartScrollbar()
-    // this.chart.scrollbarX.series.push(this.series[0]);
+    this.chart.scrollbarX = new am4core.Scrollbar()
     this.chart.scrollbarX.parent = this.chart.bottomAxesContainer
   }
 
@@ -144,6 +140,10 @@ class Chart {
 
   getData () {
     return this.chart.data
+  }
+
+  setData (data) {
+    this.chart.data = data
   }
 
   getChart () {

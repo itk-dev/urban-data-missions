@@ -156,7 +156,7 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
         $appOptions['measurementsUrl'] = $this->generateUrl('api_measurements_get_collection', [
             'mission.id' => $mission->getId(),
             'order' => ['measuredAt' => 'desc'],
-            'itemsPerPage' => 100,
+            'itemsPerPage' => 1000,
         ]);
         $appOptions['logEntriesUrl'] = $this->generateUrl('api_mission_log_entries_GET_collection', [
             'mission.id' => $mission->getId(),
