@@ -23,27 +23,12 @@ class ChartView extends Component {
       series: this.props.series,
       bullet: {
         onHit: function (chartEvent) {
-          const chart = this.getChart()
-          chart.closeAllPopups()
-          const popup = chart.openPopup('Add annotation …')
-          popup.left = chartEvent.svgPoint.x + 15
-          popup.top = chartEvent.svgPoint.y + 15
-          popup.title = ''
-          popup.content = `<button class="btn btn-success btn-sm btn-add-log-entry">
- <span className='fas fa-plus'></span>
-${Translator.trans('Add log entry')}
-</button>
-`
-          const button = popup.elements.content.querySelector('button')
           const dataContext = chartEvent.target.dataItem.dataContext
-          button.addEventListener('click', function (event) {
-            chart.closeAllPopups()
-            messenger.emit('addLogEntry', {
-              mission: mission,
-              loggedAt: dataContext.date.toISOString(),
-              type: 'measurement',
-              measurement: dataContext.measurement
-            })
+          messenger.emit('addLogEntry', {
+            mission: mission,
+            loggedAt: dataContext.date.toISOString(),
+            type: 'measurement',
+            measurement: dataContext.measurement
           })
         }
       },
@@ -106,7 +91,7 @@ ${Translator.trans('Add log entry')}
       if (entry && entry.measurement) {
         this.setState({
           message: {
-            content: Translator.trans('Log entry created: {content}', { content: entry.content }),
+            content: Translator.trans('Log entry created: %content%', { content: entry.content }),
             type: 'success'
           }
         })
