@@ -99,6 +99,9 @@ easy_admin:
             class: App\Entity\Mission
             disabled_actions: ['new', 'edit', 'delete']
 
+            templates:
+                show: admin/mission/show.html.twig
+
             list:
                 actions:
                     show:
@@ -117,6 +120,9 @@ easy_admin:
         Sensor:
             class: App\Entity\Sensor
             disabled_actions: ['new', 'delete']
+
+            templates:
+                show: admin/sensor/show.html.twig
 
             list:
                 sort: ['updatedAt', 'DESC']

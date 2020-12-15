@@ -1,0 +1,13 @@
+{% extends '@EasyAdmin/default/show.html.twig' %}
+
+{% block show_fields %}
+    <div class="form-group ">
+        <label class="control-label">
+        </label>
+        <div class="form-widget">
+            <a class="btn btn-link" href="{{ iotcrawler_subscription_url(entity.subscription.id) }}">{{ 'Show misson subscription in broker'|trans }}</a>
+        </div>
+    </div>
+
+    {{ parent() }}
+{% endblock %}
