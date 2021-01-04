@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MeasurementRepository")
+ * @ORM\Table(indexes={@ORM\Index(name="measured_at_idx",columns={"measured_at"})})
  * @ApiResource(
  *     attributes={
  *       "pagination_client_items_per_page"=true
