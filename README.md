@@ -140,5 +140,102 @@ yarn coding-standards-apply
 
 ## Mercure
 
-https://github.com/dunglas/mercure
-https://github.com/dunglas/mercure/releases
+[Mercure](https://github.com/dunglas/mercure) is used for sending messages to
+the app when new measurements are available.
+
+### Running Mercure
+
+Start Mercure with docker and supervisor:
+
+```conf
+# /etc/supervisor/conf.d/urban-data-missions-mercure.conf
+[program:urban-data-missions-mecure]
+directory=/data/www/urban-data-missions/htdocs
+command=/usr/bin/docker run
+    --name urban-data-missions-mecure
+    --env JWT_KEY='!ChangeMe!'
+    --env ALLOW_ANONYMOUS=1
+    --env CORS_ALLOWED_ORIGINS='*'
+    --env PUBLISH_ALLOWED_ORIGINS=http://localhost:1337
+    --publish 1337:80
+    dunglas/mercure
+autostart=true
+autorestart=true
+stderr_logfile=/data/www/urban-data-missions/logs/mercure.err.log
+stdout_logfile=/data/www/urban-data-missions/logs/mercure.out.log
+user=deploy
+```
+
+```sh
+sudo supervisorctl reread
+sudo supervisorctl reload
+sudo supervisorctl status
+```
+
+### Proxy
+
+Set up a nginx proxy to Mercure:
+
+```conf
+# /etc/nginx/sites-available/urban-data-missions-mercure
+server {
+    listen 443 ssl;
+
+    # Note: mercure.urban-data-missions.srvitkiot01.itkdev.dk cannot be used as
+    # server name (it's too long).
+    server_name mercure.srvitkiot01.itkdev.dk;
+
+    location /.well-known/acme-challenge {
+      alias /etc/letsencrypt/webrootauth/.well-known/acme-challenge;
+    }
+
+    include /etc/nginx/snippets/ssl.conf;
+    ssl_certificate /etc/letsencrypt/live/mercure.srvitkiot01.itkdev.dk/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mercure.srvitkiot01.itkdev.dk/privkey.pem;
+    add_header Strict-Transport-Security max-age=15768000;
+
+    # Proxy to docker container (docker-compose --file /data/www/urban-data-missions/htdocs/docker-compose.yml --project-name urban-data-missions ps)
+    location / {
+        proxy_pass http://127.0.0.1:1337;
+    }
+
+    error_log /data/www/urban-data-missions/logs/error.log;
+    access_log /data/www/urban-data-missions/logs/access.log;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    # Note: mercure.urban-data-missions.srvitkiot01.itkdev.dk cannot be used as
+    # server name (it's too long).
+    server_name mercure.srvitkiot01.itkdev.dk;
+
+    return 301 https://mercure.srvitkiot01.itkdev.dk$request_uri;
+}
+```
+
+```sh
+sudo nginx -t
+sudo service nginx reload
+```
+
+## Search
+
+Fetch sensors:
+
+```sh
+bin/console app:sensor:update
+```
+
+Rebuild index:
+
+```sh
+bin/console whatwedo:search:populate
+```
+
+Search sensor:
+
+```sh
+bin/console app:sensor:search 'temp'
+```
