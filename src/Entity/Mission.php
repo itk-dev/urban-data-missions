@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -81,8 +82,15 @@ class Mission
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MissionSensor", mappedBy="mission", cascade={"persist"}, orphanRemoval=true)
+     * @ApiSubresource()
      */
     private $missionSensors;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Measurement", mappedBy="mission", cascade={"persist"}, orphanRemoval=true)
+     * @ApiSubresource()
+     */
+    private $measurements;
 
     public function __construct()
     {
@@ -203,6 +211,29 @@ class Mission
         return $this->missionSensors;
     }
 
+    public function addMissionSensor(MissionSensor $missionSensor): self
+    {
+        if (!$this->missionSensors->contains($missionSensor)) {
+            $this->missionSensors[] = $missionSensor;
+            $missionSensor->setMission($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMissionSensor(MissionSensor $missionSensor): self
+    {
+        if ($this->missionSensors->contains($missionSensor)) {
+            $this->missionSensors->removeElement($missionSensor);
+            // set the owning side to null (unless already changed)
+            if ($missionSensor->getMission() === $this) {
+                $missionSensor->setMission(null);
+            }
+        }
+
+        return $this;
+    }
+
     /** @var array Map from sensor id to sensor name */
     private $sensorNames;
 
@@ -229,26 +260,11 @@ class Mission
         return $this->getMissionSensorNames()[$sensor->getId()] ?? null;
     }
 
-    public function addMissionSensor(MissionSensor $missionSensor): self
+    /**
+     * @return Collection|Measurement[]
+     */
+    public function getMeasurements(): Collection
     {
-        if (!$this->missionSensors->contains($missionSensor)) {
-            $this->missionSensors[] = $missionSensor;
-            $missionSensor->setMission($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMissionSensor(MissionSensor $missionSensor): self
-    {
-        if ($this->missionSensors->contains($missionSensor)) {
-            $this->missionSensors->removeElement($missionSensor);
-            // set the owning side to null (unless already changed)
-            if ($missionSensor->getMission() === $this) {
-                $missionSensor->setMission(null);
-            }
-        }
-
-        return $this;
+        return $this->measurements;
     }
 }

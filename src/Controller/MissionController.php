@@ -162,8 +162,8 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
         $measurementsPageSize = $this->options['measurements_page_size'];
         $maxNumberOfMeasurementsToLoad = $this->options['max_number_of_measurements_to_load'] ?? 3 * $measurementsPageSize;
 
-        $appOptions['measurementsUrl'] = $this->generateUrl('api_measurements_get_collection', [
-            'mission.id' => $mission->getId(),
+        $appOptions['measurementsUrl'] = $this->generateUrl('api_missions_measurements_get_subresource', [
+            'id' => $mission->getId(),
             'order' => ['measuredAt' => 'desc'],
             'itemsPerPage' => $measurementsPageSize,
         ]);

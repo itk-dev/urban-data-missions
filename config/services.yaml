@@ -16,7 +16,7 @@ parameters:
 
     'env(NGSI_LD_BROKER_NO_VERIFY)': false
 
-    'env(MEASUREMENTS_PAGE_SIZE)': '1000'
+    'env(MEASUREMENTS_PAGE_SIZE)': '500'
     'env(MAX_NUMBER_OF_MEASUREMENTS_TO_LOAD)': '500'
     'env(INITIAL_DATA_WINDOW_SIZE)': '14400' # 4 * 60 * 60 seconds = 4 hours
 
