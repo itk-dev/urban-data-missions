@@ -147,6 +147,9 @@
             "config/routes/easy_admin.yaml"
         ]
     },
+    "fakerphp/faker": {
+        "version": "v1.13.0"
+    },
     "fig/link-util": {
         "version": "1.1.0"
     },
@@ -177,9 +180,6 @@
     "friendsoftwig/twigcs": {
         "version": "v3.2.2"
     },
-    "fzaninotto/faker": {
-        "version": "v1.9.1"
-    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.39"
     },
@@ -202,6 +202,9 @@
     },
     "jms/metadata": {
         "version": "2.1.0"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
     },
     "mck89/peast": {
         "version": "v1.10.3"
@@ -405,9 +408,6 @@
     "symfony/http-kernel": {
         "version": "v5.0.3"
     },
-    "symfony/inflector": {
-        "version": "v5.0.4"
-    },
     "symfony/intl": {
         "version": "v5.0.4"
     },
@@ -534,6 +534,9 @@
     },
     "symfony/serializer": {
         "version": "v5.0.5"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.4"
     },
     "symfony/service-contracts": {
         "version": "v2.0.1"
