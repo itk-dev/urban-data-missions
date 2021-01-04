@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *       "pagination_client_items_per_page"=true
  *     },
  *     collectionOperations={
- *       "get"={"maximum_items_per_page"=1000}
+ *       "get"={"pagination_maximum_items_per_page"=1000}
  *     },
  *     itemOperations={"get"},
  *     normalizationContext={"groups"={"measurement_read"}},
