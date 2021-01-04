@@ -4,12 +4,12 @@ namespace App\Command\Mission;
 
 use App\Repository\MissionRepository;
 use App\Scorpio\SubscriptionManager;
-use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SubscriptionInfoCommand extends Command
 {
@@ -44,7 +44,7 @@ class SubscriptionInfoCommand extends Command
 
         $missions = empty($ids) ? $this->repository->findAll() : $this->repository->findBy(['id' => $ids]);
 
-        $io = new ConsoleStyle($input, $output);
+        $io = new SymfonyStyle($input, $output);
 
         foreach ($missions as $mission) {
             $io->section($mission->getId());
