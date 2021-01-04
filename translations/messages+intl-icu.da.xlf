@@ -425,6 +425,10 @@
         <source>Searching for %query% …</source>
         <target>Søger efter %query% …</target>
       </trans-unit>
+      <trans-unit id="wMsuZWb" resname="Error adding sensor %sensor% (Message: “%message%”)">
+        <source>Error adding sensor %sensor% (Message: “%message%”)</source>
+        <target state="translated">Ved under tilføjelse af sensor %sensor% (Besked: “%message%”)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
