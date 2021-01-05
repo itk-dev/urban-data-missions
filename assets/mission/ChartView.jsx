@@ -150,7 +150,12 @@ class ChartView extends Component {
           <div><h2>Chart</h2></div>
           <div>
             {this.state.message && <Alert dismissible onClose={() => this.setState({ message: null })} variant={this.state.message.type}>{this.state.message.content}</Alert>}
-            {this.state.loadingDataMessage && <Alert variant='info'>{this.state.loadingDataMessage}</Alert>}
+            {this.state.loadingDataMessage &&
+              <div className='data-loading'>
+                <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />
+                {' '}
+                {this.state.loadingDataMessage}
+              </div>}
           </div>
         </header>
 
