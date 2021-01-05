@@ -22,6 +22,14 @@ class Client implements LoggerAwareInterface
     public const ENTITY_ATTRIBUTE_RESULT_TIME = 'http://www.w3.org/ns/sosa/resultTime';
     public const ENTITY_ATTRIBUTE_IS_HOSTED_BY = 'http://www.w3.org/ns/sosa/isHostedBy';
 
+    public const ENTITY_ATTRIBUTE_OBSERVES = 'http://www.w3.org/ns/sosa/observes';
+    public const ENTITY_ATTRIBUTE_IDENTIFIER = 'http://schema.org/identifier';
+
+    public const ENTITY_ATTRIBUTE_QOI_MIN = 'https://w3id.org/iot/qoi#min';
+    public const ENTITY_ATTRIBUTE_QOI_MAX = 'https://w3id.org/iot/qoi#max';
+    public const ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL = 'https://w3id.org/iot/qoi#updateinterval';
+    public const ENTITY_ATTRIBUTE_QOI_UNIT = 'https://w3id.org/iot/qoi#unit';
+
     public static function getTypedValue($value)
     {
         [$value, $type] = explode('^^', $value);

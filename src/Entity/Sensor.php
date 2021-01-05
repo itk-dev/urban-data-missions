@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Scorpio\Client;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -65,6 +66,11 @@ class Sensor
      * @Index()
      */
     private $name;
+
+    public function __toString(): string
+    {
+        return $this->getId() ?? self::class;
+    }
 
     public function getId(): ?string
     {
@@ -170,8 +176,40 @@ class Sensor
         return $this;
     }
 
-    public function __toString()
+    public function getIdentifier(): ?string
     {
-        return $this->getId() ?? self::class;
+        return $this->data[Client::ENTITY_ATTRIBUTE_IDENTIFIER]['value'] ?? null;
+    }
+
+    public function getObservationType(): ?string
+    {
+        return $this->data[Client::ENTITY_ATTRIBUTE_OBSERVES]['object'] ?? null;
+    }
+
+    public function getQoi(): ?array
+    {
+        $qoi = array_filter([
+            'min' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_MIN]['value'] ?? null,
+            'max' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_MAX]['value'] ?? null,
+        ]);
+
+        if ($qoi) {
+            $qoi['update_interval'] = [
+                'value' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL]['value'] ?? null,
+                'unit' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL][Client::ENTITY_ATTRIBUTE_QOI_UNIT]['value'] ?? null,
+            ];
+        }
+
+        return $qoi ?: null;
+    }
+
+    public function getSensorData(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'identifier' => $this->getIdentifier(),
+            'observation_type' => $this->getObservationType(),
+            'qoi' => $this->getQoi(),
+        ];
     }
 }

@@ -42,30 +42,54 @@
                 </div>
 
                 {# @TODO: Make this a React component #}
-                {% for missionSensor in mission.missionSensors %}
-
+                {% for mission_sensor in mission.missionSensors %}
+                    {% set sensor = mission_sensor.sensor %}
+                    {% set missing_value = '👻' %}
                     <div class="row mb-3">
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <span class="text-primary-faded">{{ missionSensor.name|default(missionSensor.sensor.id) }}</span><a href="{{ path_with_referer('mission_sensor_edit', {mission: mission.id, id: missionSensor.id}) }}" class="btn btn-sm d-inline">
-                                        <i class="fas fa-edit text-primary"></i><span class="sr-only">{{ 'Edit mission sensor'|trans }}</span>
-                                    </a>
-                                </div>
-                                <div class="col bg-light text-right">
-                                    <span>{{ missionSensor.sensor.id }}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-toggle="popover" title="{{ missionSensor.sensor.type }}" data-content="<p>{{ missionSensor.sensor.type }}</p><a href='#' class='btn btn-primary btn-sm btn-block'>Læs mere</a>">
-                                        <i class="fas fa-info-circle text-primary-100"></i>
-                                    </span>
+                                    <div>
+                                        <span class="text-primary-faded">{{ mission_sensor.name|default(sensor.id) }}</span>
+                                        <a href="{{ path_with_referer('mission_sensor_edit', {mission: mission.id, id: mission_sensor.id}) }}" class="btn btn-sm d-inline">
+                                            <i class="fas fa-edit text-primary"></i>
+                                            <span class="sr-only">{{ 'Edit mission sensor'|trans }}</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="small bg-light">
+                                        <dl class="row">
+                                            <dt class="col-sm-3 mission-sensor-id sensor-id">{{ 'Sensor id'|trans }}</dt>
+                                            <dd class="col-sm-9 mission-sensor-id sensor-id"><div class="text-truncate" title="{{ sensor.id }}">{{ sensor.id }}</div>
+                                                {#
+                                                <div class="col-auto">
+                                                    <span data-toggle="popover" title="{{ sensor.type }}" data-content="<p>{{ sensor.type }}</p><a href='#' class='btn btn-primary btn-sm btn-block'>Læs mere</a>">
+                                                        <i class="fas fa-info-circle text-primary-100"></i>
+                                                    </span>
+                                                </div>
+#}
+                                            </dd>
+
+                                            <dt class="col-sm-3 mission-sensor-identifier sensor-identifier">{{ 'Identifier'|trans }}</dt>
+                                            <dd class="col-sm-9 mission-sensor-identifier sensor-identifier">{{ sensor.identifier|default(missing_value) }}</dd>
+
+                                            <dt class="col-sm-3 mission-sensor-observation-type sensor-observation-type">{{ 'Observation type'|trans }}</dt>
+                                            <dd class="col-sm-9 mission-sensor-observation-type sensor-observation-type">{{ sensor.observationType ? sensor.observationType|trans : missing_value }}</dd>
+
+                                            {% if sensor.qoi|default(false) %}
+                                                <dt class="col-sm-3 mission-sensor-qio sensor-qio">{{ 'Quality of information'|trans }}</dt>
+                                                <dd class="col-sm-9 mission-sensor-qio sensor-qio">
+                                                    <span class="mission-sensor-observation-qoi-min sensor-qoi-min">{{ sensor.qoi.min }}</span>–<span class="mission-sensor-observation-qoi-max sensor-qoi-max">{{ sensor.qoi.max }}</span>
+                                                    {% if sensor.qoi.update_interval|default(false) %}
+                                                        ({{ 'Update interval'|trans }}: {{ sensor.qoi.update_interval.value }} {{ sensor.qoi.update_interval.unit|trans }})
+                                                    {% endif %}
+                                                </dd>
+                                            {% endif %}
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mt-1 mb-3">
-                                <div class="col">
-                                    <p class="d-inline small">{{ missionSensor.sensor.type }}</p>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 {% else %}
@@ -163,4 +187,11 @@
     {{ 'measurement'|trans }}
     {{ 'system'|trans }}
     {{ 'user'|trans }}
+
+    {# QoI update interval unit #}
+    {{ 'seconds'|trans }}
+
+    {# Observation types #}
+    {{ 'urn:ngsi-ld:Temperature'|trans }}
+    {{ 'urn:ngsi-ld:Luminance'|trans }}
 {% endblock %}

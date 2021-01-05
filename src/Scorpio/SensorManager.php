@@ -48,10 +48,7 @@ class SensorManager
             static function (Sensor $sensor) {
                 return $sensor->getData()
                     ? $sensor->getData() + [
-                        '_metadata' => [
-                            'name' => $sensor->getName(),
-                            'type' => $sensor->getType(),
-                        ],
+                        '_metadata' => $sensor->getSensorData(),
                     ]
                     : null;
             },

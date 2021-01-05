@@ -69,6 +69,8 @@ function App (props) {
     }
   }, [query])
 
+  const missingValue = '👻'
+
   const renderData = () => {
     if (query && data.length === 0) {
       return query && <Alert variant='warning' className='py-1'>{Translator.trans('No sensors matching %query% found.', { query: query })}</Alert>
@@ -106,9 +108,23 @@ function App (props) {
                   ? <><h2 className='h4 mb-1'>{item._metadata.name}</h2><small>{item.id}</small></>
                   : <h2 className='h4 mb-1'>{item.id}</h2>}
               </div>
-              <p className='mb-1'>
-                {item._metadata.type ?? item.type}
-              </p>
+
+              <dl className='row'>
+                <dt className='col-sm-3 mission-sensor-identifier sensor-identifier'>{Translator.trans('Identifier')}</dt>
+                <dd className='col-sm-9 mission-sensor-identifier sensor-identifier'>{item._metadata.identifier ?? missingValue}</dd>
+
+                <dt className='col-sm-3 mission-sensor-observation-type sensor-observation-type'>{Translator.trans('Observation type')}</dt>
+                <dd className='col-sm-9 mission-sensor-observation-type sensor-observation-type'>{item._metadata.observation_type ? Translator.trans(item._metadata.observation_type) : missingValue}</dd>
+
+                {item._metadata.qoi &&
+                  <>
+                    <dt className='col-sm-3 mission-sensor-qio sensor-qio'>{Translator.trans('Quality of information')}</dt>
+                    <dd className='col-sm-9 mission-sensor-qio sensor-qio'>
+                      <span className='mission-sensor-observation-qoi-min sensor-qoi-min'>{item._metadata.qoi.min}</span>–<span className='mission-sensor-observation-qoi-max sensor-qoi-max'>{item._metadata.qoi.max}</span>
+                      {item._metadata.qoi.update_interval && <> ({Translator.trans('Update interval')}: {item._metadata.qoi.update_interval.value} {Translator.trans(item._metadata.qoi.update_interval.unit)})</>}
+                    </dd>
+                  </>}
+              </dl>
 
               {item._metadata.mission_sensor ? (
                 <p className='text-primary'>

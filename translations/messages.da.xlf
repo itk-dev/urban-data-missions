@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="da" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="CcUEzkM" resname="Error: %error%">
+        <source>Error: %error%</source>
+        <target state="translated">Fejl: %error%</target>
+      </trans-unit>
+      <trans-unit id="Xjt5jRp" resname="Show sensor in broker">
+        <source>Show sensor in broker</source>
+        <target state="translated">Vis sensor i “broker”</target>
+      </trans-unit>
+      <trans-unit id="Xqtf3U1" resname="Sensor id">
+        <source>Sensor id</source>
+        <target state="translated">Id</target>
+      </trans-unit>
+      <trans-unit id="mxBYf4S" resname="Identifier">
+        <source>Identifier</source>
+        <target state="translated">Kort id</target>
+      </trans-unit>
+      <trans-unit id="sQWzxdJ" resname="Observation type">
+        <source>Observation type</source>
+        <target state="translated">Sensortype</target>
+      </trans-unit>
+      <trans-unit id="LoQxfj0" resname="Quality of information">
+        <source>Quality of information</source>
+        <target state="translated">Informationskvalitet (QoI)</target>
+      </trans-unit>
+      <trans-unit id="h0QaTFZ" resname="Update interval">
+        <source>Update interval</source>
+        <target state="translated">Opdateringsinterval</target>
+      </trans-unit>
+      <trans-unit id="GelWMOd" resname="urn:ngsi-ld:Temperature">
+        <source>urn:ngsi-ld:Temperature</source>
+        <target state="translated">Temperatur</target>
+      </trans-unit>
+      <trans-unit id="F8QsL6J" resname="urn:ngsi-ld:Luminance">
+        <source>urn:ngsi-ld:Luminance</source>
+        <target state="translated">Luminans</target>
+      </trans-unit>
+      <trans-unit id="4DGpqVE" resname="Show mission subscription in broker">
+        <source>Show mission subscription in broker</source>
+        <target state="translated">Vis “subscription” i “broker”</target>
+      </trans-unit>
+      <trans-unit id="WfAG1jv" resname="seconds">
+        <source>seconds</source>
+        <target state="translated">sekunder</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
