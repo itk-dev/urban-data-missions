@@ -5,6 +5,430 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="gnVC.4Q" resname="Add sensor warning">
+        <source>Add sensor warning</source>
+        <target>Tilføj sensoradvarsel</target>
+      </trans-unit>
+      <trans-unit id="4RU36q_" resname="Remove sensor warning">
+        <source>Remove sensor warning</source>
+        <target>Fjern sensoradvarsel</target>
+      </trans-unit>
+      <trans-unit id="nXFseKX" resname="Edit mission sensor">
+        <source>Edit mission sensor</source>
+        <target>Rediger sensor</target>
+      </trans-unit>
+      <trans-unit id="GXZu1sy" resname="Cancel">
+        <source>Cancel</source>
+        <target>Annuller</target>
+      </trans-unit>
+      <trans-unit id="wcEAnT8" resname="Update">
+        <source>Update</source>
+        <target>Opdater</target>
+      </trans-unit>
+      <trans-unit id="R1lJisK" resname="Create">
+        <source>Create</source>
+        <target>Opret</target>
+      </trans-unit>
+      <trans-unit id="WqN_oMU" resname="Add mission sensor">
+        <source>Add mission sensor</source>
+        <target>Tilføj sensor</target>
+      </trans-unit>
+      <trans-unit id="76GQe.f" resname="Mission sensors">
+        <source>Mission sensors</source>
+        <target>Sensorer</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Navn</target>
+      </trans-unit>
+      <trans-unit id="FizGTKH" resname="Sensor">
+        <source>Sensor</source>
+        <target>Sensor</target>
+      </trans-unit>
+      <trans-unit id="ksHN.fT" resname="Enabled">
+        <source>Enabled</source>
+        <target>Aktiv</target>
+      </trans-unit>
+      <trans-unit id="qVXY6Bz" resname="Added at">
+        <source>Added at</source>
+        <target>Tilføjet</target>
+      </trans-unit>
+      <trans-unit id="haOas0X" resname="Yes">
+        <source>Yes</source>
+        <target>Ja</target>
+      </trans-unit>
+      <trans-unit id="HqRCoTS" resname="No">
+        <source>No</source>
+        <target>Nej</target>
+      </trans-unit>
+      <trans-unit id="emAP6pr" resname="Mission sensor">
+        <source>Mission sensor</source>
+        <target>Sensor</target>
+      </trans-unit>
+      <trans-unit id="kOcWEWg" resname="Loading app …">
+        <source>Loading app …</source>
+        <target>Henter app …</target>
+      </trans-unit>
+      <trans-unit id="Q64yZbm" resname="Themes">
+        <source>Themes</source>
+        <target>Temaer</target>
+      </trans-unit>
+      <trans-unit id="5rhb_.V" resname="Mission">
+        <source>Mission</source>
+        <target>Mission</target>
+      </trans-unit>
+      <trans-unit id="Ws.UiVW" resname="Mock-up">
+        <source>Mock-up</source>
+        <target>Mock-up</target>
+      </trans-unit>
+      <trans-unit id="TrvFcKG" resname="New Mission">
+        <source>New Mission</source>
+        <target>Ny mission</target>
+      </trans-unit>
+      <trans-unit id="jVuP4Gf" resname="Create mission">
+        <source>Create mission</source>
+        <target>Opret mission</target>
+      </trans-unit>
+      <trans-unit id="92tCMCZ" resname="Create new mission">
+        <source>Create new mission</source>
+        <target>Opret ny mission</target>
+      </trans-unit>
+      <trans-unit id="s_ZXBuf" resname="Data mission: {title}">
+        <source>Data mission: {title}</source>
+        <target>Datamission: {title}</target>
+      </trans-unit>
+      <trans-unit id="J2YZv.5" resname="Edit mission">
+        <source>Edit mission</source>
+        <target>Rediger mission</target>
+      </trans-unit>
+      <trans-unit id="4Jat2V1" resname="Sensors connected to your mission">
+        <source>Sensors connected to your mission</source>
+        <target>Sensorer i din mission</target>
+      </trans-unit>
+      <trans-unit id="EegZI1Z" resname="No sensors added yet">
+        <source>No sensors added yet</source>
+        <target>Ingen sensorer endnu</target>
+      </trans-unit>
+      <trans-unit id="w3GXV9C" resname="Add a sensor">
+        <source>Add a sensor</source>
+        <target>Tilføj en sensor</target>
+      </trans-unit>
+      <trans-unit id="1fDpKnB" resname="Use the buttons below to export your missions log, data and chart">
+        <source>Use the buttons below to export your missions log, data and chart</source>
+        <target>Brug knapperne nedenfor til eksportere din missions log, data og graf</target>
+      </trans-unit>
+      <trans-unit id="6tKKXld" resname="Export mission log">
+        <source>Export mission log</source>
+        <target>Eksporter missionlog</target>
+      </trans-unit>
+      <trans-unit id="IGP3HKm" resname="Messages as">
+        <source>Messages as</source>
+        <target>Beskeder som</target>
+      </trans-unit>
+      <trans-unit id="5aN7Kiy" resname="Export measurements">
+        <source>Export measurements</source>
+        <target>Eksporter målinger</target>
+      </trans-unit>
+      <trans-unit id="2ZZORHn" resname="Data as">
+        <source>Data as</source>
+        <target>Data som</target>
+      </trans-unit>
+      <trans-unit id="CIgVt8o" resname="Export chart">
+        <source>Export chart</source>
+        <target>Eksporter graf</target>
+      </trans-unit>
+      <trans-unit id="pngBxm." resname="Image as">
+        <source>Image as</source>
+        <target>Billede som</target>
+      </trans-unit>
+      <trans-unit id="Luk.r6x" resname="Mission finished at {finished_at}">
+        <source>Mission finished at {finished_at}</source>
+        <target>Mission afsluttet {finished_at}</target>
+      </trans-unit>
+      <trans-unit id="QxPBuWS" resname="Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.">
+        <source>Finish your mission when you no longer want to collect data, or if your sensors no longer deliveres data for this mission.</source>
+        <target>Afslut din mission når du ikke længere vil indsamle data eller hvis dine sensorer ikke længere leverer data til din mission.</target>
+      </trans-unit>
+      <trans-unit id="iVITu0g" resname="Finish mission">
+        <source>Finish mission</source>
+        <target>Afslut mission</target>
+      </trans-unit>
+      <trans-unit id="AkFI1gm" resname="Page navigation">
+        <source>Page navigation</source>
+        <target>Sidenavigation</target>
+      </trans-unit>
+      <trans-unit id="pXsIpIC" resname="Previous">
+        <source>Previous</source>
+        <target>Forrige</target>
+      </trans-unit>
+      <trans-unit id="H.V6Kdf" resname="Next">
+        <source>Next</source>
+        <target>Næste</target>
+      </trans-unit>
+      <trans-unit id="NYOjWKW" resname="Children">
+        <source>Children</source>
+        <target>Børn</target>
+      </trans-unit>
+      <trans-unit id="u_0x63Z" resname="Onboarding step">
+        <source>Onboarding step</source>
+        <target>Ombordstigningsskridt</target>
+      </trans-unit>
+      <trans-unit id="Yy4Tm2." resname="Start introduction">
+        <source>Start introduction</source>
+        <target>Start introduktion</target>
+      </trans-unit>
+      <trans-unit id="qGbeaBf" resname="Skip introduction">
+        <source>Skip introduction</source>
+        <target>Spring over introduktion</target>
+      </trans-unit>
+      <trans-unit id="h7QSAT5" resname="Explore the data missions">
+        <source>Explore the data missions</source>
+        <target>Udforsk datamissionerne</target>
+      </trans-unit>
+      <trans-unit id="CzFas_R" resname="Restart introduction">
+        <source>Restart introduction</source>
+        <target>Genstart introduktion</target>
+      </trans-unit>
+      <trans-unit id="RJPP1G8" resname="Mission theme">
+        <source>Mission theme</source>
+        <target>Missionstema</target>
+      </trans-unit>
+      <trans-unit id="nS2U4mr" resname="Before you can create a datamission you need to select a mission theme">
+        <source>Before you can create a datamission you need to select a mission theme</source>
+        <target>Du skal vælge et missionstema før du kan starte en datamission</target>
+      </trans-unit>
+      <trans-unit id="RkxP.QG" resname="Edit">
+        <source>Edit</source>
+        <target>Rediger</target>
+      </trans-unit>
+      <trans-unit id="rqDsWdb" resname="Search for a mission">
+        <source>Search for a mission</source>
+        <target>Søg efter en mission</target>
+      </trans-unit>
+      <trans-unit id="QOwJv70" resname="No log entries">
+        <source>No log entries</source>
+        <target>Ingen logbeskeder</target>
+      </trans-unit>
+      <trans-unit id="sdzIm2x" resname="Mission log">
+        <source>Mission log</source>
+        <target>Missionslog</target>
+      </trans-unit>
+      <trans-unit id="Z5E0FCJ" resname="Add log entry">
+        <source>Add log entry</source>
+        <target>Tilføj logbesked</target>
+      </trans-unit>
+      <trans-unit id="R70pB1_" resname="Content">
+        <source>Content</source>
+        <target>Indhold</target>
+      </trans-unit>
+      <trans-unit id="hix822E" resname="Show mission">
+        <source>Show mission</source>
+        <target>Vis mission</target>
+      </trans-unit>
+      <trans-unit id="ScJmuqq" resname="Search">
+        <source>Search</source>
+        <target>Søg</target>
+      </trans-unit>
+      <trans-unit id="IKaZcbf" resname="Search for a sensor">
+        <source>Search for a sensor</source>
+        <target>Søg efter en sensor</target>
+      </trans-unit>
+      <trans-unit id="UawuJy3" resname="Error: {error}">
+        <source>Error: {error}</source>
+        <target>Fejl: {error}</target>
+      </trans-unit>
+      <trans-unit id="eZ7el7Q" resname="Searching …">
+        <source>Searching …</source>
+        <target>Søger …</target>
+      </trans-unit>
+      <trans-unit id="MQnIK0e" resname="Results ({count})">
+        <source>Results ({count})</source>
+        <target>Resultater ({count})</target>
+      </trans-unit>
+      <trans-unit id="FjDbizz" resname="Already included in mission">
+        <source>Already included in mission</source>
+        <target>Allerede med i missionen</target>
+      </trans-unit>
+      <trans-unit id="n9coxmy" resname="Add">
+        <source>Add</source>
+        <target>Tilføj</target>
+      </trans-unit>
+      <trans-unit id="lQO_GMw" resname="Searching for {query} …">
+        <source>Searching for {query} …</source>
+        <target>Søger efter {query} …</target>
+      </trans-unit>
+      <trans-unit id="jjeVPSP" resname="Value">
+        <source>Value</source>
+        <target>Værdi</target>
+      </trans-unit>
+      <trans-unit id="MF0zYKu" resname="Logged at">
+        <source>Logged at</source>
+        <target>Skrevet</target>
+      </trans-unit>
+      <trans-unit id="F6X5YOO" resname="Filter log types">
+        <source>Filter log types</source>
+        <target>Filtrer beskedtyper</target>
+      </trans-unit>
+      <trans-unit id="iu_XbdD" resname="{0}No results match {query}|{1}One result matching {query}|]1,Inf]{count} results matching {query}">
+        <source>{0}No results match {query}|{1}One result matching {query}|]1,Inf]{count} results matching {query}</source>
+        <target>{0}Intet matcher {query}|{1}Et resultat matcher {query}|]1,Inf]{count} resultater matcher {query}</target>
+      </trans-unit>
+      <trans-unit id="ZVeV0N6" resname="{0}No results|{1}One result|]1,Inf]{count} results">
+        <source>{0}No results|{1}One result|]1,Inf]{count} results</source>
+        <target>{0}Ingen resultater|{1}Et resultat|]1,Inf]{count} resultater</target>
+      </trans-unit>
+      <trans-unit id="mjmXKCy" resname="Remove sensor from mission">
+        <source>Remove sensor from mission</source>
+        <target>Fjern sensor fra mission</target>
+      </trans-unit>
+      <trans-unit id="XKpWxZd" resname="Urban data missions">
+        <source>Urban data missions</source>
+        <target>Urban data missions</target>
+      </trans-unit>
+      <trans-unit id="_iTU2.b" resname="Edit data mission: {title}">
+        <source>Edit data mission: {title}</source>
+        <target>Rediger datamission: {title}</target>
+      </trans-unit>
+      <trans-unit id="tVtnKk_" resname="Edit data mission">
+        <source>Edit data mission</source>
+        <target>Rediger datamission</target>
+      </trans-unit>
+      <trans-unit id="_dX3l4w" resname="New data mission">
+        <source>New data mission</source>
+        <target>Ny datamission</target>
+      </trans-unit>
+      <trans-unit id="VOjefNG" resname="Create data mission">
+        <source>Create data mission</source>
+        <target>Opret datamission</target>
+      </trans-unit>
+      <trans-unit id="2H3PuZ2" resname="Data missions">
+        <source>Data missions</source>
+        <target>Datamissioner</target>
+      </trans-unit>
+      <trans-unit id="DfbxytN" resname="Show">
+        <source>Show</source>
+        <target>Vis</target>
+      </trans-unit>
+      <trans-unit id="GHiXzgr" resname="more">
+        <source>more</source>
+        <target>mere</target>
+      </trans-unit>
+      <trans-unit id="T907YgG" resname="less">
+        <source>less</source>
+        <target>mindre</target>
+      </trans-unit>
+      <trans-unit id="FIkUg2A" resname="Mission theme: {title}">
+        <source>Mission theme: {title}</source>
+        <target>Missionstema: {title}</target>
+      </trans-unit>
+      <trans-unit id="dpAPG.0" resname="Back">
+        <source>Back</source>
+        <target>Tilbage</target>
+      </trans-unit>
+      <trans-unit id="fozSBW2" resname="Title">
+        <source>Title</source>
+        <target>Title</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Beskrivelse</target>
+      </trans-unit>
+      <trans-unit id="FbYZdLJ" resname="Location">
+        <source>Location</source>
+        <target>Placering</target>
+      </trans-unit>
+      <trans-unit id="Mg6sSLK" resname="Create mission sensor">
+        <source>Create mission sensor</source>
+        <target>Opret missionssensor</target>
+      </trans-unit>
+      <trans-unit id="JuAFpMd" resname="Sensor warnings">
+        <source>Sensor warnings</source>
+        <target>Sensoradvarsler</target>
+      </trans-unit>
+      <trans-unit id="a1N7iE3" resname="Minimum value">
+        <source>Minimum value</source>
+        <target>Minimumsværdi</target>
+      </trans-unit>
+      <trans-unit id="ajBHbfm" resname="Maximum value">
+        <source>Maximum value</source>
+        <target>Maksimumsværdi</target>
+      </trans-unit>
+      <trans-unit id="L3dmip3" resname="Message">
+        <source>Message</source>
+        <target>Besked</target>
+      </trans-unit>
+      <trans-unit id="ReC5efL" resname="Give the sensor a name for this mission">
+        <source>Give the sensor a name for this mission</source>
+        <target>Giv sensoren et navn i denne mission</target>
+      </trans-unit>
+      <trans-unit id="mugpYr." resname="Sensor warning can help you detect invalid data.">
+        <source>Sensor warning can help you detect invalid data.</source>
+        <target>Sensoradvarsler kan hjælpe dig med at opdage fejlbehæftet data.</target>
+      </trans-unit>
+      <trans-unit id="hr4AdMb" resname="Generate a warning if the sensor value is below this value.">
+        <source>Generate a warning if the sensor value is below this value.</source>
+        <target>Generer en advarsel hvis sensorværdien er under denne værdi.</target>
+      </trans-unit>
+      <trans-unit id="B7ONjQ2" resname="Generate a warning if the sensor value is above this value.">
+        <source>Generate a warning if the sensor value is above this value.</source>
+        <target>Generer en advarsel hvis sensorværdien er over denne værdi.</target>
+      </trans-unit>
+      <trans-unit id="_7HyORe" resname="The message to write in the log if the sensor value is outside the bounds. “%value%” will be replaced with the actual measured value when writing the log message.">
+        <source>The message to write in the log if the sensor value is outside the bounds. “%value%” will be replaced with the actual measured value when writing the log message.</source>
+        <target>Beskeden der skal skrives i loggen hvis sensorværdien er uden for grænserne. “%value%” bliver erstattet med den faktisk sensorværdi i logbeskeden.</target>
+      </trans-unit>
+      <trans-unit id="VuAOK3o" resname="Give your mission an easy recognisable title">
+        <source>Give your mission an easy recognisable title</source>
+        <target>Giv din mission en kort og præcis titel</target>
+      </trans-unit>
+      <trans-unit id="P2gJ_mp" resname="Give a short description of what you want to achieve">
+        <source>Give a short description of what you want to achieve</source>
+        <target>Giv en kort beskrivelse af hvad du vil undersøge</target>
+      </trans-unit>
+      <trans-unit id="CG63CM0" resname="Write the address or primary location of your mission">
+        <source>Write the address or primary location of your mission</source>
+        <target>Skriv adresse eller primær placering af din mission</target>
+      </trans-unit>
+      <trans-unit id="LZyQHQd" resname="Enter a log entry">
+        <source>Enter a log entry</source>
+        <target>Indtast en logbesked</target>
+      </trans-unit>
+      <trans-unit id="35BQWN1" resname="alert">
+        <source>alert</source>
+        <target>advarsel</target>
+      </trans-unit>
+      <trans-unit id="bFppkAO" resname="measurement">
+        <source>measurement</source>
+        <target>måling</target>
+      </trans-unit>
+      <trans-unit id="u8XmYeE" resname="system">
+        <source>system</source>
+        <target>system</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target>bruger</target>
+      </trans-unit>
+      <trans-unit id="0MIrdDz" resname="No sensors matching %query% found.">
+        <source>No sensors matching %query% found.</source>
+        <target>Ingen sensorer matcher %query%.</target>
+      </trans-unit>
+      <trans-unit id="UXlIkU5" resname="{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%">
+        <source>{0}No results match %query%|{1}One result matching %query%|]1,Inf]%count% results matching %query%</source>
+        <target>{0}Ingen resultater matcher %query%|{1}Et resultat matcher %query%|]1,Inf]%count% resulter matcher %query%</target>
+      </trans-unit>
+      <trans-unit id="cX8n7Xm" resname="{0}No results|{1}One result|]1,Inf]%count% results">
+        <source>{0}No results|{1}One result|]1,Inf]%count% results</source>
+        <target>{0}Ingen resulter|{1}Et resultat|]1,Inf]%count% resultater</target>
+      </trans-unit>
+      <trans-unit id="Ub_M73A" resname="Searching for %query% …">
+        <source>Searching for %query% …</source>
+        <target>Søger efter %query% …</target>
+      </trans-unit>
+      <trans-unit id="wMsuZWb" resname="Error adding sensor %sensor% (Message: “%message%”)">
+        <source>Error adding sensor %sensor% (Message: “%message%”)</source>
+        <target>Fejl under tilføjelse af sensor %sensor% (Besked: “%message%”)</target>
+      </trans-unit>
       <trans-unit id="CcUEzkM" resname="Error: %error%">
         <source>Error: %error%</source>
         <target state="translated">Fejl: %error%</target>
