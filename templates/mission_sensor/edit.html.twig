@@ -10,6 +10,40 @@
             <h1>{{ is_new_sensor ? 'Create mission sensor'|trans : 'Edit mission sensor'|trans }}</h1>
 
             {{ form_start(form) }}
+                {% set sensor = mission_sensor.sensor %}
+                {% set missing_value = '👻' %}
+
+                <div class="form-group row">
+                    {{ form_label(form.sensor) }}
+                    <div style="display: none">{{ form_widget(form.sensor) }}</div>
+
+                    <div class="col-sm-10">
+                        <div class="small bg-light">
+                            <dl class="row">
+                                <dt class="col-sm-3 mission-sensor-id sensor-id">{{ 'Sensor id'|trans }}</dt>
+                                <dd class="col-sm-9 mission-sensor-id sensor-id"><div class="text-truncate" title="{{ sensor.id }}">{{ sensor.id }}</div>
+                                </dd>
+
+                                <dt class="col-sm-3 mission-sensor-identifier sensor-identifier">{{ 'Identifier'|trans }}</dt>
+                                <dd class="col-sm-9 mission-sensor-identifier sensor-identifier">{{ sensor.identifier|default(missing_value) }}</dd>
+
+                                <dt class="col-sm-3 mission-sensor-observation-type sensor-observation-type">{{ 'Observation type'|trans }}</dt>
+                                <dd class="col-sm-9 mission-sensor-observation-type sensor-observation-type">{{ sensor.observationType ? sensor.observationType|trans : missing_value }}</dd>
+
+                                {% if sensor.qoi|default(false) %}
+                                    <dt class="col-sm-3 mission-sensor-qio sensor-qio">{{ 'Quality of information'|trans }}</dt>
+                                    <dd class="col-sm-9 mission-sensor-qio sensor-qio">
+                                        <span class="mission-sensor-observation-qoi-min sensor-qoi-min">{{ sensor.qoi.min }}</span>–<span class="mission-sensor-observation-qoi-max sensor-qoi-max">{{ sensor.qoi.max }}</span>
+                                        {% if sensor.qoi.update_interval|default(false) %}
+                                            ({{ 'Update interval'|trans }}: {{ sensor.qoi.update_interval.value }} {{ sensor.qoi.update_interval.unit|trans }})
+                                        {% endif %}
+                                    </dd>
+                                {% endif %}
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
                 {{ form_widget(form) }}
 
                 <div class="row border-top pt-3">
