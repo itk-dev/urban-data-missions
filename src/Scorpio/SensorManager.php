@@ -6,9 +6,9 @@ use App\Entity\Sensor;
 use App\Repository\SensorRepository;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SensorManager
 {
@@ -17,16 +17,24 @@ class SensorManager
     /** @var Client */
     private $client;
 
+    /** @var SensorRepository */
+    private $sensorRepository;
+
     /** @var EntityManagerInterface */
     private $entityManager;
+
+    /** @var SerializerInterface */
+    private $serializer;
 
     /** @var array */
     private $options;
 
-    public function __construct(Client $client, SensorRepository $sensorRepository, EntityManagerInterface $entityManager, array $sensorManagerOptions)
+    public function __construct(Client $client, SensorRepository $sensorRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer, array $sensorManagerOptions)
     {
         $this->client = $client;
+        $this->sensorRepository = $sensorRepository;
         $this->entityManager = $entityManager;
+        $this->serializer = $serializer;
 
         $resolver = new OptionsResolver();
 
@@ -35,35 +43,24 @@ class SensorManager
 
     public function search(array $options = []): array
     {
-        $pattern = $options['query']['q'] ?? $options['query']['query'] ?? null;
-        $result = [];
-        foreach ([Client::ENTITY_TYPE_SENSOR] as $type) {
-            $brokerQuery = [
-                'type' => $type,
-                'idPattern' => $pattern,
-            ];
-            try {
-                // @see https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf
-                $response = $this->client->getEntities($brokerQuery);
-                $items = array_filter($response->toArray());
-                if (!empty($items)) {
-                    $result[] = $items;
-                }
-            } catch (Exception $e) {
-            }
-        }
+        $query = $options['query']['q'] ?? $options['query']['query'] ?? '';
+        $result = array_map(
+            static function (Sensor $sensor) {
+                return $sensor->getData()
+                    ? $sensor->getData() + [
+                        '_metadata' => $sensor->getSensorData(),
+                    ]
+                    : null;
+            },
+            $this->sensorRepository->search($query),
+        );
+        $result = array_filter($result);
+        $result = array_column($result, null, 'id');
 
-        if (!empty($result)) {
-            // Flatten.
-            $result = array_merge(...$result);
-            // Index by id (to remove duplicates).
-            $result = array_column($result, null, 'id');
-
-            if (isset($options['mission_sensors'])) {
-                $missionSensors = $options['mission_sensors'];
-                foreach ($result as $id => &$item) {
-                    $item['_metadata']['mission_sensor'] = $missionSensors[$id] ?? null;
-                }
+        if (isset($options['mission_sensors'])) {
+            $missionSensors = $options['mission_sensors'];
+            foreach ($result as $id => &$item) {
+                $item['_metadata']['mission_sensor'] = $missionSensors[$id] ?? null;
             }
         }
 
@@ -75,12 +72,12 @@ class SensorManager
 
     public function getSensors(array $criteria = [])
     {
-        return $this->getRepository()->findBy($criteria);
+        return $this->sensorRepository->findBy($criteria);
     }
 
     public function getSensor(string $id)
     {
-        $sensor = $this->getRepository()->find($id);
+        $sensor = $this->sensorRepository->find($id);
 
         if (null === $sensor) {
             $data = $this->client->getEntity($id);
@@ -129,7 +126,6 @@ class SensorManager
 
     public function updateSensors()
     {
-        $repository = $this->getRepository();
         foreach ($this->options['types'] as $type) {
             $query = ['type' => $type];
             $response = $this->client->getEntities($query);
@@ -138,7 +134,7 @@ class SensorManager
                 foreach ($result as $data) {
                     if (isset($data['id'])) {
                         $id = $data['id'];
-                        $sensor = $repository->find($data['id']);
+                        $sensor = $this->sensorRepository->find($data['id']);
                         if (null === $sensor) {
                             $sensor = (new Sensor())
                                 ->setId($id);
@@ -154,8 +150,93 @@ class SensorManager
         }
     }
 
-    private function getRepository(): SensorRepository
+    /**
+     * Get sensors.
+     */
+    public function updatePlatformSensors()
     {
-        return $this->entityManager->getRepository(Sensor::class);
+        $sensorData = [];
+
+        $response = $this->client->getEntities(['type' => 'http://www.w3.org/ns/sosa/Platform']);
+        if (Response::HTTP_OK === $response->getStatusCode()) {
+            $platforms = $response->toArray();
+            foreach ($platforms as $platform) {
+                $response = $this->client->getEntities([
+                    'type' => Client::ENTITY_TYPE_SENSOR,
+                    'q' => sprintf('%s==%s', Client::ENTITY_ATTRIBUTE_IS_HOSTED_BY, $platform['id']),
+                ]);
+                if (Response::HTTP_OK === $response->getStatusCode()) {
+                    $sensorData[] = $response->toArray();
+                }
+            }
+        }
+
+        $sensorData = array_merge(...$sensorData);
+
+        return $this->createSensors($sensorData);
+    }
+
+    /**
+     * @return Sensor[]
+     */
+    private function createSensors(array $sensorData)
+    {
+        $sensors = [];
+        foreach ($sensorData as $data) {
+            if (isset($data['id'])) {
+                $id = $data['id'];
+                $sensor = $this->sensorRepository->find($data['id']);
+                if (null === $sensor) {
+                    $sensor = (new Sensor())
+                        ->setId($id);
+                }
+                $this->updateSensorData($sensor);
+                $this->entityManager->persist($sensor);
+                $sensors[] = $sensor;
+            }
+        }
+        $this->entityManager->flush();
+
+        return $sensors;
+    }
+
+    public function updateSensorData(Sensor $sensor)
+    {
+        $data = $this->client->getEntity($sensor->getId());
+        try {
+            if (Client::ENTITY_TYPE_SENSOR === ($data['type'] ?? null)) {
+                $sensor->setData($data);
+                // Get stream generated by the sensor.
+                $response = $this->client->getEntities([
+                    'type' => Client::ENTITY_TYPE_STREAM,
+                    'q' => sprintf('%s==%s', Client::ENTITY_ATTRIBUTE_GENERATED_BY, $data['id']),
+                ]);
+                if (Response::HTTP_OK === $response->getStatusCode()) {
+                    $streams = $response->toArray();
+                    if (1 !== count($streams)) {
+                        throw new \RuntimeException(sprintf('Cannot get stream for sensor %s', $data['id']));
+                    }
+                    $stream = reset($streams);
+                    $sensor->setStream($stream);
+
+                    // Get stream observation.
+                    $response = $this->client->getEntities([
+                        'type' => Client::ENTITY_TYPE_STREAM_OBSERVATION,
+                        'q' => sprintf('%s==%s', Client::ENTITY_ATTRIBUTE_BELONGS_TO, $stream['id']),
+                    ]);
+                    if (Response::HTTP_OK === $response->getStatusCode()) {
+                        $observations = $response->toArray();
+                        if (1 !== count($observations)) {
+                            throw new \RuntimeException(sprintf('Cannot get observation for stream %s', $stream['id']));
+                        }
+                        $observation = reset($observations);
+
+                        $sensor->setStreamObservation($observation);
+                    }
+                }
+            }
+        } catch (\RuntimeException $exception) {
+            $this->error($exception->getMessage());
+        }
     }
 }

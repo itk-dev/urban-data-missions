@@ -69,6 +69,8 @@ function App (props) {
     }
   }, [query])
 
+  const missingValue = '👻'
+
   const renderData = () => {
     if (query && data.length === 0) {
       return query && <Alert variant='warning' className='py-1'>{Translator.trans('No sensors matching %query% found.', { query: query })}</Alert>
@@ -102,12 +104,27 @@ function App (props) {
               className='sensor-search-result pb-3'
             >
               <div className='d-flex w-100 justify-content-between'>
-                <h2 className='h4 mb-1'>{item.id}</h2>
-                <small />
+                {item._metadata.name
+                  ? <><h2 className='h4 mb-1'>{item._metadata.name}</h2><small>{item.id}</small></>
+                  : <h2 className='h4 mb-1'>{item.id}</h2>}
               </div>
-              <p className='mb-1'>
-                {item.type}
-              </p>
+
+              <dl className='row'>
+                <dt className='col-sm-3 mission-sensor-identifier sensor-identifier'>{Translator.trans('Identifier')}</dt>
+                <dd className='col-sm-9 mission-sensor-identifier sensor-identifier'>{item._metadata.identifier ?? missingValue}</dd>
+
+                <dt className='col-sm-3 mission-sensor-observation-type sensor-observation-type'>{Translator.trans('Observation type')}</dt>
+                <dd className='col-sm-9 mission-sensor-observation-type sensor-observation-type'>{item._metadata.observation_type ? Translator.trans(item._metadata.observation_type) : missingValue}</dd>
+
+                {item._metadata.qoi &&
+                  <>
+                    <dt className='col-sm-3 mission-sensor-qio sensor-qio'>{Translator.trans('Quality of information')}</dt>
+                    <dd className='col-sm-9 mission-sensor-qio sensor-qio'>
+                      <span className='mission-sensor-observation-qoi-min sensor-qoi-min'>{item._metadata.qoi.min}</span>–<span className='mission-sensor-observation-qoi-max sensor-qoi-max'>{item._metadata.qoi.max}</span>
+                      {item._metadata.qoi.update_interval && <> ({Translator.trans('Update interval')}: {item._metadata.qoi.update_interval.value} {Translator.trans(item._metadata.qoi.update_interval.unit)})</>}
+                    </dd>
+                  </>}
+              </dl>
 
               {item._metadata.mission_sensor ? (
                 <p className='text-primary'>
@@ -145,7 +162,7 @@ function App (props) {
         <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} size='lg' />
       </Form.Group>
 
-      {error && <Alert variant='danger'>{Translator.trans('Error: {error}', { error: error })}</Alert>}
+      {error && <Alert variant='danger'>{Translator.trans('Error: %error%', { error: error })}</Alert>}
 
       {isLoading
         ? <Alert variant='info' className='py-1'>{query ? <span>{Translator.trans('Searching for %query% …', { query: query })}</span> : <span>{Translator.trans('Searching …')}</span>}</Alert>

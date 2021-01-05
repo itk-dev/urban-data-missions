@@ -4,14 +4,14 @@ namespace App\Command;
 
 use App\Scorpio\SensorManager;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class SensorCommand extends Command
+class SensorUpdateCommand extends Command
 {
-    protected static $defaultName = 'app:sensor';
+    protected static $defaultName = 'app:sensor:update';
 
     /** @var SensorManager */
     private $sensorManager;
@@ -25,24 +25,28 @@ class SensorCommand extends Command
     protected function configure()
     {
         $this
-            ->addArgument('action', InputArgument::REQUIRED, '"update"');
+            ->setDescription('Updates the local list of sensors');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $action = $input->getArgument('action');
+        $io = new SymfonyStyle($input, $output);
 
         $logger = new ConsoleLogger($output);
         $this->sensorManager->setLogger($logger);
 
-        switch ($action) {
-            case 'update':
-            default:
-            $this->sensorManager->updateSensors();
-                break;
+        $sensors = $this->sensorManager->updatePlatformSensors();
+
+        if ($io->isVerbose()) {
+            foreach ($sensors as $sensor) {
+                $io->definitionList(
+                    ['id' => $sensor->getId()],
+                    ['name' => $sensor->getName()],
+                    ['type' => $sensor->getType()]
+                );
+            }
         }
 
-        return 0;
+        return static::SUCCESS;
     }
 }

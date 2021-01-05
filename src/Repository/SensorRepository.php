@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Sensor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use whatwedo\SearchBundle\Entity\Index;
 
 /**
  * @method Sensor|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,14 @@ class SensorRepository extends ServiceEntityRepository
         parent::__construct($registry, Sensor::class);
     }
 
-    // /**
-    //  * @return Sensor[] Returns an array of Sensor objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Sensor[]
+     */
+    public function search(string $query)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $ids = $this->getEntityManager()->getRepository(Index::class)
+            ->search($query, $this->_entityName);
 
-    /*
-    public function findOneBySomeField($value): ?Sensor
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->findBy(['id' => $ids]);
     }
-    */
 }

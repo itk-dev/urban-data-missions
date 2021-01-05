@@ -99,6 +99,9 @@ easy_admin:
             class: App\Entity\Mission
             disabled_actions: ['new', 'edit', 'delete']
 
+            templates:
+                show: admin/mission/show.html.twig
+
             list:
                 actions:
                     show:
@@ -116,22 +119,35 @@ easy_admin:
 
         Sensor:
             class: App\Entity\Sensor
-            disabled_actions: ['new', 'edit', 'delete']
+            disabled_actions: ['new', 'delete']
+
+            templates:
+                show: admin/sensor/show.html.twig
 
             list:
+                sort: ['updatedAt', 'DESC']
+
                 actions: ['show']
 
                 fields:
                     - property: id
                     - property: createdAt
-                    - property: missionSensors
+                    - property: updatedAt
+                    - property: name
+                    - property: type
 
             show:
                 fields:
                     - property: id
                     - property: createdAt
                     - property: data
-                    - property: missionSensors
+                    - property: name
+                    - property: type
+
+            edit:
+                fields:
+                    - property: name
+                    - property: type
 
         MissionSensor:
             class: App\Entity\MissionSensor

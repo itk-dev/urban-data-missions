@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Scorpio\Client;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use whatwedo\SearchBundle\Annotation\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SensorRepository")
@@ -21,16 +21,15 @@ class Sensor
      * @ORM\Id()
      * @ORM\Column(type="string")
      * @Groups({"sensor", "measurement_read", "mission_log_entry_read"})
+     * @Index()
      */
     private $id;
 
-    /** @var string|null */
-    private $type;
-
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Mission", mappedBy="sensors")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Index()
      */
-    private $missions;
+    private $type;
 
     /**
      * @ORM\Column(type="json")
@@ -62,9 +61,15 @@ class Sensor
      */
     private $streamObservationId;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Index()
+     */
+    private $name;
+
+    public function __toString(): string
     {
-        $this->missions = new ArrayCollection();
+        return $this->getId() ?? self::class;
     }
 
     public function getId(): ?string
@@ -88,30 +93,9 @@ class Sensor
         return $this->type;
     }
 
-    /**
-     * @return Collection|Mission[]
-     */
-    public function getMissions(): Collection
+    public function setType(string $type): self
     {
-        return $this->missions;
-    }
-
-    public function addMission(Mission $mission): self
-    {
-        if (!$this->missions->contains($mission)) {
-            $this->missions[] = $mission;
-            $mission->addSensor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMission(Mission $mission): self
-    {
-        if ($this->missions->contains($mission)) {
-            $this->missions->removeElement($mission);
-            $mission->removeSensor($this);
-        }
+        $this->type = $type;
 
         return $this;
     }
@@ -180,8 +164,52 @@ class Sensor
         return $this->streamObservationId;
     }
 
-    public function __toString()
+    public function getName(): ?string
     {
-        return $this->getId() ?? self::class;
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getIdentifier(): ?string
+    {
+        return $this->data[Client::ENTITY_ATTRIBUTE_IDENTIFIER]['value'] ?? null;
+    }
+
+    public function getObservationType(): ?string
+    {
+        return $this->data[Client::ENTITY_ATTRIBUTE_OBSERVES]['object'] ?? null;
+    }
+
+    public function getQoi(): ?array
+    {
+        $qoi = array_filter([
+            'min' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_MIN]['value'] ?? null,
+            'max' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_MAX]['value'] ?? null,
+        ]);
+
+        if ($qoi) {
+            $qoi['update_interval'] = [
+                'value' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL]['value'] ?? null,
+                'unit' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL][Client::ENTITY_ATTRIBUTE_QOI_UNIT]['value'] ?? null,
+            ];
+        }
+
+        return $qoi ?: null;
+    }
+
+    public function getSensorData(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'identifier' => $this->getIdentifier(),
+            'observation_type' => $this->getObservationType(),
+            'qoi' => $this->getQoi(),
+        ];
     }
 }

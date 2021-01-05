@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cd5437faf9cc532621d7656ae43ad4f",
+    "content-hash": "ce19b5af4267dcb51df935b044ea5a7a",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -449,6 +449,50 @@
                 }
             ],
             "time": "2020-11-11T10:22:58+00:00"
+        },
+        {
+            "name": "cweagans/composer-patches",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cweagans/composer-patches.git",
+                "reference": "ae02121445ad75f4eaff800cc532b5e6233e2ddf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/ae02121445ad75f4eaff800cc532b5e6233e2ddf",
+                "reference": "ae02121445ad75f4eaff800cc532b5e6233e2ddf",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0 || ~2.0",
+                "phpunit/phpunit": "~4.6"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "cweagans\\Composer\\Patches"
+            },
+            "autoload": {
+                "psr-4": {
+                    "cweagans\\Composer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Cameron Eagans",
+                    "email": "me@cweagans.net"
+                }
+            ],
+            "description": "Provides a way to patch Composer packages.",
+            "time": "2020-09-30T17:56:20+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -8275,6 +8319,117 @@
                 "validate"
             ],
             "time": "2020-07-08T17:02:28+00:00"
+        },
+        {
+            "name": "whatwedo/core-bundle",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/whatwedo/CoreBundle.git",
+                "reference": "f7102e88595cd2a005c20b167d80b29f33e4cbf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/whatwedo/CoreBundle/zipball/f7102e88595cd2a005c20b167d80b29f33e4cbf6",
+                "reference": "f7102e88595cd2a005c20b167d80b29f33e4cbf6",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/collections": "~1.0",
+                "php": ">=7.2",
+                "symfony/console": "~4.0|~5.0",
+                "symfony/framework-bundle": "~4.0|~5.0",
+                "symfony/http-kernel": "~4.0|~5.0",
+                "symfony/intl": "~4.0|~5.0",
+                "symfony/options-resolver": "~4.0|~5.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "whatwedo\\CoreBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ueli Banholzer",
+                    "email": "ueli@whatwedo.ch"
+                },
+                {
+                    "name": "Felix Imobersteg",
+                    "email": "felix@whatwedo.ch"
+                },
+                {
+                    "name": "Nicolo Singer",
+                    "email": "nicolo@whatwedo.ch"
+                }
+            ],
+            "description": "Reusable components used by other bundles of whatwedo",
+            "homepage": "https://doc.whatwedo.ch/whatwedo/corebundle",
+            "time": "2020-10-23T14:30:04+00:00"
+        },
+        {
+            "name": "whatwedo/search-bundle",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/whatwedo/SearchBundle.git",
+                "reference": "aebdf9821d10935e6453d24c678f461637af541d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/whatwedo/SearchBundle/zipball/aebdf9821d10935e6453d24c678f461637af541d",
+                "reference": "aebdf9821d10935e6453d24c678f461637af541d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "symfony/framework-bundle": "~4.0|~5.0",
+                "symfony/http-kernel": "~4.0|~5.0",
+                "whatwedo/core-bundle": "^0.4"
+            },
+            "require-dev": {
+                "symfony/orm-pack": "^1.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "patches_applied": {
+                    "String foreign id": "patches/whatwedo/search-bundle/foreign_id-string.patch"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "whatwedo\\SearchBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ueli Banholzer",
+                    "email": "ueli@whatwedo.ch"
+                },
+                {
+                    "name": "Felix Imobersteg",
+                    "email": "felix@whatwedo.ch"
+                },
+                {
+                    "name": "Nicolo Singer",
+                    "email": "nicolo@whatwedo.ch"
+                },
+                {
+                    "name": "Maurizio Monticelli",
+                    "email": "maurizio@whatwedo.ch"
+                }
+            ],
+            "description": "Full text search on Doctrine entities without external dependencies.",
+            "homepage": "https://doc.whatwedo.ch/whatwedo/searchbundle",
+            "time": "2020-10-23T14:34:02+00:00"
         },
         {
             "name": "willdurand/js-translation-bundle",
