@@ -65,7 +65,7 @@ class ChartView extends Component {
           loadedData = loadedData.concat(data['hydra:member'])
 
           const nextUrl = data['hydra:view']['hydra:next']
-          if (nextUrl && loadedData.length <= maxNumberOfMeasurementsToLoad) {
+          if (nextUrl && loadedData.length < maxNumberOfMeasurementsToLoad) {
             loadData(nextUrl)
           } else {
             this.setState({
@@ -73,7 +73,6 @@ class ChartView extends Component {
             })
 
             this.chart.getChart().events.once('validated', () => {
-              // Zoom to last 4 hours.
               const now = (new Date()).getTime()
               const start = now - 1000 * initialDataWindowSize
               const end = now
@@ -106,15 +105,16 @@ class ChartView extends Component {
     })
   }
 
+  buildData = (series, measurement) => ({
+    date: new Date(measurement.measuredAt),
+    [series]: measurement.value,
+    measurement: measurement
+  })
+
   addMeasurement = (measurement) => {
     const series = measurement.sensor.id
     if (series !== null && series in this.props.series) {
-      const data = {
-        date: new Date(measurement.measuredAt),
-        [series]: measurement.value,
-        measurement: measurement
-      }
-      this.chart.addData(data)
+      this.chart.addData(this.buildData(series, measurement))
     }
   }
 
@@ -128,11 +128,7 @@ class ChartView extends Component {
     measurements.forEach(measurement => {
       const series = measurement.sensor.id
       if (series !== null && series in this.props.series) {
-        data.push({
-          date: new Date(measurement.measuredAt),
-          [series]: measurement.value,
-          measurement: measurement
-        })
+        data.push(this.buildData(series, measurement))
       }
     })
     data.sort((a, b) => a.date - b.date)
