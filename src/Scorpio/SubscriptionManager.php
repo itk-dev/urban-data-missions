@@ -94,7 +94,9 @@ class SubscriptionManager implements LoggerAwareInterface
             'description' => $description,
             'entities' => $mission->getMissionSensors()
                 ->filter(static function (MissionSensor $missionSensor) {
-                    return $missionSensor->getEnabled();
+                    return $missionSensor->getEnabled()
+                        // We want to subscribe on stream observations.
+                        && $missionSensor->getSensor()->getStreamObservationId();
                 })
                 ->map(static function (MissionSensor $missionSensor) {
                     return [
