@@ -309,10 +309,14 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
                     $this->debug(sprintf('Mission sensor %s not enabled', $missionSensor->getId()));
                 } else {
                     $type = Measurement::TYPE_MEASURED;
-                    $value = $data[Client::ENTITY_ATTRIBUTE_HAS_SIMPLE_RESULT]['value'] ?? null;
-                    if (null === $value && isset($data[Client::ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT]['value'])) {
+                    // An observation estimated by fault recovery may have
+                    // both an "estimated" and a "simple" value, i.e. we have
+                    // to check for "estimated" first.
+                    if (isset($data[Client::ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT]['value'])) {
                         $value = $data[Client::ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT]['value'];
                         $type = Measurement::TYPE_ESTIMATED;
+                    } else {
+                        $value = $data[Client::ENTITY_ATTRIBUTE_HAS_SIMPLE_RESULT]['value'] ?? null;
                     }
                     if (null === $value) {
                         throw new BadRequestHttpException('Missing value');
