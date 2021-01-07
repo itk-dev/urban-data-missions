@@ -19,6 +19,7 @@ class Client implements LoggerAwareInterface
     public const ENTITY_ATTRIBUTE_BELONGS_TO = 'http://purl.org/iot/ontology/iot-stream#belongsTo';
     public const ENTITY_ATTRIBUTE_BELONGS_TO_SHORT = 'belongsTo';
     public const ENTITY_ATTRIBUTE_HAS_SIMPLE_RESULT = 'http://www.w3.org/ns/sosa/hasSimpleResult';
+    public const ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT = 'http://www.fault-detection.de/hasEstimatedResult';
     public const ENTITY_ATTRIBUTE_RESULT_TIME = 'http://www.w3.org/ns/sosa/resultTime';
     public const ENTITY_ATTRIBUTE_IS_HOSTED_BY = 'http://www.w3.org/ns/sosa/isHostedBy';
 

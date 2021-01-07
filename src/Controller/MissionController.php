@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Measurement;
 use App\Entity\Mission;
+use App\Entity\MissionLogEntry;
 use App\Entity\MissionSensor;
 use App\Export\MissionExport;
 use App\Form\Type\MissionType;
@@ -307,7 +308,16 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
                 if (!$missionSensor->getEnabled()) {
                     $this->debug(sprintf('Mission sensor %s not enabled', $missionSensor->getId()));
                 } else {
-                    $value = $data[Client::ENTITY_ATTRIBUTE_HAS_SIMPLE_RESULT]['value'] ?? null;
+                    $type = Measurement::TYPE_MEASURED;
+                    // An observation estimated by fault recovery may have
+                    // both an "estimated" and a "simple" value, i.e. we have
+                    // to check for "estimated" first.
+                    if (isset($data[Client::ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT]['value'])) {
+                        $value = $data[Client::ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT]['value'];
+                        $type = Measurement::TYPE_ESTIMATED;
+                    } else {
+                        $value = $data[Client::ENTITY_ATTRIBUTE_HAS_SIMPLE_RESULT]['value'] ?? null;
+                    }
                     if (null === $value) {
                         throw new BadRequestHttpException('Missing value');
                     }
@@ -321,11 +331,24 @@ class MissionController extends AbstractController implements LoggerAwareInterfa
                     $measurement = (new Measurement())
                         ->setMeasuredAt($measuredAt)
                         ->setSensor($sensor)
+                        ->setType($type)
                         ->setValue($value)
                         ->setData($data)
                         ->setPayload($payload)
                         ->setMission($mission);
                     $entityManager->persist($measurement);
+
+                    if (Measurement::TYPE_ESTIMATED === $measurement->getType()) {
+                        $content = 'Measured value estimated by fault recovery.';
+                        $logEntry = (new MissionLogEntry())
+                            ->setMission($measurement->getMission())
+                            ->setMeasurement($measurement)
+                            ->setLoggedAt($measurement->getMeasuredAt())
+                            ->setType(MissionLogEntry::TYPE_ALERT)
+                            ->setContent($content);
+                        $entityManager->persist($logEntry);
+                    }
+
                     $entityManager->flush();
                 }
             } catch (\Exception $exception) {

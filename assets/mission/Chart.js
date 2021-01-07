@@ -123,6 +123,14 @@ class Chart {
       bullet.circle.radius = 4
       bullet.circle.fill = am4core.color('#fff')
 
+      bullet.circle.adapter.add('stroke', function (color, target) {
+        // @see https://www.amcharts.com/docs/v4/reference/dataitem/
+        // @see https://www.amcharts.com/docs/v4/reference/color/
+        return target.dataItem.dataContext?.measurement?.type === 'estimated'
+          ? am4core.color({ r: 255, g: 0, b: 0 })
+          : color
+      })
+
       if (options.bullet.onHit) {
         bullet.events.on('hit', options.bullet.onHit, this)
       }

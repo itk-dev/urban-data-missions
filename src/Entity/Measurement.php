@@ -29,6 +29,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Measurement
 {
+    public const TYPE_MEASURED = 'measured';
+    public const TYPE_ESTIMATED = 'estimated';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
@@ -73,6 +76,12 @@ class Measurement
      * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
      */
     private $value;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
+     */
+    private $type;
 
     /**
      * @Groups({"measurement_read", "mission_log_entry_read", "mission"})
@@ -160,6 +169,18 @@ class Measurement
     public function setValue(float $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type ?? static::TYPE_MEASURED;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
