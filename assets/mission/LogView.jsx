@@ -16,10 +16,10 @@ class LogView extends Component {
       filter: {
         // Display order
         names: [
-          Translator.trans('alert'),
-          Translator.trans('measurement'),
-          Translator.trans('system'),
-          Translator.trans('user')
+          'alert',
+          'measurement',
+          'system',
+          'user'
         ],
         // Actual values
         values: {
@@ -115,7 +115,7 @@ class LogView extends Component {
           key={`filter-${name}`} pill
           className={`filter-${name} ${active ? 'active' : ''} badge-log-entry-type badge-log-entry-type-${name} mr-1`}
           onClick={() => this.toggleFilter(name)}
-        >{name}
+        >{Translator.trans(name)}
         </Badge>
       )
     }
