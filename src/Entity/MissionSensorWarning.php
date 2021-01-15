@@ -47,7 +47,7 @@ class MissionSensorWarning
         return $this->missionSensor;
     }
 
-    public function setMissionSensor(MissionSensor $missionSensor): self
+    public function setMissionSensor(?MissionSensor $missionSensor): self
     {
         $this->missionSensor = $missionSensor;
 
