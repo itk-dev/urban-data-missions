@@ -16,6 +16,7 @@ import Translator from '../translations'
 function App (props) {
   const [data, setData] = useState([])
   const [query, setQuery] = useState('')
+  const [observationType, setObservationType] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -172,9 +173,15 @@ function App (props) {
 
   return (
     <div className='mission-sensor-search mt-3'>
-      <Form.Group controlId='formContent'>
+      <Form.Group controlId='formQuery'>
         <Form.Label className='sr-only'>{Translator.trans('Search')}</Form.Label>
         <Form.Control placeholder={Translator.trans('Search for a sensor')} value={query} onChange={(event) => setQuery(event.target.value)} size='lg' />
+      </Form.Group>
+      <Form.Group controlId='formObservationType'>
+        <Form.Label className='sr-only'>{Translator.trans('Sensor observation type')}</Form.Label>
+        <Form.Control as='select' placeholder={Translator.trans('Select sensor observation type')} value={observationType} onChange={(event) => setObservationType(event.target.value)} size='lg'>
+
+        </Form.Control>
       </Form.Group>
 
       {error && <Alert variant='danger'>{Translator.trans('Error: %error%', { error: error })}</Alert>}
