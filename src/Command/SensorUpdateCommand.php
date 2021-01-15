@@ -32,8 +32,10 @@ class SensorUpdateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $logger = new ConsoleLogger($output);
-        $this->sensorManager->setLogger($logger);
+        if ($output->isVerbose()) {
+            $logger = new ConsoleLogger($output);
+            $this->sensorManager->setLogger($logger);
+        }
 
         $sensors = $this->sensorManager->updatePlatformSensors();
 
