@@ -62,6 +62,16 @@ class Sensor
     private $streamObservationId;
 
     /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $qoi;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $qoiId;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Index()
      */
@@ -164,6 +174,27 @@ class Sensor
         return $this->streamObservationId;
     }
 
+    public function getQoi(): ?array
+    {
+        return $this->qoi;
+    }
+
+    /**
+     * @return Sensor
+     */
+    public function setQoi(array $qoi): self
+    {
+        $this->qoi = $qoi;
+        $this->qoiId = $qoi['id'] ?? null;
+
+        return $this;
+    }
+
+    public function getQoiId(): ?string
+    {
+        return $this->qoiId;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -184,23 +215,6 @@ class Sensor
     public function getObservationType(): ?string
     {
         return $this->data[Client::ENTITY_ATTRIBUTE_OBSERVES]['object'] ?? null;
-    }
-
-    public function getQoi(): ?array
-    {
-        $qoi = array_filter([
-            'min' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_MIN]['value'] ?? null,
-            'max' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_MAX]['value'] ?? null,
-        ]);
-
-        if ($qoi) {
-            $qoi['update_interval'] = [
-                'value' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL]['value'] ?? null,
-                'unit' => $this->data[Client::ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL][Client::ENTITY_ATTRIBUTE_QOI_UNIT]['value'] ?? null,
-            ];
-        }
-
-        return $qoi ?: null;
     }
 
     public function getSensorData(): array
