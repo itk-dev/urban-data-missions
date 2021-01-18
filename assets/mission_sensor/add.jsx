@@ -11,6 +11,7 @@ import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Translator from '../translations'
+import AsyncSelect from 'react-select/async'
 
 // @see https://www.robinwieruch.de/react-hooks-fetch-data
 function App (props) {
@@ -28,13 +29,20 @@ function App (props) {
     return props.editSensorUrl.replace('%sensor%', encodeURIComponent(sensor._metadata.mission_sensor.id))
   }
 
+  const buildUrl = (url, params) => {
+    const theUrl = new URL(url)
+    Object.keys(params).forEach(key => { if (params[key]) { theUrl.searchParams.append(key, params[key]) } })
+
+    return theUrl
+  }
+
   const abortController = new AbortController()
 
   const doSearch = debounce(
     (query) => {
       // abortController = new AbortController()
       setIsLoading(true)
-      const url = props.searchUrl + '?q=' + encodeURIComponent(query)
+      const url = buildUrl(props.searchUrl, { query, observation_type: observationType })
       fetch(url, {
         headers: {
           accept: 'application/ld+json'
@@ -67,9 +75,20 @@ function App (props) {
     return () => {
       abortController.abort()
     }
-  }, [query])
+  }, [query, observationType])
 
   const missingValue = '👻'
+
+  const loadObservationTypeOptions = async (inputValue, callback) => {
+    const url = buildUrl(props.observationTypesUrl, { q: inputValue })
+
+    return fetch(url)
+      .then((response) => {
+        return response.json()
+      }).then((json) => {
+        return json
+      })
+  }
 
   const renderData = () => {
     if (query && data.length === 0) {
@@ -179,9 +198,13 @@ function App (props) {
       </Form.Group>
       <Form.Group controlId='formObservationType'>
         <Form.Label className='sr-only'>{Translator.trans('Sensor observation type')}</Form.Label>
-        <Form.Control as='select' placeholder={Translator.trans('Select sensor observation type')} value={observationType} onChange={(event) => setObservationType(event.target.value)} size='lg'>
-
-        </Form.Control>
+        <AsyncSelect
+          loadOptions={loadObservationTypeOptions}
+          onChange={(option) => setObservationType(option.value)}
+          placeholder={Translator.trans('Search for a sensor observation type')}
+          loadingMessage={() => Translator.trans('Loading sensor observation types …')}
+          noOptionsMessage={() => Translator.trans('No sensor observation types loaded')}
+        />
       </Form.Group>
 
       {error && <Alert variant='danger'>{Translator.trans('Error: %error%', { error: error })}</Alert>}

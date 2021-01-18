@@ -89,7 +89,18 @@ class Client
         return $this->getData($query, ['alternativeType' => $alternativeType]);
     }
 
-    private function getData(Query $query, $variables)
+    public function getObservableProperties()
+    {
+        $query = (new Query('observableProperties'))
+            ->setSelectionSet([
+                'id',
+                'alternativeType',
+            ]);
+
+        return $this->getData($query);
+    }
+
+    private function getData(Query $query, array $variables = [])
     {
         return $this->runQuery($query, false, $variables)->getData();
     }

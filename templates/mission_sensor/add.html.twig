@@ -10,9 +10,10 @@
             <h1>{{ 'Add mission sensor'|trans }}</h1>
 
             {% set options = {
-                searchUrl: path('mission_sensor_search', {mission: mission.id}),
-                addSensorUrl: path('mission_sensor_new', {mission: mission.id, sensor: '%sensor%'})|replace({('%'|url_encode): '%'}),
-                editSensorUrl: path('mission_sensor_edit', {mission: mission.id, id: '%sensor%'})|replace({('%'|url_encode): '%'}),
+                searchUrl: url('mission_sensor_search', {mission: mission.id}),
+                addSensorUrl: url('mission_sensor_new', {mission: mission.id, sensor: '%sensor%'})|replace({('%'|url_encode): '%'}),
+                editSensorUrl: url('mission_sensor_edit', {mission: mission.id, id: '%sensor%'})|replace({('%'|url_encode): '%'}),
+                observationTypesUrl: url('api_data_observation_types'),
                 } %}
             <div id="app" data-options="{{ options|json_encode }}">
                 {{ 'Loading app …'|trans }}
