@@ -473,6 +473,30 @@
         <source>seconds</source>
         <target state="translated">sekunder</target>
       </trans-unit>
+      <trans-unit id="In2y0e7" resname="Rated">
+        <source>Rated</source>
+        <target state="translated">Justeret</target>
+      </trans-unit>
+      <trans-unit id="8ohzj2B" resname="Absolute">
+        <source>Absolute</source>
+        <target state="translated">Absolut</target>
+      </trans-unit>
+      <trans-unit id="AT9UQAy" resname="age">
+        <source>age</source>
+        <target state="translated">alder</target>
+      </trans-unit>
+      <trans-unit id="c0Hnrut" resname="completeness">
+        <source>completeness</source>
+        <target state="translated">fuldstændighed</target>
+      </trans-unit>
+      <trans-unit id="LpCJ.vx" resname="frequency">
+        <source>frequency</source>
+        <target state="translated">frekvens</target>
+      </trans-unit>
+      <trans-unit id="aU0lpri" resname="plausibility">
+        <source>plausibility</source>
+        <target state="translated">sandsynlighed</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
