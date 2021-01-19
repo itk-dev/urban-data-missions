@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% from 'mission/show.html.twig' import render_qoi %}
+
 {% block title %}{{ 'Edit mission sensor'|trans }}{% endblock %}
 
 {% block content %}
@@ -33,10 +35,7 @@
                                 {% if sensor.qoi|default(false) %}
                                     <dt class="col-sm-3 mission-sensor-qio sensor-qio">{{ 'Quality of information'|trans }}</dt>
                                     <dd class="col-sm-9 mission-sensor-qio sensor-qio">
-                                        <span class="mission-sensor-observation-qoi-min sensor-qoi-min">{{ sensor.qoi.min }}</span>–<span class="mission-sensor-observation-qoi-max sensor-qoi-max">{{ sensor.qoi.max }}</span>
-                                        {% if sensor.qoi.update_interval|default(false) %}
-                                            ({{ 'Update interval'|trans }}: {{ sensor.qoi.update_interval.value }} {{ sensor.qoi.update_interval.unit|trans }})
-                                        {% endif %}
+                                        {{ render_qoi(sensor.qoi) }}
                                     </dd>
                                 {% endif %}
                             </dl>

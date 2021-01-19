@@ -233,6 +233,14 @@ class SensorManager
 
                         $sensor->setStreamObservation($observation);
                     }
+
+                    // Get QoI
+                    if (isset($stream[Client::ENTITY_ATTRIBUTE_QOI_HAS_QUALITY]['object'])) {
+                        $qoi = $this->client->getEntity($stream[Client::ENTITY_ATTRIBUTE_QOI_HAS_QUALITY]['object']);
+                        if ($qoi) {
+                            $sensor->setQoi($qoi);
+                        }
+                    }
                 }
             }
         } catch (\RuntimeException $exception) {

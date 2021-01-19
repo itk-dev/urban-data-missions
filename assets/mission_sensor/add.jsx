@@ -41,7 +41,6 @@ function App (props) {
         signal: abortController.signal
       })
         .then((response) => {
-          ;; console.log('response', response)
           if (!response.ok) {
             throw new Error(response.statusText)
           }
@@ -120,8 +119,24 @@ function App (props) {
                   <>
                     <dt className='col-sm-3 mission-sensor-qio sensor-qio'>{Translator.trans('Quality of information')}</dt>
                     <dd className='col-sm-9 mission-sensor-qio sensor-qio'>
-                      <span className='mission-sensor-observation-qoi-min sensor-qoi-min'>{item._metadata.qoi.min}</span>–<span className='mission-sensor-observation-qoi-max sensor-qoi-max'>{item._metadata.qoi.max}</span>
-                      {item._metadata.qoi.update_interval && <> ({Translator.trans('Update interval')}: {item._metadata.qoi.update_interval.value} {Translator.trans(item._metadata.qoi.update_interval.unit)})</>}
+                      <dl className='sensor-qoi'>
+                        {Object.entries(item._metadata.qoi).map(([key, value]) =>
+                          value?.type === 'Property' &&
+                            <React.Fragment key={key}>
+                              <dt>{Translator.trans(key.replace(/^[^#]+#/, ''))}</dt>
+
+                              {undefined !== value?.['https://w3id.org/iot/qoi#hasRatedValue']?.value &&
+                                <dd>
+                                  {value['https://w3id.org/iot/qoi#hasRatedValue'].value} ({Translator.trans('Rated')})
+                                </dd>}
+
+                              {undefined !== value?.['https://w3id.org/iot/qoi#hasAbsoluteValue']?.value &&
+                                <dd>
+                                  {value['https://w3id.org/iot/qoi#hasAbsoluteValue'].value} ({Translator.trans('Absolute')})
+                                </dd>}
+                            </React.Fragment>
+                        )}
+                      </dl>
                     </dd>
                   </>}
               </dl>

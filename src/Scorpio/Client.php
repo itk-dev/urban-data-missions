@@ -14,6 +14,7 @@ class Client implements LoggerAwareInterface
     public const ENTITY_TYPE_SENSOR = 'http://www.w3.org/ns/sosa/Sensor';
     public const ENTITY_TYPE_STREAM = 'http://purl.org/iot/ontology/iot-stream#IotStream';
     public const ENTITY_TYPE_STREAM_OBSERVATION = 'http://purl.org/iot/ontology/iot-stream#StreamObservation';
+    public const ENTITY_TYPE_QOI_QUALITY = 'https://w3id.org/iot/qoi#Quality';
 
     public const ENTITY_ATTRIBUTE_GENERATED_BY = 'http://purl.org/iot/ontology/iot-stream#generatedBy';
     public const ENTITY_ATTRIBUTE_BELONGS_TO = 'http://purl.org/iot/ontology/iot-stream#belongsTo';
@@ -26,10 +27,7 @@ class Client implements LoggerAwareInterface
     public const ENTITY_ATTRIBUTE_OBSERVES = 'http://www.w3.org/ns/sosa/observes';
     public const ENTITY_ATTRIBUTE_IDENTIFIER = 'http://schema.org/identifier';
 
-    public const ENTITY_ATTRIBUTE_QOI_MIN = 'https://w3id.org/iot/qoi#min';
-    public const ENTITY_ATTRIBUTE_QOI_MAX = 'https://w3id.org/iot/qoi#max';
-    public const ENTITY_ATTRIBUTE_QOI_UPDATE_INTERVAL = 'https://w3id.org/iot/qoi#updateinterval';
-    public const ENTITY_ATTRIBUTE_QOI_UNIT = 'https://w3id.org/iot/qoi#unit';
+    public const ENTITY_ATTRIBUTE_QOI_HAS_QUALITY = 'https://w3id.org/iot/qoi#hasQuality';
 
     public static function getTypedValue($value)
     {
