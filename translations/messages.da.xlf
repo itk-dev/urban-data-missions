@@ -497,6 +497,30 @@
         <source>plausibility</source>
         <target state="translated">sandsynlighed</target>
       </trans-unit>
+      <trans-unit id="zejGoYb" resname="urn:ngsi-ld:AbsoluteHumidity">
+        <source>urn:ngsi-ld:AbsoluteHumidity</source>
+        <target state="needs-l10n">__urn:ngsi-ld:AbsoluteHumidity</target>
+      </trans-unit>
+      <trans-unit id="_pejisb" resname="urn:ngsi-ld:ParticleCurrent">
+        <source>urn:ngsi-ld:ParticleCurrent</source>
+        <target state="needs-l10n">__urn:ngsi-ld:ParticleCurrent</target>
+      </trans-unit>
+      <trans-unit id="U1Fjl0A" resname="urn:ngsi-ld:ParticleFluence">
+        <source>urn:ngsi-ld:ParticleFluence</source>
+        <target state="needs-l10n">__urn:ngsi-ld:ParticleFluence</target>
+      </trans-unit>
+      <trans-unit id="9dhmmFT" resname="urn:ngsi-ld:ParticleFluenceRate">
+        <source>urn:ngsi-ld:ParticleFluenceRate</source>
+        <target state="needs-l10n">__urn:ngsi-ld:ParticleFluenceRate</target>
+      </trans-unit>
+      <trans-unit id="UXgclpn" resname="urn:ngsi-ld:Pressure">
+        <source>urn:ngsi-ld:Pressure</source>
+        <target state="needs-l10n">__urn:ngsi-ld:Pressure</target>
+      </trans-unit>
+      <trans-unit id="OFj5hNB" resname="urn:ngsi-ld:SoundPressureLevel">
+        <source>urn:ngsi-ld:SoundPressureLevel</source>
+        <target state="needs-l10n">__urn:ngsi-ld:SoundPressureLevel</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
