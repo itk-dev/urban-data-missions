@@ -3,6 +3,7 @@
 namespace App\Scorpio;
 
 use App\Entity\Sensor;
+use App\IoTCrawler\SearchEnabler\Client as SearchEnablerClient;
 use App\Repository\SensorRepository;
 use App\Traits\LoggerTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,9 +30,10 @@ class SensorManager
     /** @var array */
     private $options;
 
-    public function __construct(Client $client, SensorRepository $sensorRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer, array $sensorManagerOptions)
+    public function __construct(Client $client, SearchEnablerClient $searchEnablerClient, SensorRepository $sensorRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer, array $sensorManagerOptions)
     {
         $this->client = $client;
+        $this->searchEnablerClient = $searchEnablerClient;
         $this->sensorRepository = $sensorRepository;
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
@@ -43,6 +45,13 @@ class SensorManager
 
     public function search(array $options = []): array
     {
+        $sensorIds = null;
+        if (isset($options['query']['observation_type'])) {
+            $sensors = $this->searchEnablerClient->getSensorsByObservesType($options['query']['observation_type']);
+            $sensorIds = array_column($sensors->sensors, 'id');
+        }
+        // Get sensor ids from search enabler.
+
         $query = $options['query']['q'] ?? $options['query']['query'] ?? '';
         $result = array_map(
             static function (Sensor $sensor) {
@@ -56,6 +65,12 @@ class SensorManager
         );
         $result = array_filter($result);
         $result = array_column($result, null, 'id');
+
+        if (null !== $sensorIds) {
+            $result = array_filter($result, static function ($id) use ($sensorIds) {
+                return in_array($id, $sensorIds, true);
+            }, ARRAY_FILTER_USE_KEY);
+        }
 
         if (isset($options['mission_sensors'])) {
             $missionSensors = $options['mission_sensors'];

@@ -89,7 +89,7 @@ class Client
         return $this->getData($query, ['alternativeType' => $alternativeType]);
     }
 
-    public function getObservableProperties()
+    public function getObservableProperties(): array
     {
         $query = (new Query('observableProperties'))
             ->setSelectionSet([
@@ -97,7 +97,12 @@ class Client
                 'alternativeType',
             ]);
 
-        return $this->getData($query);
+        $data = $this->getData($query);
+        $properties = $data->observableProperties ?? [];
+
+        return array_values(array_filter($properties, static function ($item) {
+            return isset($item->alternativeType);
+        }));
     }
 
     private function getData(Query $query, array $variables = [])

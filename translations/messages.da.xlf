@@ -499,7 +499,7 @@
       </trans-unit>
       <trans-unit id="zejGoYb" resname="urn:ngsi-ld:AbsoluteHumidity">
         <source>urn:ngsi-ld:AbsoluteHumidity</source>
-        <target state="needs-l10n">__urn:ngsi-ld:AbsoluteHumidity</target>
+        <target state="translated">Absolut fugtighed</target>
       </trans-unit>
       <trans-unit id="_pejisb" resname="urn:ngsi-ld:ParticleCurrent">
         <source>urn:ngsi-ld:ParticleCurrent</source>
@@ -515,11 +515,59 @@
       </trans-unit>
       <trans-unit id="UXgclpn" resname="urn:ngsi-ld:Pressure">
         <source>urn:ngsi-ld:Pressure</source>
-        <target state="needs-l10n">__urn:ngsi-ld:Pressure</target>
+        <target state="translated">Tryk</target>
       </trans-unit>
       <trans-unit id="OFj5hNB" resname="urn:ngsi-ld:SoundPressureLevel">
         <source>urn:ngsi-ld:SoundPressureLevel</source>
-        <target state="needs-l10n">__urn:ngsi-ld:SoundPressureLevel</target>
+        <target state="translated">Lydtrykniveau</target>
+      </trans-unit>
+      <trans-unit id="wHeqC4H" resname="(all observation types)">
+        <source>(all observation types)</source>
+        <target state="translated">(alle typer)</target>
+      </trans-unit>
+      <trans-unit id="EOlPS6V" resname="No sensors with type %observationType% and matching the query &quot;%query%&quot; found.">
+        <source>No sensors with type %observationType% and matching the query "%query%" found.</source>
+        <target state="translated">Ingen sensorer med type %observationType% og matchende "%query%" fundet.</target>
+      </trans-unit>
+      <trans-unit id="UTzu_p5" resname="No sensors with type %observationType% found.">
+        <source>No sensors with type %observationType% found.</source>
+        <target state="translated">Ingen sensorer med type %observationType% fundet.</target>
+      </trans-unit>
+      <trans-unit id="VmtkS.R" resname="No sensors matching the query &quot;%query%&quot; found.">
+        <source>No sensors matching the query "%query%" found.</source>
+        <target state="translated">Ingen sensorer matchende “%query%” fundet.</target>
+      </trans-unit>
+      <trans-unit id="aofqoer" resname="{0}No sensors with type %observationType% and matching the query &quot;%query%&quot;|{1}One sensor with type %observationType% and matching the query &quot;%query%&quot;|]1,Inf]%count% sensors with type %observationType% and matching the query &quot;%query%&quot;">
+        <source>{0}No sensors with type %observationType% and matching the query "%query%"|{1}One sensor with type %observationType% and matching the query "%query%"|]1,Inf]%count% sensors with type %observationType% and matching the query "%query%"</source>
+        <target state="translated">{0}Ingen sensorer med type %observationType% og matchende "%query%"|{1}En sensor med type %observationType% og matchende "%query%"|]1,Inf]%count% sensorer with type %observationType% og matchende "%query%</target>
+      </trans-unit>
+      <trans-unit id="duekTc6" resname="{0}No sensors with type %observationType%|{1}One sensor with type %observationType%|]1,Inf]%count% sensors with type %observationType%">
+          <source>{0}No sensors with type %observationType%|{1}One sensor with type %observationType%|]1,Inf]%count% sensors with type %observationType%</source>
+          <target state="translated">{0}Ingen sensorer med type %observationType%|{1}En sensor med type %observationType%|]1,Inf]%count% sensorer with type %observationType%</target>
+      </trans-unit>
+      <trans-unit id="hXLeVZq" resname="{0}No sensors matching the query &quot;%query%&quot;|{1}One sensor matching the query &quot;%query%&quot;|]1,Inf]%count% sensors matching the query &quot;%query%&quot;">
+        <source>{0}No sensors matching the query "%query%"|{1}One sensor matching the query "%query%"|]1,Inf]%count% sensors matching the query "%query%"</source>
+        <target state="translated">{0}Ingen sensorer matchende "%query%"|{1}En sensor matchende "%query%"|]1,Inf]%count% sensorer matchende "%query%"</target>
+      </trans-unit>
+      <trans-unit id="Lv54b5x" resname="{0}No sensors|{1}One sensor|]1,Inf]%count% sensors">
+        <source>{0}No sensors|{1}One sensor|]1,Inf]%count% sensors</source>
+        <target state="translated">{0}Ingen sensorer|{1}En sensor|]1,Inf]%count% sensorer</target>
+      </trans-unit>
+      <trans-unit id="xwn0klC" resname="Sensor observation type">
+        <source>Sensor observation type</source>
+        <target state="translated">Sensorobservationstype</target>
+      </trans-unit>
+      <trans-unit id="cnVBtmn" resname="Search for a sensor observation type">
+        <source>Search for a sensor observation type</source>
+        <target state="translated">Søg efter en sensorobservationstype</target>
+      </trans-unit>
+      <trans-unit id="ZrhBFH0" resname="Loading sensor observation types …">
+        <source>Loading sensor observation types …</source>
+        <target state="translated">Henter sensorobservationstyper …</target>
+      </trans-unit>
+      <trans-unit id="mwhp2cI" resname="No sensor observation types loaded">
+        <source>No sensor observation types loaded</source>
+        <target state="translated">Ingen sensorobservationstyper hentet</target>
       </trans-unit>
     </body>
   </file>
