@@ -463,7 +463,7 @@
       </trans-unit>
       <trans-unit id="F8QsL6J" resname="urn:ngsi-ld:Luminance">
         <source>urn:ngsi-ld:Luminance</source>
-        <target state="translated">Luminans</target>
+        <target state="translated">Lysintensitet</target>
       </trans-unit>
       <trans-unit id="4DGpqVE" resname="Show mission subscription in broker">
         <source>Show mission subscription in broker</source>
@@ -499,7 +499,7 @@
       </trans-unit>
       <trans-unit id="zejGoYb" resname="urn:ngsi-ld:AbsoluteHumidity">
         <source>urn:ngsi-ld:AbsoluteHumidity</source>
-        <target state="translated">Absolut fugtighed</target>
+        <target state="translated">Luftfugtighed</target>
       </trans-unit>
       <trans-unit id="_pejisb" resname="urn:ngsi-ld:ParticleCurrent">
         <source>urn:ngsi-ld:ParticleCurrent</source>
@@ -515,11 +515,11 @@
       </trans-unit>
       <trans-unit id="UXgclpn" resname="urn:ngsi-ld:Pressure">
         <source>urn:ngsi-ld:Pressure</source>
-        <target state="translated">Tryk</target>
+        <target state="translated">Atmosfærisk tryk</target>
       </trans-unit>
       <trans-unit id="OFj5hNB" resname="urn:ngsi-ld:SoundPressureLevel">
         <source>urn:ngsi-ld:SoundPressureLevel</source>
-        <target state="translated">Lydtrykniveau</target>
+        <target state="translated">Støj</target>
       </trans-unit>
       <trans-unit id="wHeqC4H" resname="(all observation types)">
         <source>(all observation types)</source>
