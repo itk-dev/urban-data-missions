@@ -39,6 +39,9 @@ services:
             $ngsiLdBrokerOptions:
                 no_verify: '%env(bool:NGSI_LD_BROKER_NO_VERIFY)%'
 
+            $searchEnablerOptions:
+                url: '%env(SEARCH_ENABLER_URL)%'
+
             $missionOptions:
                 measurements_page_size: '%env(int:MEASUREMENTS_PAGE_SIZE)%'
                 max_number_of_measurements_to_load: '%env(int:MAX_NUMBER_OF_MEASUREMENTS_TO_LOAD)%'
