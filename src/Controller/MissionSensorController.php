@@ -111,9 +111,19 @@ class MissionSensorController extends AbstractController
             return $this->redirectToRoute('mission_show', ['id' => $missionSensor->getMission()->getId()]);
         }
 
+        $deleteForm = null;
+
+        if (null !== $missionSensor->getId()) {
+            $deleteForm = $this->createFormBuilder()
+                ->setMethod('DELETE')
+                ->setAction($this->generateUrl('mission_sensor_delete', ['mission' => $missionSensor->getMission()->getId(), 'id' => $missionSensor->getId()]))
+                ->getForm();
+        }
+
         return $this->render('mission_sensor/edit.html.twig', [
             'mission_sensor' => $missionSensor,
             'form' => $form->createView(),
+            'delete_form' => null !== $deleteForm ? $deleteForm->createView() : null,
         ]);
     }
 
@@ -128,6 +138,6 @@ class MissionSensorController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('mission_sensor_index');
+        return $this->redirectToRoute('mission_show', ['id' => $missionSensor->getMission()->getId()]);
     }
 }

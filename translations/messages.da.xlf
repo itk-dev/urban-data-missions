@@ -542,8 +542,8 @@
         <target state="translated">{0}Ingen sensorer med type %observationType% og matchende "%query%"|{1}En sensor med type %observationType% og matchende "%query%"|]1,Inf]%count% sensorer with type %observationType% og matchende "%query%</target>
       </trans-unit>
       <trans-unit id="duekTc6" resname="{0}No sensors with type %observationType%|{1}One sensor with type %observationType%|]1,Inf]%count% sensors with type %observationType%">
-          <source>{0}No sensors with type %observationType%|{1}One sensor with type %observationType%|]1,Inf]%count% sensors with type %observationType%</source>
-          <target state="translated">{0}Ingen sensorer med type %observationType%|{1}En sensor med type %observationType%|]1,Inf]%count% sensorer with type %observationType%</target>
+        <source>{0}No sensors with type %observationType%|{1}One sensor with type %observationType%|]1,Inf]%count% sensors with type %observationType%</source>
+        <target state="translated">{0}Ingen sensorer med type %observationType%|{1}En sensor med type %observationType%|]1,Inf]%count% sensorer with type %observationType%</target>
       </trans-unit>
       <trans-unit id="hXLeVZq" resname="{0}No sensors matching the query &quot;%query%&quot;|{1}One sensor matching the query &quot;%query%&quot;|]1,Inf]%count% sensors matching the query &quot;%query%&quot;">
         <source>{0}No sensors matching the query "%query%"|{1}One sensor matching the query "%query%"|]1,Inf]%count% sensors matching the query "%query%"</source>
@@ -568,6 +568,10 @@
       <trans-unit id="mwhp2cI" resname="No sensor observation types loaded">
         <source>No sensor observation types loaded</source>
         <target state="translated">Ingen sensorobservationstyper hentet</target>
+      </trans-unit>
+      <trans-unit id=".Lt5ojT" resname="Confirm that you want to remove this sensor from the mission.">
+        <source>Confirm that you want to remove this sensor from the mission.</source>
+        <target state="translated">Bekræft at du vil fjerne denne sensor fra missionen.</target>
       </trans-unit>
     </body>
   </file>
