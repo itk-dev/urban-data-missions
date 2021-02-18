@@ -37,7 +37,6 @@ symfony console bazinga:js-translation:dump assets/ --format=json
 
 ## Assets
 
-
 ```sh
 docker run --volume ${PWD}:/app --workdir /app node:latest yarn install
 docker run --volume ${PWD}:/app --workdir /app node:latest yarn build
@@ -124,7 +123,6 @@ done
 EOF
 ```
 
-
 ### Coding standards
 
 ```sh
@@ -137,7 +135,6 @@ composer coding-standards-apply
 yarn coding-standards-apply
 ```
 
-
 ## Mercure
 
 [Mercure](https://github.com/dunglas/mercure) is used for sending messages to
@@ -145,31 +142,8 @@ the app when new measurements are available.
 
 ### Running Mercure
 
-Start Mercure with docker and supervisor:
-
-```conf
-# /etc/supervisor/conf.d/urban-data-missions-mercure.conf
-[program:urban-data-missions-mecure]
-directory=/data/www/urban-data-missions/htdocs
-command=/usr/bin/docker run
-    --name urban-data-missions-mecure
-    --env JWT_KEY='!ChangeMe!'
-    --env ALLOW_ANONYMOUS=1
-    --env CORS_ALLOWED_ORIGINS='*'
-    --env PUBLISH_ALLOWED_ORIGINS=http://localhost:1337
-    --publish 1337:80
-    dunglas/mercure
-autostart=true
-autorestart=true
-stderr_logfile=/data/www/urban-data-missions/logs/mercure.err.log
-stdout_logfile=/data/www/urban-data-missions/logs/mercure.out.log
-user=deploy
-```
-
 ```sh
-sudo supervisorctl reread
-sudo supervisorctl reload
-sudo supervisorctl status
+docker-compose --file docker-compose.mercure.yml up --detach
 ```
 
 ### Proxy
