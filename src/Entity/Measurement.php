@@ -96,6 +96,11 @@ class Measurement
         $this->sensorWarnings = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return static::class;
+    }
+
     public function getId(): ?string
     {
         return $this->id;

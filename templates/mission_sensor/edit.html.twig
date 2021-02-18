@@ -47,9 +47,9 @@
 
                 <div class="row border-top pt-3">
                     <div class="col">
-                        {% if not is_new_sensor %}
+                        {% if delete_form|default(false) %}
                             {# TODO: Make this button do what it says. #}
-                            {# <button type="button" class="btn btn-danger">{{ 'Remove sensor from mission'|trans }}</button> #}
+                            <button id="delete-form-submit" type="button" class="btn btn-danger">{{ 'Remove sensor from mission'|trans }}</button>
                         {% endif %}
                     </div>
                     <div class="col-auto ml-auto">
@@ -58,6 +58,21 @@
                     </div>
                 </div>
             {{ form_end(form) }}
+
+            {% if delete_form|default(false) %}
+                {{ form_start(delete_form, {attr: { id: 'delete-form' }}) }}
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete'~mission_sensor.id) }}"/>
+                {{ form_end(delete_form) }}
+
+                <script>
+                    document.getElementById('delete-form-submit').addEventListener('click', function () {
+                        if (confirm({{ 'Confirm that you want to remove this sensor from the mission.'|trans|json_encode|raw }})) {
+                            document.getElementById('delete-form').submit();
+                        }
+                    })
+                </script>
+
+            {% endif %}
         </article>
     </div>
 {% endblock %}
