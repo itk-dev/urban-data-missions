@@ -20,7 +20,8 @@ class Client implements LoggerAwareInterface
     public const ENTITY_ATTRIBUTE_BELONGS_TO = 'http://purl.org/iot/ontology/iot-stream#belongsTo';
     public const ENTITY_ATTRIBUTE_BELONGS_TO_SHORT = 'belongsTo';
     public const ENTITY_ATTRIBUTE_HAS_SIMPLE_RESULT = 'http://www.w3.org/ns/sosa/hasSimpleResult';
-    public const ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT = 'https://w3id.org/iot/fd/hasVerdict';
+    public const ENTITY_ATTRIBUTE_HAS_ESTIMATED_RESULT = 'https://w3id.org/iot/fd/hasEstimatedResult';
+    public const ENTITY_ATTRIBUTE_HAS_VERDICT = 'https://w3id.org/iot/fd/hasVerdict';
     public const ENTITY_ATTRIBUTE_RESULT_TIME = 'http://www.w3.org/ns/sosa/resultTime';
     public const ENTITY_ATTRIBUTE_IS_HOSTED_BY = 'http://www.w3.org/ns/sosa/isHostedBy';
 
@@ -31,17 +32,23 @@ class Client implements LoggerAwareInterface
 
     public static function getTypedValue($value)
     {
-        [$value, $type] = explode('^^', $value);
-        [$_, $type] = explode('#', $type);
+        // '87.12^^http://www.w3.org/2001/XMLSchema#integer'
+        $pattern = '/^(?<value>[^\^]+)\^\^(?<ns>[^\#]+)\#(?<type>.+)$/';
+        if (preg_match($pattern, $value, $matches)) {
+            $value = $matches['value'];
+            $type = $matches['type'];
 
-        switch ($type) {
-            case 'integer':
-                return (int) $value;
-            case 'float':
-                return (float) $value;
-            default:
-                return $value;
+            switch ($type) {
+                case 'integer':
+                    return (int) $value;
+                case 'float':
+                    return (float) $value;
+                default:
+                    return $value;
+            }
         }
+
+        return $value;
     }
 
     public static function getEntityTypes(): array
