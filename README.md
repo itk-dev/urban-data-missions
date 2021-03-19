@@ -143,7 +143,7 @@ the app when new measurements are available.
 ### Running Mercure
 
 ```sh
-docker-compose --file docker-compose.mercure.yml up --detach
+MERCURE_JWT_KEY=«the JWT key matching token set in .env.local» docker-compose --file docker-compose.mercure.yml up --detach
 ```
 
 ### Proxy
